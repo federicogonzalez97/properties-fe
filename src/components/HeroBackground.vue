@@ -1,5 +1,5 @@
 <template>
-  <section class="hero-background">
+  <section class="hero-background" :style="{ minHeight: heroHeight + 'px' }">
     <div class="hero-background__image-container">
       <img 
         src="/images/hero-house.jpg" 
@@ -23,22 +23,69 @@
 
 <script setup lang="ts">
 import FilterBar from './FilterBar.vue'
+import { ref, onMounted, onUnmounted } from 'vue'
+
+const getInitialHeight = () => {
+  if (typeof window !== 'undefined') {
+    if (window.innerWidth <= 480) {
+      return 420
+    } else if (window.innerWidth <= 768) {
+      return 520
+    }
+  }
+  return 660
+}
+
+const heroHeight = ref(getInitialHeight())
+
+const handleFilterHeightChange = (event: CustomEvent) => {
+  const { isExpanded } = event.detail
+  
+  if (window.innerWidth <= 768) {
+    if (isExpanded) {
+      heroHeight.value = window.innerWidth <= 480 ? 630 : 720
+    } else {
+      heroHeight.value = window.innerWidth <= 480 ? 420 : 520
+    }
+  } else {
+    heroHeight.value = 660
+  }
+}
+    
+const handleResize = () => {
+  if (typeof window !== 'undefined') {
+    heroHeight.value = getInitialHeight()
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('filterHeightChanged', handleFilterHeightChange as EventListener)
+  window.addEventListener('resize', handleResize)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('filterHeightChanged', handleFilterHeightChange as EventListener)
+  window.removeEventListener('resize', handleResize)
+})
 </script>
 
 <style lang="scss" scoped>
 .hero-background {
   position: relative;
   width: 100vw;
-  height: 660px;
-  overflow: hidden;
+  min-height: 660px;
+  height: auto;
+  overflow: visible;
   margin-left: calc(-50vw + 50%);
   margin-top: 0;
+  transition: min-height 0.3s ease;
   
   &__image-container {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
+    min-height: 100%;
     height: 100%;
     z-index: 1;
   }
@@ -55,6 +102,7 @@ import FilterBar from './FilterBar.vue'
     top: 0;
     left: 0;
     width: 100%;
+    min-height: 100%;
     height: 100%;
     background: linear-gradient(
       135deg, 
@@ -214,13 +262,26 @@ import FilterBar from './FilterBar.vue'
     }
   }
 }
-
+    
 @media (max-width: 768px) {
   .hero-background {
-    height: 500px;
+    min-height: 520px;
+    
+    &__content {
+      padding-top: 80px;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
     
     &__title {
-      font-size: 2.5rem;
+      width: 90%;
+      max-width: 400px;
+      height: auto;
+      min-height: 80px;
+      top: 180px;
+      font-size: 24px;
+      line-height: 120%;
+      padding: 0 20px;
     }
     
     &__search-container {
@@ -235,6 +296,22 @@ import FilterBar from './FilterBar.vue'
     
     &__filter-select {
       width: 200px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-background {
+    min-height: 420px;
+    
+    &__title {
+      font-size: 20px;
+      top: 150px;
+      padding: 0 15px;
+    }
+    
+    &__content {
+      padding-top: 60px;
     }
   }
 }

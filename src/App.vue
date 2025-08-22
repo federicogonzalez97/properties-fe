@@ -12,11 +12,6 @@ import Footer from './components/Footer.vue'
     <HeaderLanding />
     <HeroBackground />
     <main class="main-content">
-      <div class="content-placeholder">
-        <h2>Explora nuestras propiedades exclusivas.</h2>
-        <p class="subtitle">Las propiedades que buscás, en un solo lugar</p>
-      </div>
-      
       <PropertyCards />
       
       <DreamPropertySection />
@@ -41,7 +36,20 @@ import Footer from './components/Footer.vue'
 body {
   font-family: 'Arial', sans-serif;
   line-height: 1.6;
-  overflow-x: hidden; 
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+html {
+  margin: 0;
+  padding: 0;
 }
 
 #app {
@@ -56,56 +64,5 @@ body {
   position: relative;
 }
 
-.content-placeholder {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem 2rem 1rem 2rem; 
-  text-align: center;
-  position: relative; 
-}
 
-.content-placeholder h2 {
-  width: 500px;
-  height: 100px;
-  margin: 0 auto; 
-  opacity: 1;
-  
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 600;
-  font-size: 36px;
-  line-height: 50px;
-  letter-spacing: 0.3px;
-  text-align: center;
-  
-  color: #222222;
-  
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-}
-
-.content-placeholder p {
-  font-size: 1.2rem;
-  color: #666;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.content-placeholder .subtitle {
-  width: 530px;
-  height: 26px;
-  margin: 0 auto; 
-  opacity: 1;
-  
-  font-family: 'Poppins', sans-serif;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 26px;
-  letter-spacing: 0.2px;
-  text-align: center;
-  
-  color: #838383;
-  
-  margin-top: 1rem;
-  margin-bottom: 1rem; 
-}
 </style>

@@ -3,11 +3,6 @@
 
       <div class="dream-property-image">
         <img src="/images/proerty_dream.jpg" alt="Propiedad soñada" />
-        
-        
-        <div class="dream-property-title">
-          Tu propiedad soñada, a solo un click!
-        </div>
       </div>
       
 
@@ -81,8 +76,9 @@
   <style lang="scss" scoped>
   .dream-property-section {
 
-    width: 1345px;
-    height: 663px;
+    width: 100%;
+    max-width: 1345px;
+    min-height: 663px;
     transform: rotate(0deg);
     opacity: 1;
     margin: 0 auto;
@@ -91,12 +87,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    min-height: 663px;
     z-index: 999;
     
     position: relative;
-    
-    
     overflow: hidden;
   }
   
@@ -124,34 +117,7 @@
   }
 }
   
-  .dream-property-title {
-  width: 206px;
-  height: 102px;
-  position: absolute;
-  top: 55px;
-  right: 152px; 
-  transform: scaleX(-1); 
-  opacity: 1;
-  z-index: 10; 
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 600; 
-  font-style: normal;
-  font-size: 28px;
-  leading-trim: none;
-  line-height: 100%;
-  letter-spacing: 0%;
-  vertical-align: middle;
-  
-  color: #222222;
-  
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  
-  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  
-  pointer-events: none; 
-}
+
 
 .background-spiral {
   position: absolute;
@@ -327,4 +293,87 @@
   color: #838383;
   margin: 0;
 }
-  </style>
+
+
+@media (max-width: 768px) { 
+  .dream-property-section {
+    min-height: 500px;
+    padding: 20px;
+  }
+
+  .dream-property-image {
+    width: 100%;
+    height: 300px;
+    border-top-left-radius: 100px;
+  }
+
+
+
+  .features-cards-container {
+    position: relative;
+    top: 20px;
+    left: 0;
+    width: 100%;
+    gap: 20px;
+    transform: none;
+  }
+
+  .feature-card {
+    width: 100%;
+    max-width: 350px;
+    height: 80px;
+    gap: 12px;
+  }
+
+  .feature-icon {
+    width: 70px;
+    height: 80px;
+  }
+
+  .feature-icon img {
+    width: 35px;
+    height: 35px;
+    top: 20px;
+    left: 18px;
+  }
+
+  .feature-title {
+    font-size: 14px;
+  }
+
+  .feature-subtitle {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dream-property-section {
+    min-height: 400px;
+    padding: 15px;
+  }
+
+  .dream-property-image {
+    height: 250px;
+    border-top-left-radius: 80px;
+  }
+
+
+
+  .feature-card {
+    height: 70px;
+    gap: 10px;
+  }
+
+  .feature-icon {
+    width: 60px;
+    height: 70px;
+  }
+
+  .feature-icon img {
+    width: 30px;
+    height: 30px;
+    top: 18px;
+    left: 15px;
+  }
+}
+</style>

@@ -26,8 +26,9 @@
 
 <style lang="scss" scoped>
 .investment-opportunities-section {
-  width: 1041px;
-  height: 90px;
+  width: 100%;
+  max-width: 1041px;
+  min-height: 90px;
   margin: 0 auto;
   text-align: center;
   opacity: 1;
@@ -42,8 +43,10 @@
 }
 
 .section-header h2 {
-  width: 1041px;
-  height: 44px;
+  width: 100%;
+  max-width: 1041px;
+  height: auto;
+  min-height: 44px;
   margin: 0;
   opacity: 1;
 
@@ -63,8 +66,10 @@
 }
 
 .subtitle {
-  width: 530px;
-  height: 26px;
+  width: 100%;
+  max-width: 530px;
+  height: auto;
+  min-height: 26px;
   margin: 0;
   opacity: 1;
 
@@ -133,5 +138,64 @@
 
 .pagination-dot.active {
   background: #365196;
+}
+
+// Responsive para mobile
+@media (max-width: 768px) {
+  .investment-opportunities-section {
+    padding: 0 20px;
+  }
+
+  .section-header {
+    margin-top: 40px;
+    gap: 15px;
+  }
+
+  .section-header h2 {
+    font-size: 28px;
+    padding: 0 20px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    padding: 0 20px;
+  }
+
+  .property-cards-container {
+    margin-top: 30px;
+    margin-bottom: 40px;
+    gap: 15px;
+  }
+
+  .property-card {
+    width: 100%;
+    max-width: 280px;
+    height: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  .investment-opportunities-section {
+    padding: 0 15px;
+  }
+
+  .section-header {
+    margin-top: 30px;
+    gap: 12px;
+  }
+
+  .section-header h2 {
+    font-size: 24px;
+    padding: 0 15px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    padding: 0 15px;
+  }
+
+  .property-card {
+    height: 200px;
+  }
 }
 </style>
