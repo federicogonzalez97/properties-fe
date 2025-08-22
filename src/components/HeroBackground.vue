@@ -16,7 +16,6 @@
         </h1>
       </div>
       
-      <!-- Aquí está el FilterBar -->
       <FilterBar />
     </div>
   </section>
@@ -24,17 +23,16 @@
 
 <script setup lang="ts">
 import FilterBar from './FilterBar.vue'
-// Lógica del componente aquí
 </script>
 
 <style lang="scss" scoped>
 .hero-background {
   position: relative;
-  width: 100vw; /* Ancho completo de la ventana */
+  width: 100vw;
   height: 660px;
   overflow: hidden;
-  margin-left: calc(-50vw + 50%); /* Centrar el elemento full-width */
-  margin-top: 0; /* Sin margen superior */
+  margin-left: calc(-50vw + 50%);
+  margin-top: 0;
   
   &__image-container {
     position: absolute;
@@ -77,7 +75,7 @@ import FilterBar from './FilterBar.vue'
     align-items: center;
     padding: 0 2rem;
     text-align: center;
-    padding-top: 120px; /* Espacio para el header */
+    padding-top: 120px;
   }
   
   &__text-container {
@@ -87,7 +85,7 @@ import FilterBar from './FilterBar.vue'
   
   &__title {
     font-family: 'Montserrat', sans-serif;
-    font-weight: 600; /* SemiBold */
+    font-weight: 600;
     font-size: 28px;
     line-height: 100%;
     letter-spacing: 0;
@@ -96,7 +94,6 @@ import FilterBar from './FilterBar.vue'
     margin: 0;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     
-    /* Dimensiones y posicionamiento exactos del diseño */
     width: 721px;
     height: 68px;
     position: absolute;
@@ -218,7 +215,6 @@ import FilterBar from './FilterBar.vue'
   }
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .hero-background {
     height: 500px;

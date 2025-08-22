@@ -1,12 +1,11 @@
 <template>
   <div class="investment-opportunities-section">
-    <!-- Título principal -->
+    
     <div class="section-header">
       <h2>Oportunidades de inversión</h2>
       <p class="subtitle">Explora Nuestra Oferta de Complejos Residenciales</p>
     </div>
 
-    <!-- Contenedor de cards de propiedades -->
     <div class="property-cards-container">
       <div class="property-card"></div>
       <div class="property-card"></div>
@@ -14,7 +13,6 @@
       <div class="property-card"></div>
     </div>
 
-    <!-- Paginador -->
     <div class="pagination">
       <div class="pagination-dot active"></div>
       <div class="pagination-dot"></div>
@@ -24,7 +22,6 @@
 </template>
 
 <script setup lang="ts">
-// Componente para la sección de oportunidades de inversión
 </script>
 
 <style lang="scss" scoped>

@@ -1,6 +1,5 @@
 <template>
   <footer class="footer">
-    <!-- Contenido principal del footer -->
     <div class="footer-main-content">
       <div class="footer-logo">
         <h3>LOGO</h3>
@@ -54,10 +53,8 @@
       </nav>
     </div>
     
-    <!-- Línea separadora -->
     <div class="footer-separator"></div>
     
-    <!-- Sección de copyright -->
     <div class="footer-copyright">
       <p>Copyright ©2023 | Todos los derechos reservados</p>
     </div>
@@ -65,7 +62,7 @@
 </template>
 
 <script setup lang="ts">
-// Componente Footer
+    
 </script>
 
 <style lang="scss" scoped>

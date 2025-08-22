@@ -274,38 +274,29 @@
 }
 
 .feature-icon {
-  /* Dimensiones exactas del Figma */
   width: 86px;
   height: 89px;
   
-  /* Gradiente exacto del Figma */
   background: linear-gradient(180deg, #273A6A 0%, #0D245F 100%);
   
-  /* Bordes redondeados exactos del Figma */
   border-top-left-radius: 12px;
   border-bottom-left-radius: 12px;
   
-  /* Posicionamiento relativo para el SVG interno */
   position: relative;
   
-  /* Layout */
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Estilos para las imágenes dentro de los iconos */
 .feature-icon img {
-  /* Dimensiones exactas del Figma */
   width: 42px;
   height: 40px;
   
-  /* Posicionamiento exacto del Figma */
   position: absolute;
   top: 23px;
   left: 22px;
-  
-  /* Filtro para hacer las imágenes blancas */
+      
   filter: brightness(0) invert(1);
 }
 
