@@ -1,11 +1,11 @@
 <template>
   <footer class="footer">
-    <div class="footer-main-content">
+    <div class="footer-container">
       <div class="footer-logo">
         <h3>LOGO</h3>
       </div>
       
-      <nav class="footer-navigation">
+      <div class="footer-main-content">
         <div class="nav-column">
           <h4 class="nav-title">Inicio</h4>
           <ul class="nav-list">
@@ -50,13 +50,13 @@
             <div class="social-icon"><img src="/images/Linkedin.svg" alt="LinkedIn"></div>
           </div>
         </div>
-      </nav>
+      </div>
     </div>
     
     <div class="footer-separator"></div>
     
     <div class="footer-copyright">
-      <p>Copyright ©2023 | Todos los derechos reservados</p>
+      Copyright ©2023 | Todos los derechos reservados
     </div>
   </footer>
 </template>
@@ -68,54 +68,75 @@
 <style lang="scss" scoped>
 .footer {
   width: 100%;
-  height: 378px;
-  background: #0D245F;
-  color: #FFFFFF;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
+  min-height: 378px;
+  background: url('/images/footer.png') no-repeat center center;
+  background-size: cover;
+  box-shadow: 0px 1px 3px 0px #3651961A;
+  box-shadow: 0px 5px 5px 0px #36519617;
+  box-shadow: 0px 11px 7px 0px #3651960D;
+  box-shadow: 0px 19px 8px 0px #36519603;
+  box-shadow: 0px 30px 9px 0px #36519600;
   margin-top: 500px;
-  padding-top: 44px;
   position: relative;
+}
+
+.footer-logo {
+  width: 135px;
+  height: 62px;
+  position: absolute;
+  top: 44px;
+  left: 154px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-logo h3 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 48px;
+  line-height: 130%;
+  letter-spacing: 0%;
+  text-align: center;
+  color: #ffffff;
+  margin: 0;
+}
+
+.footer-container {
+  width: 100%;
+  max-width: 1200px;
+  position: relative;
+  margin: 0 auto;
+  padding-top: 44px;
 }
 
 .footer-main-content {
   width: 747px;
   height: 194px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 62px;
-  margin: 0 auto;
-}
-
-.footer-logo h3 {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 600;
-  font-size: 24px;
-  color: #FFFFFF;
-  margin: 0;
-}
-
-.footer-navigation {
+  position: absolute;
+  top: 44px;
+  left: 436px;
   display: flex;
   gap: 62px;
-  align-items: flex-start;
 }
 
 .nav-column {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
 }
 
 .nav-title {
-  font-family: 'Montserrat', sans-serif;
+  width: 80px;
+  height: 30px;
+  font-family: 'Poppins', sans-serif;
   font-weight: 600;
   font-size: 18px;
   color: #FFFFFF;
-  margin: 0 0 10px 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
 }
 
 .nav-list {
@@ -124,15 +145,19 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .nav-link {
+  width: 63px;
+  height: 21px;
   color: #FFFFFF;
   text-decoration: none;
   font-family: 'Poppins', sans-serif;
   font-weight: 400;
   font-size: 14px;
+  display: flex;
+  align-items: center;
   transition: color 0.3s ease;
 }
 
@@ -141,8 +166,8 @@
 }
 
 .social-section {
-  width: 93px;
-  height: 112px;
+  width: 80px;
+  height: 153px;
 }
 
 .social-icons {
@@ -152,46 +177,49 @@
 }
 
 .social-icon {
-  width: 30px;
-  height: 30px;
+  width: 63px;
+  height: 21px;
   background: transparent;
   border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  border: 1px solid #E0E0E0;
 }
 
 .social-icon img {
   width: 20px;
   height: 20px;
   object-fit: contain;
+  margin: 0 auto;
 }
 
 .footer-separator {
   width: 1041px;
   height: 0.8px;
+  position: absolute;
+  top:  290px;
+  left: 50%;
+  transform: translateX(-50%);
   background: #FCFCFC;
-  margin: 20px auto;
-  opacity: 1;
+  margin-left: 60px;
 }
 
 .footer-copyright {
-  width: 1041px;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
-}
-
-.footer-copyright p {
+  width: 346px;
+  height: 18px;
+  position: absolute;
+  top: 306px;
+  margin-left: 490px;
   font-family: 'Poppins', sans-serif;
   font-weight: 400;
   font-size: 14px;
-  color: #FFFFFF;
+  line-height: 130%;
+  letter-spacing: 0%;
   text-align: center;
-  margin: 0;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

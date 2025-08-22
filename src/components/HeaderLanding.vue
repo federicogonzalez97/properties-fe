@@ -54,20 +54,20 @@ onUnmounted(() => {
   height: 45px;
   opacity: 1;
   gap: 24px;
-  background: transparent; /* Header transparente */
+  background: transparent;
   justify-content: space-between;
   align-items: center;
   border-radius: 10px;
   padding: 0 20px;
-  z-index: 9999; /* Z-index muy alto para estar por encima del HeroBackground */
-  position: absolute; /* Posición absoluta para estar sobre el HeroBackground */
-  top: 58px; /* Margen superior del diseño */
-  left: 50%; /* Centrar horizontalmente */
-  transform: translateX(-50%); /* Centrar perfectamente */
-  backdrop-filter: none; /* Sin blur por defecto */
+  z-index: 9999;
+  position: absolute;
+  top: 58px;
+  left: 50%;
+  transform: translateX(-50%);
+  backdrop-filter: none;
 
   &--scrolled {
-    backdrop-filter: blur(10px); /* Aplica blur cuando se hace scroll */
+    backdrop-filter: blur(10px);
   }
 
   &__logo {
@@ -99,10 +99,10 @@ onUnmounted(() => {
     }
 
     &-link {
-      font-weight: 600; /* SemiBold = 600 */
+      font-weight: 600;
       font-size: 14px;
       line-height: 100%;
-      letter-spacing: 0; /* Sin % */
+      letter-spacing: 0;
       font-family: "Poppins", sans-serif;
       color: white;
       text-decoration: none;
@@ -138,11 +138,11 @@ onUnmounted(() => {
         opacity: 1;
         gap: 10px;
         border-radius: 20px;
-        padding: 10px 15px; /* Simplificado */
-        border: 1.5px solid white; /* Corregido */
+        padding: 10px 15px;
+        border: 1.5px solid white;
         background-color: transparent;
         color: white;
-        font-weight: 600; /* SemiBold */
+        font-weight: 600;
         
         &:hover {
           background-color: rgba(255, 255, 255, 0.1);
