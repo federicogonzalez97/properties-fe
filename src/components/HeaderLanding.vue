@@ -121,7 +121,7 @@ onUnmounted(() => {
     display: flex;
     flex-direction: row;
     gap: 10px;
-
+    
     &-button {
       border-radius: 20px;
       padding: 10px 15px;

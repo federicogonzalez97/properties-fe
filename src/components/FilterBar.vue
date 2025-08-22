@@ -1,7 +1,7 @@
 <template>
   <div class="filter-bar">
     <div class="filter-bar__content">
-      <!-- Botón Comprar -->
+      
       <button 
         class="filter-bar__button filter-bar__button--comprar" 
         :class="{ 'active': selectedButton === 'comprar' }"
@@ -11,7 +11,7 @@
         <div class="filter-bar__indicator" :class="{ 'filter-bar__indicator--active': selectedButton === 'comprar' }"></div>
       </button>
       
-      <!-- Botón Alquilar -->
+      
       <button 
         class="filter-bar__button filter-bar__button--alquilar" 
         :class="{ 'active': selectedButton === 'alquilar' }"
@@ -25,7 +25,7 @@
         <input type="text" placeholder="Buscar por ubicación o palabra clave..." class="filter-bar__input-text">
       </div>
 
-      <!-- Dropdowns de filtros -->
+
       <div class="filter-bar__dropdown" :class="{ 'active': selectedDropdown === 'departamento' }" @click="selectDropdown('departamento')">
         <span class="filter-bar__dropdown-text">Departamento</span>
         <img src="/images/arrow-down.svg" alt="Flecha" class="filter-bar__dropdown-arrow">
@@ -41,14 +41,14 @@
         <img src="/images/arrow-down.svg" alt="Flecha" class="filter-bar__dropdown-arrow">
       </div>
 
-      <!-- Botón de filtro -->
+      
       <button class="filter-bar__action-button filter-bar__action-button--filter">
-        <img src="/Filter.svg" alt="Filtro" class="filter-bar__action-icon">
+        <img src="/images/Filter.svg" alt="Filtro" class="filter-bar__action-icon">
       </button>
 
-      <!-- Botón de búsqueda -->
+      
       <button class="filter-bar__action-button filter-bar__action-button--search">
-        <img src="/search.svg" alt="Búsqueda" class="filter-bar__action-icon">
+        <img src="/images/search.svg" alt="Búsqueda" class="filter-bar__action-icon">
       </button>
     </div>
   </div>
@@ -57,8 +57,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const selectedButton = ref('alquilar') // Por defecto Alquilar está seleccionado
-const selectedDropdown = ref<string | null>(null) // Para trackear qué dropdown está activo
+const selectedButton = ref('alquilar') 
+const selectedDropdown = ref<string | null>(null) 
 
 const selectButton = (button: string) => {
   selectedButton.value = button
@@ -71,16 +71,16 @@ const selectDropdown = (dropdown: string) => {
 
 <style lang="scss" scoped>
 .filter-bar {
-  /* Dimensiones y posicionamiento del contenedor principal */
+  
   width: 1030px;
   height: 44px;
-  position: absolute; /* Para posicionarlo sobre el HeroBackground */
+  position: absolute; 
   top: 399px;
-  left: 50%; /* Centrar horizontalmente */
-  transform: translateX(-50%); /* Centrar perfectamente */
+  left: 50%; 
+  transform: translateX(-50%); 
   opacity: 1;
   
-  /* Sombras exactas del diseño */
+  
   box-shadow: 
     0px 1px 3px 0px #3651961A,
     0px 5px 5px 0px #36519617,
@@ -88,29 +88,29 @@ const selectDropdown = (dropdown: string) => {
     0px 19px 8px 0px #36519603,
     0px 30px 9px 0px #36519600;
 
-  border-radius: 10px; /* Un borde redondeado común para estos elementos */
+  border-radius: 10px; 
 
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* Alinear elementos desde la izquierda */
-  padding: 0; /* Sin padding para que los botones toquen los bordes */
+  justify-content: flex-start; 
+  padding: 0; 
 
   &__content {
-    /* Estilos para el contenido interno */
+    
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
-    gap: 0; /* Sin gap entre botones para que estén juntos */
+    gap: 0; 
   }
 
   &__button {
-    /* Estilos base para ambos botones */
+    
     border: none;
     cursor: pointer;
     transition: all 0.3s ease;
     font-family: 'Poppins', sans-serif;
-    font-weight: 500; /* Medium */
+    font-weight: 500; 
     font-size: 11px;
     line-height: 100%;
     letter-spacing: 0;
@@ -124,7 +124,7 @@ const selectDropdown = (dropdown: string) => {
     padding: 0;
 
     &--comprar {
-      /* Especificaciones exactas del botón Comprar */
+      
       width: 100px;
       height: 44px;
       background: var(--rosa, #F5F7FA);
@@ -134,17 +134,17 @@ const selectDropdown = (dropdown: string) => {
       border-bottom-right-radius: 0;
 
       .filter-bar__button-text {
-        color: #8A8A8A; /* Gris por defecto */
+        color: #8A8A8A; 
       }
 
       &:has(.filter-bar__indicator--active) .filter-bar__button-text,
       &.active .filter-bar__button-text {
-        color: #333; /* Oscuro cuando está activo */
+        color: #333; 
       }
     }
 
     &--alquilar {
-      /* Especificaciones exactas del botón Alquilar */
+      
       width: 100px;
       height: 44px;
       background: var(--crema, #FCFCFC);
@@ -155,15 +155,15 @@ const selectDropdown = (dropdown: string) => {
       padding-right: 5px;
       padding-left: 5px;
       box-shadow: 0px 51px 30px 0px #6A64A60D;
-      margin-right: 8px; /* Margen derecho para separar del input */
+        margin-right: 8px; 
 
       .filter-bar__button-text {
-        color: #8A8A8A; /* Gris por defecto */
+        color: #8A8A8A; 
       }
 
       &:has(.filter-bar__indicator--active) .filter-bar__button-text,
       &.active .filter-bar__button-text {
-        color: #333; /* Oscuro cuando está activo */
+        color: #333; 
       }
     }
 
@@ -173,7 +173,7 @@ const selectDropdown = (dropdown: string) => {
   }
 
   &__button-text {
-    /* Estilos del texto del botón */
+    
     width: 43px;
     height: 17px;
     display: flex;
@@ -191,21 +191,21 @@ const selectDropdown = (dropdown: string) => {
   }
 
   &__indicator {
-    /* Rectángulo indicador debajo de cada botón */
+    
     width: 76px;
     height: 4px;
     border-radius: 5px;
-    background: transparent; /* Por defecto transparente */
-    margin-top: 2px; /* Espacio entre el texto y el indicador */
+    background: transparent; 
+    margin-top: 2px; 
     transition: background-color 0.3s ease;
 
     &--active {
-      background: var(--new-blue, #365196); /* Azul cuando está activo */
+      background: var(--new-blue, #365196);   
     }
   }
 
   &__input {
-    /* Contenedor del input con especificaciones exactas */
+    
     width: 398px;
     height: 44px;
     gap: 10px;
@@ -217,17 +217,16 @@ const selectDropdown = (dropdown: string) => {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 8px; /* Espacio de 8px entre el input y el primer dropdown */
+    margin-right: 8px; 
   }
 
   &__input-text {
-    /* Estilos del texto del input con especificaciones exactas */
+    
     width: 436px;
     height: 17px;
-    angle: 0deg;
     opacity: 1;
     font-family: 'Poppins', sans-serif;
-    font-weight: 400; /* Regular */
+    font-weight: 400; 
     font-size: 11px;
     line-height: 100%;
     letter-spacing: 0;
@@ -248,18 +247,18 @@ const selectDropdown = (dropdown: string) => {
   }
 
   &__dropdown {
-    /* Estilos para los dropdowns con ancho adaptativo */
+    
     display: flex;
     align-items: center;
-    height: 44px; /* Altura fija como en el diseño */
-    gap: 10px; /* Espacio entre el texto y la flecha */
-    padding: 0 10px; /* Padding interno */
+    height: 44px; 
+    gap: 10px; 
+    padding: 0 10px; 
     border-radius: 5px;
     background: var(--crema, #FCFCFC);
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-right: 8px; /* Espacio entre dropdowns - 8px como solicitaste */
-    width: fit-content; /* Ancho adaptativo al contenido (Hug) */
+    margin-right: 8px; 
+    width: fit-content; 
 
     &:hover {
       background-color: #F0F0F0;
@@ -269,32 +268,32 @@ const selectDropdown = (dropdown: string) => {
       background-color: #F0F0F0;
       
       .filter-bar__dropdown-text {
-        color: #333; /* Color negro cuando está activo */
+        color: #333; 
       }
     }
 
-    /* Removemos la regla &:last-child ya que ahora no son los últimos elementos */
+    
 
     &-text {
       font-family: 'Poppins', sans-serif;
-      font-weight: 400; /* Regular */
+      font-weight: 400; 
       font-size: 11px;
       line-height: 100%;
       letter-spacing: 0;
-      color: #8A8A8A; /* Mismo color gris que el placeholder del input */
-      white-space: nowrap; /* Evita que el texto se rompa */
+      color: #8A8A8A; 
+      white-space: nowrap; 
     }
 
     &-arrow {
       width: 12px;
       height: 12px;
       object-fit: contain;
-      flex-shrink: 0; /* Evita que la flecha se encoja */
+      flex-shrink: 0; 
     }
   }
 
   &__action-button {
-    /* Estilos base para los botones de acción */
+    
     width: 44px;
     height: 44px;
     border: none;
@@ -316,24 +315,23 @@ const selectDropdown = (dropdown: string) => {
     }
 
     &--filter {
-      /* Estilos específicos para el botón de filtro */
+      
       box-shadow: 0px 51px 30px 0px #6A64A60D;
-      margin-right: 8px; /* Espacio entre el botón de filtro y el de búsqueda */
+      margin-right: 8px; 
     }
 
     &--search {
-      /* Estilos específicos para el botón de búsqueda */
-      background: #365196; /* Mismo color azul que el botón de registrarse */
+      background: #365196; 
       box-shadow: 0px 51px 30px 0px #6A64A60D;
       
       &:hover {
-        background-color: #2a3f7a; /* Color azul más oscuro en hover */
+        background-color: #2a3f7a; 
       }
     }
   }
 
   &__action-icon {
-    /* Estilos para los iconos de los botones */
+    
     width: 20px;
     height: 20px;
     object-fit: contain;
