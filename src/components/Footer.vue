@@ -63,7 +63,7 @@
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M7 14L12 9L17 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-      <span>Ir arriba</span>
+      <span class="footer-back-to-top__text">Ir arriba</span>
     </button>
   </footer>
 </template>
@@ -356,6 +356,26 @@ const scrollToTop = () => {
     color: #FFFFFF;
     font-weight: 400;
   }
+  
+  .footer-back-to-top {
+    width: 52px;
+    height: 52px;
+    padding: 14px;
+    gap: 0;
+    bottom: 20px;
+    right: 30px;
+    border-radius: 50%;
+    justify-content: center;
+    
+    .footer-back-to-top__text {
+      display: none;
+    }
+    
+    svg {
+      width: 22px;
+      height: 22px;
+    }
+  }
 }
 
 @media (max-width: 480px) {
@@ -397,13 +417,25 @@ const scrollToTop = () => {
   }
 
   .footer-back-to-top {
-    width: auto;
-    font-size: 11px;
-    gap: 4px;
-    margin-top: 8px;
-    margin-bottom: 10px;
-    bottom: 10px;
-    right: 10px;
+    width: 56px;
+    height: 56px;
+    padding: 14px;
+    gap: 0;
+    margin-top: 0;
+    margin-bottom: 20px;
+    bottom: 15px;
+    right: 25px;
+    border-radius: 50%;
+    justify-content: center;
+    
+    .footer-back-to-top__text {
+      display: none;
+    }
+    
+    svg {
+      width: 28px;
+      height: 28px;
+    }
   }
 }
 
