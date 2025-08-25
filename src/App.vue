@@ -1,26 +1,20 @@
 <script setup lang="ts">
-import HeaderLanding from './components/HeaderLanding.vue'
-import HeroBackground from './components/HeroBackground.vue'
-import PropertyCards from './components/PropertyCards.vue'
-import DreamPropertySection from './components/DreamPropertySection.vue'
-import InvestmentOpportunities from './components/InvestmentOpportunities.vue'
-import Footer from './components/Footer.vue'
+import { onMounted } from 'vue'
+import { useAuth } from './composables/useAuth'
+
+const { initAuth, handleOAuthCallback } = useAuth()
+
+onMounted(async () => {
+  await initAuth()
+  
+  await handleOAuthCallback()
+})
 </script>
 
 <template>
   <div id="app">
-    <HeaderLanding />
-    <HeroBackground />
-    <main class="main-content">
-      <PropertyCards />
-      
-      <DreamPropertySection />
-      
-      <InvestmentOpportunities />
-    </main>
+    <router-view />
   </div>
-  
-  <Footer />
 </template>
 
 <style>
