@@ -89,13 +89,13 @@ interface Props {
   mode: 'login' | 'register'
 }
 
-interface Emits {
-  (e: 'back'): void
-  (e: 'success'): void
-}
+// interface Emits {
+//   (e: 'back'): void
+//   (e: 'success'): void
+// }
 
 const props = defineProps<Props>()
-const emit = defineEmits<Emits>()
+// const emit = defineEmits<Emits>()
 
 const { login, register, isLoading, error } = useAuth()
 
