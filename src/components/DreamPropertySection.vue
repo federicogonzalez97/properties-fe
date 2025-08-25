@@ -5,6 +5,9 @@
         <img src="/images/proerty_dream.jpg" alt="Propiedad soñada" />
       </div>
       
+      <div class="dream-property-text">
+        <h2>Tu propiedad soñada, a solo un click!</h2>
+      </div>
 
       <div class="background-spiral">
         <img src="/images/Ellipse.svg" alt="Espiral decorativo" />
@@ -114,6 +117,28 @@
     height: 100%;
     object-fit: cover;
     border-top-left-radius: 200px; 
+  }
+}
+
+.dream-property-text {
+  position: absolute;
+  top: 55px;
+  left: 152px;
+  z-index: 10;
+  width: 206px;
+  height: 102px;
+  
+  h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #545F71;
+    margin: 0;
+    vertical-align: middle;
+    opacity: 1;
+    transform: rotate(0deg);
   }
 }
   
