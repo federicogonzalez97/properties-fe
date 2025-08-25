@@ -75,7 +75,7 @@
       </div>
 
       <div class="filter-bar__input">
-        <input type="text" placeholder="Buscar por ubicación o palabra clave..." class="filter-bar__input-text">
+        <input type="text" placeholder="Buscar por ubicación o palabra clave" class="filter-bar__input-text">
       </div>
 
 
@@ -418,6 +418,10 @@ const toggleExpandedFilters = () => {
 
   &__action-button--desktop {
     display: flex; 
+  }
+  
+  &__action-button--filter.filter-bar__action-button--desktop {
+    display: none; 
   }
 
   &__dropdown--mobile,
