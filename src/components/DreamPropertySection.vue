@@ -262,11 +262,12 @@
   
   position: relative;
   z-index: 10;
+  overflow: hidden;
 }
 
 .feature-icon {
   width: 86px;
-  height: 89px;
+  height: 100%;
   
   background: linear-gradient(180deg, #273A6A 0%, #0D245F 100%);
   
@@ -328,11 +329,22 @@
 
   .dream-property-image {
     width: 100%;
-    height: 300px;
-    border-top-left-radius: 100px;
+    height: 100%;
+    left: 0;
+    top: 0;
+    border-top-left-radius: 0;
   }
 
+  .dream-property-text {
+    display: none;
+  }
 
+  .background-spiral,
+  .background-spiral-small,
+  .background-spiral-third,
+  .background-spiral-fourth {
+    display: none;
+  }
 
   .features-cards-container {
     position: relative;
@@ -341,6 +353,7 @@
     width: 100%;
     gap: 20px;
     transform: none;
+    z-index: 100;
   }
 
   .feature-card {
@@ -348,11 +361,15 @@
     max-width: 350px;
     height: 80px;
     gap: 12px;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 100;
   }
 
   .feature-icon {
     width: 70px;
-    height: 80px;
+    height: 100%;
+    z-index: 100;
   }
 
   .feature-icon img {
@@ -378,20 +395,36 @@
   }
 
   .dream-property-image {
-    height: 250px;
-    border-top-left-radius: 80px;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    border-top-left-radius: 0;
   }
 
+  .dream-property-text {
+    display: none;
+  }
 
+  .background-spiral,
+  .background-spiral-small,
+  .background-spiral-third,
+  .background-spiral-fourth {
+    display: none;
+  }
 
   .feature-card {
     height: 70px;
     gap: 10px;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 100;
   }
 
   .feature-icon {
     width: 60px;
-    height: 70px;
+    height: 100%;
+    z-index: 100;
   }
 
   .feature-icon img {
@@ -399,6 +432,73 @@
     height: 30px;
     top: 18px;
     left: 15px;
+  }
+
+  .feature-title {
+    font-size: 13px;
+  }
+
+  .feature-subtitle {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 360px) {
+  .dream-property-section {
+    min-height: 350px;
+    padding: 10px;
+  }
+
+  .dream-property-image {
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    border-top-left-radius: 0;
+  }
+
+  .dream-property-text {
+    display: none;
+  }
+
+  .background-spiral,
+  .background-spiral-small,
+  .background-spiral-third,
+  .background-spiral-fourth {
+    display: none;
+  }
+
+  .features-cards-container {
+    gap: 15px;
+    z-index: 100;
+  }
+
+  .feature-card {
+    height: 65px;
+    gap: 8px;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+  }
+
+  .feature-icon {
+    width: 55px;
+    z-index: 100;
+  }
+
+  .feature-icon img {
+    width: 25px;
+    height: 25px;
+    top: 18px;
+    left: 15px;
+  }
+
+  .feature-title {
+    font-size: 12px;
+  }
+
+  .feature-subtitle {
+    font-size: 10px;
   }
 }
 </style>
