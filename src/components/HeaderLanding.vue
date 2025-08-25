@@ -19,31 +19,45 @@
         <li class="header__nav-item">
           <a href="#" class="header__nav-link" @click="scrollToSection('property-cards')">Propiedades</a>
         </li>
-        <li class="header__nav-item">
-          <a href="#" class="header__nav-link" @click="scrollToSection('investment')">Inversión</a>
-        </li>
-        <li class="header__nav-item">
-          <a href="#" class="header__nav-link" @click="scrollToSection('contact')">Contacto</a>
-        </li>
       </ul>
     </nav>
 
     <div class="header__cta">
-      <button class="header__cta-button header__cta-button--primary">
-        Login
-      </button>
-      <button class="header__cta-button header__cta-button--secondary">
-        Registrarse
-      </button>
+      <template v-if="!isAuthenticated">
+        <button class="header__cta-button header__cta-button--primary" @click="openAuthModal('login')">
+          Login
+        </button>
+        <button class="header__cta-button header__cta-button--secondary" @click="openAuthModal('register')">
+          Registrarse
+        </button>
+      </template>
+      
+      <template v-else>
+        <button class="header__cta-button header__cta-button--secondary" @click="handleLogout">
+          Logout
+        </button>
+      </template>
     </div>
   </header>
+
+       <AuthModal 
+         :is-open="isAuthModalOpen"
+         :mode="authModalMode"
+         @close="closeAuthModal"
+       />
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from "vue";
+import AuthModal from './AuthModal.vue';
+import { useAuth } from '../composables/useAuth';
 
 const isScrolled = ref(false);
 const isMobileMenuOpen = ref(false);
+const isAuthModalOpen = ref(false);
+const authModalMode = ref<'login' | 'register'>('login');
+
+const { logout, isAuthenticated } = useAuth();
 
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 10;
@@ -57,6 +71,21 @@ const toggleMobileMenu = () => {
   } else {
     document.body.style.overflow = 'auto';
   }
+};
+
+const openAuthModal = (mode: 'login' | 'register' = 'login') => {
+  authModalMode.value = mode;
+  isAuthModalOpen.value = true;
+  document.body.style.overflow = 'hidden';
+};
+
+const closeAuthModal = () => {
+  isAuthModalOpen.value = false;
+  document.body.style.overflow = 'auto';
+};
+
+const handleLogout = async () => {
+  await logout();
 };
 
 const scrollToSection = (sectionId: string) => {
@@ -105,20 +134,6 @@ const scrollToSection = (sectionId: string) => {
         const sections = document.querySelectorAll('section, div');
         for (const section of sections) {
           if (section.textContent?.includes('Oportunidades de inversión')) {
-            section.scrollIntoView({ behavior: 'smooth' });
-            break;
-          }
-        }
-      }
-      break;
-    case 'contact':
-      const footer = document.querySelector('.footer');
-      if (footer) {
-        footer.scrollIntoView({ behavior: 'smooth' });
-      } else {    
-        const sections = document.querySelectorAll('section, div');
-        for (const section of sections) {
-          if (section.textContent?.includes('LOGO') && section.textContent?.includes('Inicio')) {
             section.scrollIntoView({ behavior: 'smooth' });
             break;
           }
@@ -292,18 +307,41 @@ onUnmounted(() => {
         }
       }
 
-      &--secondary {
-        background-color: #365196;
-        color: white;
+          &--secondary {
+      background-color: #365196;
+      color: white;
 
-        &:hover {
-          background-color: #2a3f7a;
-          transform: translateY(-2px);
-          box-shadow: 0 4px 15px rgba(54, 81, 150, 0.3);
-        }
+      &:hover {
+        background-color: #2a3f7a;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(54, 81, 150, 0.3);
       }
     }
   }
+
+            &__user-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+    &__user-email {
+      color: white;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: "Poppins", sans-serif;
+    }
+    
+    @media (max-width: 768px) {
+      &__user-info {
+        gap: 0;
+      }
+      
+      &__user-email {
+        display: none;
+      }
+    }
+}
 }
 
 @media (max-width: 768px) {
@@ -441,7 +479,61 @@ onUnmounted(() => {
     }
 
     &__cta {
-      display: none;
+      display: flex !important;
+      order: 3;
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 9998;
+      
+      .header__cta-button--primary {
+        display: none;
+      }
+      
+      .header__cta-button--secondary {
+        display: flex;
+      }
+      
+
+      
+      .header__cta-button {
+        padding: 8px 12px;
+        font-size: 12px;
+        min-width: 60px;
+        height: 32px;
+        border-radius: 16px;
+        
+        &--primary {
+          border-width: 1px;
+        }
+      }
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .header {
+      padding: 0 15px;
+      
+      &__logo {
+        font-size: 24px;
+      }
+      
+      &__cta {
+        right: 15px;
+        
+        .header__cta-button {
+          padding: 6px 10px;
+          font-size: 11px;
+          min-width: 55px;
+          height: 28px;
+        }
+      .header__cta-button--secondary {
+        display: flex;
+      }
+      
+
+      }
     }
   }
 }
