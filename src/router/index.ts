@@ -1,34 +1,48 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import { useAuth } from '@/composables/useAuth'
+import { createRouter, createWebHistory } from 'vue-router';
+import { useAuth } from '@/composables/useAuth';
 
-const Home = () => import('@/components/Home.vue')
+const Home = () => import('@/components/Home.vue');
+const PrivacyPolicy = () => import('@/components/PrivacyPolicy.vue');
+const DataDeletion = () => import('@/components/DataDeletion.vue');
 
 const routes = [
   {
     path: '/',
     name: 'Home',
     component: Home,
-    meta: { requiresAuth: false }
-  }
-]
+    meta: { requiresAuth: false },
+  },
+  {
+    path: '/privacy-policy',
+    name: 'PrivacyPolicy',
+    component: PrivacyPolicy,
+    meta: { requiresAuth: false },
+  },
+  {
+    path: '/data-deletion',
+    name: 'DataDeletion',
+    component: DataDeletion,
+    meta: { requiresAuth: false },
+  },
+];
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
-})
+  routes,
+});
 
 router.beforeEach(async (to, _from, next) => {
   if (to.meta.requiresAuth) {
-    const { verifyToken } = useAuth()
-    const isValid = await verifyToken()
-    
+    const { verifyToken } = useAuth();
+    const isValid = await verifyToken();
+
     if (!isValid) {
-      next('/')
-      return
+      next('/');
+      return;
     }
   }
-  
-  next()
-})
 
-export default router
+  next();
+});
+
+export default router;
