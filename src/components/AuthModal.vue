@@ -161,7 +161,7 @@ const handleAuthSuccess = () => {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: 20px 25px;
+  padding: 30px 25px 20px 25px;
   border-bottom: 1px solid #f0f0f0;
   position: relative;
 }
@@ -426,7 +426,7 @@ const handleAuthSuccess = () => {
   }
   
   .modal-header {
-    padding: 20px;
+    padding: 30px 20px 20px 20px;
   }
   
   .modal-back {
@@ -503,7 +503,7 @@ const handleAuthSuccess = () => {
   }
   
   .modal-header {
-    padding: 15px;
+    padding: 25px 15px 15px 15px;
   }
   
   .modal-back {

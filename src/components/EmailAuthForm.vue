@@ -192,9 +192,6 @@ watch(currentMode, () => {
   resetForm()
 })
 
-const toggleMode = () => {
-  currentMode.value = currentMode.value === 'login' ? 'register' : 'login'
-}
 
 const handleSubmit = async () => {
   if (!validateForm()) {
@@ -222,7 +219,7 @@ const handleSubmit = async () => {
   display: flex;
   flex-direction: column;
   padding: 20px 20px 20px 20px;
-  padding-top: 15px;
+  padding-top: 25px;
 }
 
 .form-header {
@@ -374,7 +371,7 @@ const handleSubmit = async () => {
 @media (max-width: 768px) {
   .email-auth-form {
     padding: 20px 15px;
-    padding-top: 20px;
+    padding-top: 30px;
   }
   
   .form-header {
