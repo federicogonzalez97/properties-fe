@@ -1,9 +1,9 @@
 <template>
   <div class="home">
     <HeaderLanding />
-    <HeroBackground />
+    <HeroBackground @filters-changed="handleFiltersChanged" />
     <main class="main-content">
-      <PropertyCards />
+      <PropertyCards :filters="currentFilters" />
       <DreamPropertySection />
       <InvestmentOpportunities />
     </main>
@@ -12,12 +12,25 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
 import HeaderLanding from './HeaderLanding.vue'
 import HeroBackground from './HeroBackground.vue'
 import PropertyCards from './PropertyCards.vue'
 import DreamPropertySection from './DreamPropertySection.vue'
 import InvestmentOpportunities from './InvestmentOpportunities.vue'
 import Footer from './Footer.vue'
+import { propertiesService } from '@/services/properties.service'
+import type { PropertyFilter } from '@/interfaces/properties.interface'
+
+const currentFilters = ref<PropertyFilter>({})
+
+const handleFiltersChanged = (filters: PropertyFilter) => {
+  currentFilters.value = filters
+}
+
+onMounted(async () => {
+  await propertiesService.loadAllProperties()
+})
 </script>
 
 <style scoped>
