@@ -43,7 +43,7 @@ const handleFilterHeightChange = (event: CustomEvent) => {
   
   if (window.innerWidth <= 768) {
     if (isExpanded) {
-      heroHeight.value = window.innerWidth <= 480 ? 630 : 720
+      heroHeight.value = window.innerWidth <= 480 ? 580 : 650
     } else {
       heroHeight.value = window.innerWidth <= 480 ? 420 : 520
     }
