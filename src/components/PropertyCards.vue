@@ -5,31 +5,211 @@
       <p class="subtitle">Las propiedades que buscás, en un solo lugar</p>
     </div>
     
-    <div class="property-cards-container">
+    <div v-if="isLoading" class="loading-container">
+      <div class="loading-spinner"></div>
+      <p>Cargando propiedades...</p>
+    </div>
+    
+    <div v-else-if="properties.length === 0" class="no-properties-container">
+      <div class="no-properties-icon">🏠</div>
+      <h3 class="no-properties-title">No hay propiedades disponibles</h3>
+      <p class="no-properties-message">
+        <br>Intenta ajustar los criterios de búsqueda.
+      </p>
+    </div>
+    
+    <div v-else class="property-cards-container">
       <div class="cards-row">
-        <div class="property-card">
-        </div>
-        
-        <div class="property-card">
-        </div>
-        
-        <div class="property-card">
-        </div>
-        
-        <div class="property-card">
+        <div 
+          v-for="(property, index) in displayedProperties" 
+          :key="`${property.precio}-${property.tipo}-${index}`"
+          class="property-card"
+        >
+          <div class="property-card__image">
+            <img 
+              :src="property.imagenUrl || '/images/house.svg'" 
+              :alt="`${property.tipo} en ${formatAddress(property.direccion)}`"
+              @error="handleImageError"
+            >
+          </div>
+          
+          <div class="property-card__content">
+            <div class="property-card__title-price">
+              <h3 class="property-card__title">
+                {{ property.tipo.charAt(0).toUpperCase() + property.tipo.slice(1) }}
+              </h3>
+              <div class="property-card__price">
+                {{ formatPrice(property.precio) }}
+              </div>
+            </div>
+            
+            <div class="property-card__details">
+              <div class="property-card__detail" v-if="property.dormitorios > 0">
+                <img src="/images/dormitorio.svg" alt="Dormitorios" class="property-card__detail-icon">
+                <span>{{ property.dormitorios }}</span>
+              </div>
+              <div class="property-card__detail" v-if="property.banios > 0">
+                <img src="/images/banios.svg" alt="Baños" class="property-card__detail-icon">
+                <span>{{ property.banios }}</span>
+              </div>
+              <div class="property-card__detail">
+                <img src="/images/area.svg" alt="Área" class="property-card__detail-icon">
+                <span>{{ property.superficie }}m²</span>
+              </div>
+            </div>
+            
+            <p class="property-card__address">
+              {{ formatAddress(property.direccion) }}
+            </p>
+          </div>
         </div>
       </div>
     </div>
     
-    <div class="pagination">
-      <div class="pagination-dot active"></div>
-      <div class="pagination-dot"></div>
-      <div class="pagination-dot"></div>
+    <div class="pagination" v-if="!isLoading && totalPages > 1">
+      <button 
+        class="pagination-arrow pagination-arrow--prev"
+        @click="goToPrevPage"
+        :disabled="currentPageGroup === 0"
+      >
+        &#8249;
+      </button>
+      
+      <div 
+        v-for="page in visiblePages" 
+        :key="page"
+        @click="goToPage(page); updatePageGroup(page)"
+        class="pagination-dot" 
+        :class="{ 'active': currentPage === page }"
+      ></div>
+      
+      <button 
+        class="pagination-arrow pagination-arrow--next"
+        @click="goToNextPage"
+        :disabled="currentPageGroup === totalPageGroups - 1"
+      >
+        &#8250;
+      </button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted, computed, watch } from 'vue'
+import { propertiesService } from '@/services/properties.service'
+import type { Property, PropertyFilter } from '@/interfaces/properties.interface'
+
+
+const props = defineProps<{
+  filters?: PropertyFilter
+}>()
+
+const properties = ref<Property[]>([])
+const isLoading = ref(false)
+const error = ref<string | null>(null)
+const currentPage = ref(1)
+const itemsPerPage = 4
+
+const totalPages = computed(() => {
+  const pages = Math.ceil(properties.value.length / itemsPerPage)
+  return pages
+})
+
+const currentPageGroup = ref(0) 
+const pagesPerGroup = 3 
+
+const visiblePages = computed(() => {
+  const startPage = currentPageGroup.value * pagesPerGroup + 1
+  const endPage = Math.min(startPage + pagesPerGroup - 1, totalPages.value)
+  const pages = []
+  for (let i = startPage; i <= endPage; i++) {
+    pages.push(i)
+  }
+  return pages
+})
+
+const totalPageGroups = computed(() => Math.ceil(totalPages.value / pagesPerGroup))
+
+const displayedProperties = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage
+  const end = start + itemsPerPage
+  return properties.value.slice(start, end)
+})
+
+const formatPrice = (price: number): string => {
+  return propertiesService.formatPrice(price)
+}
+
+const formatAddress = (direccion: Property['direccion']): string => {
+  return propertiesService.formatAddress(direccion)
+}
+
+const handleImageError = (event: Event) => {
+  const img = event.target as HTMLImageElement
+  img.src = '/images/house.svg'
+}
+
+const goToPage = (page: number) => {
+  currentPage.value = page
+}
+
+const goToPrevPage = () => {
+  if (currentPageGroup.value > 0) {
+    currentPageGroup.value--
+    currentPage.value = currentPageGroup.value * pagesPerGroup + 1
+  }
+}
+
+const goToNextPage = () => {
+  if (currentPageGroup.value < totalPageGroups.value - 1) {
+    currentPageGroup.value++
+    currentPage.value = currentPageGroup.value * pagesPerGroup + 1
+  }
+}
+
+const updatePageGroup = (page: number) => {
+  currentPageGroup.value = Math.floor((page - 1) / pagesPerGroup)
+}
+
+const loadProperties = async (filters?: PropertyFilter) => {
+  if (filters && Object.keys(filters).length > 0) {
+    try {
+      isLoading.value = true
+      error.value = null
+      
+      await propertiesService.getProperties(filters)
+      properties.value = propertiesService.properties.value
+      currentPage.value = 1
+      currentPageGroup.value = 0 
+    } catch (err) {
+      console.error('Error loading properties with filters:', err)
+      error.value = 'Error al cargar las propiedades'
+      properties.value = [] 
+    } finally {
+      isLoading.value = false
+    }
+  } else {
+    isLoading.value = propertiesService.isLoading.value
+    properties.value = propertiesService.properties.value
+    currentPage.value = 1
+    currentPageGroup.value = 0 
+    
+  }
+}
+
+watch(() => props.filters, (newFilters) => {
+  loadProperties(newFilters)
+}, { deep: true })
+
+watch(() => propertiesService.properties.value, () => {
+  if (!props.filters || Object.keys(props.filters).length === 0) {
+    properties.value = propertiesService.properties.value
+  }
+})
+
+onMounted(() => {
+  loadProperties(props.filters)
+})
 </script>
 
 <style lang="scss" scoped>
@@ -37,7 +217,7 @@
   width: 100%;
   max-width: 1345px;
   min-height: 414px;
-  padding: 10px 152px 30px 152px;
+  padding: 10px 152px 80px 152px;
   gap: 46px;
   transform: rotate(0deg);
   opacity: 1;
@@ -124,7 +304,7 @@
   height: 299.5826110839844px;
   transform: rotate(0deg);
   opacity: 1;
-  border-radius: 3.47px;
+  border-radius: 0;
   background: var(--crema, #FCFCFC);
   
   box-shadow: 
@@ -136,8 +316,9 @@
   
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: stretch;
+  justify-content: flex-start;
+  overflow: hidden;
   
   transition: all 0.3s ease;
   
@@ -150,20 +331,209 @@
       0px 70px 30px 0px #6A64A603,
       0px 110px 35px 0px #6A64A600;
   }
+
+  &__image {
+    width: 229px;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+    transform: rotate(0deg);
+    opacity: 1;
+    border-radius: 0 !important;
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 0 !important;
+      border: none !important;
+    }
+  }
+
+
+
+  &__content {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    flex-grow: 1;
+    height: 99px;
+  }
+
+  &__title-price {
+    width: calc(100% - 28px);
+    height: 21px;
+    position: absolute;
+    top: 7px;
+    left: 14px;
+    right: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transform: rotate(0deg);
+    opacity: 1;
+  }
+
+  &__price {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 13.87px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: right;
+    vertical-align: middle;
+    min-width: 80px;
+    height: 21px;
+    transform: rotate(0deg);
+    opacity: 1;
+    color: #365196;
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  &__title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 11.1px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    vertical-align: middle;
+    color: #222222;
+    margin: 0;
+  }
+
+  &__address {
+    width: 201.10870361328125px;
+    height: 27px;
+    position: absolute;
+    top: 68px;
+    left: 14px;
+    transform: rotate(0deg);
+    opacity: 1;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 9.71px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    vertical-align: middle;
+    color: #838383;
+    margin: 0;
+  }
+
+  &__details {
+    width: 204px;
+    height: 21px;
+    position: absolute;
+    top: 37px;
+    left: 12px;
+    right: 12px;
+    transform: rotate(0deg);
+    opacity: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__detail {
+    height: 21.962383270263672px;
+    transform: rotate(0deg);
+    opacity: 1;
+    padding: 0 7.08px;
+    gap: 2.83px;
+    border-radius: 7.08px;
+    background: var(--fondo-claro-nuevo, #F8F9FB);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    color: #666666;
+    min-width: fit-content;
+
+    &-icon {
+      width: 12px;
+      height: 12px;
+    }
+  }
 }
 
-// Responsive para mobile
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  gap: 15px;
+
+  p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: #838383;
+    margin: 0;
+  }
+}
+
+.no-properties-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 40px;
+  text-align: center;
+  gap: 15px;
+}
+
+.no-properties-icon {
+  font-size: 48px;
+  margin-bottom: 10px;
+  opacity: 0.6;
+}
+
+.no-properties-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+  color: #365196;
+  margin: 0;
+}
+
+.no-properties-message {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #838383;
+  margin: 0;
+  line-height: 1.5;
+  max-width: 400px;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #365196;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 @media (max-width: 768px) {
   .property-cards-section {
-    padding: 20px 20px 30px 20px;
+    padding: 8px 20px 60px 20px;
     gap: 30px;
-    z-index: 200;
+    z-index: 1;
     position: relative;
   }
 
   .section-header {
     padding: 1.5rem 1rem 1rem 1rem;
-    z-index: 200;
+    z-index: 1;
     position: relative;
   }
   
@@ -202,12 +572,22 @@
     width: 100%;
     max-width: 300px;
     height: 250px;
+    
+    &__image {
+      width: 100% !important;
+      border-radius: 0 !important;
+      
+      img {
+        border-radius: 0 !important;
+        border: none !important;
+      }
+    }
   }
 }
 
 @media (max-width: 480px) {
   .property-cards-section {
-    padding: 15px 15px 25px 15px;
+    padding: 5px 15px 50px 15px;
     gap: 25px;
   }
 
@@ -225,6 +605,16 @@
 
   .property-card {
     height: 200px;
+    
+    &__image {
+      width: 100% !important;
+      border-radius: 0 !important;
+      
+      img {
+        border-radius: 0 !important;
+        border: none !important;
+      }
+    }
   }
 }
 
@@ -258,8 +648,44 @@
   }
 }
 
+.pagination-arrow {
+  background: #365196;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  
+  &:hover:not(:disabled) {
+    background: #2a3f7a;
+    transform: scale(1.1);
+  }
+  
+  &:disabled {
+    background: #C0C0C0;
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  
+  &--prev {
+    margin-right: 5px;
+  }
+  
+  &--next {
+    margin-left: 5px;
+  }
+}
+
 :root {
   --crema: #FCFCFC;
   --fondo-claro: #F8F9FB;
+  --fondo-claro-nuevo: #F8F9FB;
 }
 </style>
