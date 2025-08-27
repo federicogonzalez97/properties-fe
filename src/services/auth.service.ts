@@ -189,7 +189,6 @@ export const authService = {
     try {
       const urlParams = new URLSearchParams(window.location.search)
       const token = urlParams.get('token')
-      const provider = urlParams.get('provider')
       const error = urlParams.get('error')
 
       if (error) {
@@ -204,7 +203,7 @@ export const authService = {
 
         window.location.href = '/'
 
-        console.log(`Login exitoso con ${provider}`)
+
       }
     } catch (error) {
       console.error('OAuth callback error:', error)
