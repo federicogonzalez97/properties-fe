@@ -46,6 +46,14 @@
               </div>
 
 
+              <div class="mode-switch mode-switch--mobile">
+                <span class="mode-switch-text">
+                  {{ isLoginMode ? '¿No tienes cuenta?' : '¿Ya tienes una cuenta?' }}
+                </span>
+                <button class="mode-switch-link" @click="switchMode">
+                  {{ isLoginMode ? 'Registrarse' : 'Iniciar sesión' }}
+                </button>
+              </div>
 
               <p class="legal-text">
                 Al iniciar sesión, aceptas los Términos y Condiciones, Declaraciones, Política de Protección de Datos y Política de Privacidad.
@@ -118,6 +126,10 @@ const hideEmailForm = () => {
 };
 
 const handleAuthSuccess = () => {
+};
+
+const switchMode = () => {
+  currentMode.value = currentMode.value === 'login' ? 'register' : 'login';
 };
 
 
@@ -345,6 +357,10 @@ const handleAuthSuccess = () => {
   margin-bottom: 20px;
 }
 
+.mode-switch--mobile {
+  display: none;
+}
+
 .mode-switch-text {
   font-family: 'Poppins', sans-serif;
   font-weight: 400;
@@ -483,6 +499,10 @@ const handleAuthSuccess = () => {
   .mode-switch {
     margin-bottom: 15px;
   }
+
+  .mode-switch--mobile {
+    display: block;
+  }
   
   .mode-switch-text,
   .mode-switch-link {
@@ -558,6 +578,10 @@ const handleAuthSuccess = () => {
   
   .mode-switch {
     margin-bottom: 12px;
+  }
+
+  .mode-switch--mobile {
+    display: block; /* Mostrar en mobile pequeño */
   }
   
   .mode-switch-text,
