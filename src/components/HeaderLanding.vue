@@ -1,5 +1,5 @@
 <template>
-  <header class="header" :class="{ 'header--scrolled': isScrolled }">
+  <header class="header">
     <div class="header__logo">LOGO</div>
 
     <button class="header__hamburger" @click="toggleMobileMenu">
@@ -52,16 +52,11 @@ import { ref, onMounted, onUnmounted } from "vue";
 import AuthModal from './AuthModal.vue';
 import { useAuth } from '../composables/useAuth';
 
-const isScrolled = ref(false);
 const isMobileMenuOpen = ref(false);
 const isAuthModalOpen = ref(false);
 const authModalMode = ref<'login' | 'register'>('login');
 
 const { logout, isAuthenticated } = useAuth();
-
-const handleScroll = () => {
-  isScrolled.value = window.scrollY > 10;
-};
 
 const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value;
@@ -145,11 +140,10 @@ const scrollToSection = (sectionId: string) => {
 };
 
 onMounted(() => {
-  window.addEventListener("scroll", handleScroll);
+  // Sin listeners de scroll
 });
 
 onUnmounted(() => {
-  window.removeEventListener("scroll", handleScroll);
   document.body.style.overflow = 'auto';
 });
 </script>
@@ -183,9 +177,7 @@ onUnmounted(() => {
   transform: translateX(-50%);
   backdrop-filter: none;
 
-  &--scrolled {
-    backdrop-filter: blur(10px);
-  }
+
 
   &__logo {
     width: 426px;
@@ -363,9 +355,9 @@ onUnmounted(() => {
     &__hamburger {
       display: flex;
       order: 1;
-      position: absolute;
-      left: 20px;
-      z-index: 10000;
+      position: relative;
+      left: 0;
+      z-index: 10001;
       transition: all 0.3s ease;
       outline: none !important;
       background: none !important;
@@ -437,6 +429,7 @@ onUnmounted(() => {
       left: 0;
       width: 100vw;
       height: calc(100vh + 100px);
+      background: rgba(0, 0, 0, 0.95);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       flex-direction: column;
@@ -444,7 +437,7 @@ onUnmounted(() => {
       align-items: center;
       transform: translateX(-100%);
       transition: all 0.4s ease;
-      z-index: 9999;
+      z-index: 10000;
 
       &--mobile-open {
         transform: translateX(0);
@@ -457,11 +450,11 @@ onUnmounted(() => {
       }
 
       &-link {
-        font-size: 28px;
-        font-weight: 700;
-        padding: 20px 40px;
+        font-size: 22px;
+        font-weight: 600;
+        padding: 16px 32px;
         border: none;
-        border-radius: 15px;
+        border-radius: 12px;
         background: transparent;
         color: white;
         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
@@ -481,10 +474,10 @@ onUnmounted(() => {
     &__cta {
       display: flex !important;
       order: 3;
-      position: absolute;
-      right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
+      position: relative;
+      right: 0;
+      top: 0;
+      transform: none;
       z-index: 9998;
       
       .header__cta-button--primary {
@@ -519,6 +512,18 @@ onUnmounted(() => {
         font-size: 24px;
       }
       
+      &__nav {
+        &-link {
+          font-size: 18px;
+          font-weight: 600;
+          padding: 12px 24px;
+        }
+        
+        &-list {
+          gap: 20px;
+        }
+      }
+      
       &__cta {
         right: 15px;
         
@@ -528,11 +533,25 @@ onUnmounted(() => {
           min-width: 55px;
           height: 28px;
         }
-      .header__cta-button--secondary {
-        display: flex;
+        
+        .header__cta-button--secondary {
+          display: flex;
+        }
       }
-      
-
+    }
+  }
+  
+  @media (max-width: 360px) {
+    .header {
+      &__nav {
+        &-link {
+          font-size: 16px;
+          padding: 10px 20px;
+        }
+        
+        &-list {
+          gap: 15px;
+        }
       }
     }
   }
