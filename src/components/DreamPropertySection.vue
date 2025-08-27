@@ -354,6 +354,9 @@
     gap: 20px;
     transform: none;
     z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .feature-card {
@@ -471,6 +474,9 @@
   .features-cards-container {
     gap: 15px;
     z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .feature-card {
