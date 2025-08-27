@@ -1,8 +1,8 @@
 <template>
   <div class="investment-opportunities-section">
     <div class="section-header">
-      <h2>Explora nuestras propiedades exclusivas.</h2>
-      <p class="subtitle">Las propiedades que buscás, en un solo lugar</p>
+      <h2>Oportunidades de inversión</h2>
+      <p class="subtitle">Explora Nuestra Oferta de Complejos Residenciales</p>
     </div>
     
     <div class="property-cards-container">
@@ -60,10 +60,11 @@
 }
 
 .section-header h2 {
-  width: 500px;
-  height: 100px;
+  width: 1041px;
+  height: 96px;
   margin: 0 auto; 
   opacity: 1;
+  gap: 20px;
   
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
@@ -74,8 +75,8 @@
   
   color: #222222;
   
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .subtitle {
@@ -84,7 +85,7 @@
   margin: 0 auto; 
   opacity: 1;
   
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 26px;
@@ -93,8 +94,8 @@
   
   color: #838383;
   
-  margin-top: 1rem;
-  margin-bottom: 1rem; 
+  margin-top: 0rem;
+  margin-bottom: 1.5rem; 
 }
 
 .property-cards-container {
