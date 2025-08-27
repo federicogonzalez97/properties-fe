@@ -42,8 +42,10 @@
             </button>
           </div>
 
-          <div class="filter-bar__dropdown filter-bar__dropdown--mobile" :class="{ 'active': selectedDropdown === 'terreno' }" @click="selectDropdown('terreno')">
-            <span class="filter-bar__dropdown-text">Terreno</span>
+
+
+          <div class="filter-bar__dropdown filter-bar__dropdown--mobile" :class="{ 'active': selectedDropdown === 'tipo' }" @click="selectDropdown('tipo')">
+            <span class="filter-bar__dropdown-text">Tipo</span>
             <img src="/images/arrow-down.svg" alt="Flecha" class="filter-bar__dropdown-arrow">
           </div>
 
@@ -58,11 +60,6 @@
       </div>
 
       <div class="filter-bar__expanded-filters" v-if="showExpandedFilters">
-        <div class="filter-bar__dropdown filter-bar__dropdown--expanded" :class="{ 'active': selectedDropdown === 'departamento' }" @click="selectDropdown('departamento')">
-          <span class="filter-bar__dropdown-text">Departamento</span>
-          <img src="/images/arrow-down.svg" alt="Flecha" class="filter-bar__dropdown-arrow">
-        </div>
-
         <div class="filter-bar__dropdown filter-bar__dropdown--expanded" :class="{ 'active': selectedDropdown === 'ambientes' }" @click="selectDropdown('ambientes')">
           <span class="filter-bar__dropdown-text">Ambientes</span>
           <img src="/images/arrow-down.svg" alt="Flecha" class="filter-bar__dropdown-arrow">
@@ -79,8 +76,8 @@
       </div>
 
 
-      <div class="filter-bar__dropdown filter-bar__dropdown--desktop" :class="{ 'active': selectedDropdown === 'departamento' }" @click="selectDropdown('departamento')">
-        <span class="filter-bar__dropdown-text">Departamento</span>
+      <div class="filter-bar__dropdown filter-bar__dropdown--desktop" :class="{ 'active': selectedDropdown === 'tipo' }" @click="selectDropdown('tipo')">
+        <span class="filter-bar__dropdown-text">Tipo</span>
         <img src="/images/arrow-down.svg" alt="Flecha" class="filter-bar__dropdown-arrow">
       </div>
 
