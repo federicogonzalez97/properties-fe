@@ -45,14 +45,7 @@
                 </button>
               </div>
 
-              <div class="mode-switch">
-                <span class="mode-switch-text">
-                  {{ isLoginMode ? '¿No tienes cuenta?' : '¿Ya tienes cuenta?' }}
-                </span>
-                <button class="mode-switch-link" @click="toggleMode">
-                  {{ isLoginMode ? 'Regístrate aquí' : 'Inicia sesión aquí' }}
-                </button>
-              </div>
+
 
               <p class="legal-text">
                 Al iniciar sesión, aceptas los Términos y Condiciones, Declaraciones, Política de Protección de Datos y Política de Privacidad.
@@ -73,7 +66,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, ref, computed } from 'vue';
+import { defineProps, defineEmits, ref, computed, watch } from 'vue';
 import { useAuth } from '@/composables/useAuth';
 import EmailAuthForm from './EmailAuthForm.vue';
 
@@ -97,6 +90,18 @@ const { loginWithGoogle, loginWithFacebook } = useAuth();
 const currentMode = ref<'login' | 'register'>(props.mode);
 const showEmailForm = ref(false);
 
+watch(() => props.mode, (newMode) => {
+  currentMode.value = newMode;
+  showEmailForm.value = false;
+}, { immediate: true });
+
+watch(() => props.isOpen, (isOpen) => {
+  if (isOpen) {
+    currentMode.value = props.mode;
+    showEmailForm.value = false;
+  }
+});
+
 const isLoginMode = computed(() => currentMode.value === 'login');
 
 const closeModal = () => {
@@ -115,10 +120,7 @@ const hideEmailForm = () => {
 const handleAuthSuccess = () => {
 };
 
-const toggleMode = () => {
-  currentMode.value = currentMode.value === 'login' ? 'register' : 'login';
-  showEmailForm.value = false;
-};
+
 </script>
 
 <style scoped lang="scss">

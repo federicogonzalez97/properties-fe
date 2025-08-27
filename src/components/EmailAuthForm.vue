@@ -70,14 +70,14 @@
       </button>
     </form>
 
-    <div class="form-footer">
+    <!-- <div class="form-footer">
       <span class="footer-text">
         {{ isLoginMode ? '¿No tienes cuenta?' : '¿Ya tienes cuenta?' }}
       </span>
       <button class="footer-link" @click="toggleMode">
         {{ isLoginMode ? 'Regístrate aquí' : 'Inicia sesión aquí' }}
       </button>
-    </div>
+    </div> -->
   </div>
 </template>
 
