@@ -181,7 +181,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { FILTER_OPTIONS } from '@/services/properties.service'
+import { FILTER_OPTIONS } from '@/interfaces/properties.interface'
 
 const selectedButton = ref<string | null>(null)
 const selectedDropdown = ref<string | null>(null)
