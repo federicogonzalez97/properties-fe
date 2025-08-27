@@ -16,7 +16,7 @@
         </h1>
       </div>
       
-      <FilterBar />
+      <FilterBar @filters-changed="handleFiltersChanged" />
     </div>
   </section>
 </template>
@@ -24,6 +24,12 @@
 <script setup lang="ts">
 import FilterBar from './FilterBar.vue'
 import { ref, onMounted, onUnmounted } from 'vue'
+import type { PropertyFilter } from '@/interfaces/properties.interface'
+
+// Emits
+const emit = defineEmits<{
+  'filters-changed': [filters: PropertyFilter]
+}>()
 
 const getInitialHeight = () => {
   if (typeof window !== 'undefined') {
@@ -56,6 +62,10 @@ const handleResize = () => {
   if (typeof window !== 'undefined') {
     heroHeight.value = getInitialHeight()
   }
+}
+
+const handleFiltersChanged = (filters: PropertyFilter) => {
+  emit('filters-changed', filters)
 }
 
 onMounted(() => {
