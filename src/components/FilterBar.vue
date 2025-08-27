@@ -42,53 +42,128 @@
             </button>
           </div>
 
-
-
-          <div class="filter-bar__dropdown filter-bar__dropdown--mobile" :class="{ 'active': selectedDropdown === 'tipo' }" @click="selectDropdown('tipo')">
-            <span class="filter-bar__dropdown-text">Tipo</span>
-            <img src="/images/arrow-down.svg" alt="Flecha" class="filter-bar__dropdown-arrow">
+          <div class="filter-bar__dropdown filter-bar__dropdown--mobile" :class="{ 'active': selectedDropdown === 'tipo' }">
+            <div @click="selectDropdown('tipo')" class="filter-bar__dropdown-header">
+              <span class="filter-bar__dropdown-text">{{ selectedTipo ? selectedTipo.label : 'Tipo' }}</span>
+              <img src="/images/arrow-down.svg" alt="Flecha" class="filter-bar__dropdown-arrow">
+            </div>
+            <div v-if="selectedDropdown === 'tipo'" class="filter-bar__dropdown-menu">
+              <div 
+                v-for="tipo in tipoOptions" 
+                :key="tipo.value"
+                @click="selectTipo(tipo)"
+                class="filter-bar__dropdown-item"
+              >
+                {{ tipo.label }}
+              </div>
+            </div>
           </div>
 
           <button class="filter-bar__action-button filter-bar__action-button--filter filter-bar__action-button--mobile" @click="toggleExpandedFilters">
             <img src="/images/Filter.svg" alt="Filtro" class="filter-bar__action-icon">
           </button>
 
-          <button class="filter-bar__action-button filter-bar__action-button--search filter-bar__action-button--mobile">
+          <button class="filter-bar__action-button filter-bar__action-button--search filter-bar__action-button--mobile" @click="searchProperties">
             <img src="/images/search.svg" alt="Búsqueda" class="filter-bar__action-icon">
           </button>
         </div>
       </div>
 
       <div class="filter-bar__expanded-filters" v-if="showExpandedFilters">
-        <div class="filter-bar__dropdown filter-bar__dropdown--expanded" :class="{ 'active': selectedDropdown === 'ambientes' }" @click="selectDropdown('ambientes')">
-          <span class="filter-bar__dropdown-text">Ambientes</span>
-          <img src="/images/arrow-down.svg" alt="Flecha" class="filter-bar__dropdown-arrow">
+        <div class="filter-bar__dropdown filter-bar__dropdown--expanded" :class="{ 'active': selectedDropdown === 'ambientes' }">
+          <div @click="selectDropdown('ambientes')" class="filter-bar__dropdown-header">
+            <span class="filter-bar__dropdown-text">{{ selectedAmbientes ? selectedAmbientes.label : 'Ambientes' }}</span>
+            <img src="/images/arrow-down.svg" alt="Flecha" class="filter-bar__dropdown-arrow">
+          </div>
+          <div v-if="selectedDropdown === 'ambientes'" class="filter-bar__dropdown-menu">
+            <div 
+              v-for="ambiente in ambientesOptions" 
+              :key="ambiente.value"
+              @click="selectAmbientes(ambiente)"
+              class="filter-bar__dropdown-item"
+            >
+              {{ ambiente.label }}
+            </div>
+          </div>
         </div>
 
-        <div class="filter-bar__dropdown filter-bar__dropdown--expanded" :class="{ 'active': selectedDropdown === 'precio' }" @click="selectDropdown('precio')">
-          <span class="filter-bar__dropdown-text">Precio</span>
-          <img src="/images/arrow-down.svg" alt="Flecha" class="filter-bar__dropdown-arrow">
+        <div class="filter-bar__dropdown filter-bar__dropdown--expanded" :class="{ 'active': selectedDropdown === 'precio' }">
+          <div @click="selectDropdown('precio')" class="filter-bar__dropdown-header">
+            <span class="filter-bar__dropdown-text">{{ selectedPrecio ? selectedPrecio.label : 'Precio' }}</span>
+            <img src="/images/arrow-down.svg" alt="Flecha" class="filter-bar__dropdown-arrow">
+          </div>
+          <div v-if="selectedDropdown === 'precio'" class="filter-bar__dropdown-menu">
+            <div 
+              v-for="precio in precioOptions" 
+              :key="precio.value || 'unlimited'"
+              @click="selectPrecio(precio)"
+              class="filter-bar__dropdown-item"
+            >
+              {{ precio.label }}
+            </div>
+          </div>
         </div>
       </div>
 
       <div class="filter-bar__input">
-        <input type="text" placeholder="Buscar por ubicación o palabra clave" class="filter-bar__input-text">
+        <input 
+          type="text" 
+          placeholder="Buscar por ubicación o palabra clave" 
+          class="filter-bar__input-text"
+          v-model="searchQuery"
+          @keyup.enter="searchProperties"
+        >
       </div>
 
-
-      <div class="filter-bar__dropdown filter-bar__dropdown--desktop" :class="{ 'active': selectedDropdown === 'tipo' }" @click="selectDropdown('tipo')">
-        <span class="filter-bar__dropdown-text">Tipo</span>
-        <img src="/images/arrow-down.svg" alt="Flecha" class="filter-bar__dropdown-arrow">
+      <div class="filter-bar__dropdown filter-bar__dropdown--desktop" :class="{ 'active': selectedDropdown === 'tipo' }">
+        <div @click="selectDropdown('tipo')" class="filter-bar__dropdown-header">
+          <span class="filter-bar__dropdown-text">{{ selectedTipo ? selectedTipo.label : 'Tipo' }}</span>
+          <img src="/images/arrow-down.svg" alt="Flecha" class="filter-bar__dropdown-arrow">
+        </div>
+        <div v-if="selectedDropdown === 'tipo'" class="filter-bar__dropdown-menu">
+          <div 
+            v-for="tipo in tipoOptions" 
+            :key="tipo.value"
+            @click="selectTipo(tipo)"
+            class="filter-bar__dropdown-item"
+          >
+            {{ tipo.label }}
+          </div>
+        </div>
       </div>
 
-      <div class="filter-bar__dropdown filter-bar__dropdown--desktop" :class="{ 'active': selectedDropdown === 'ambientes' }" @click="selectDropdown('ambientes')">
-        <span class="filter-bar__dropdown-text">Ambientes</span>
-        <img src="/images/arrow-down.svg" alt="Flecha" class="filter-bar__dropdown-arrow">
+      <div class="filter-bar__dropdown filter-bar__dropdown--desktop" :class="{ 'active': selectedDropdown === 'ambientes' }">
+        <div @click="selectDropdown('ambientes')" class="filter-bar__dropdown-header">
+          <span class="filter-bar__dropdown-text">{{ selectedAmbientes ? selectedAmbientes.label : 'Ambientes' }}</span>
+          <img src="/images/arrow-down.svg" alt="Flecha" class="filter-bar__dropdown-arrow">
+        </div>
+        <div v-if="selectedDropdown === 'ambientes'" class="filter-bar__dropdown-menu">
+          <div 
+            v-for="ambiente in ambientesOptions" 
+            :key="ambiente.value"
+            @click="selectAmbientes(ambiente)"
+            class="filter-bar__dropdown-item"
+          >
+            {{ ambiente.label }}
+          </div>
+        </div>
       </div>
 
-      <div class="filter-bar__dropdown filter-bar__dropdown--desktop" :class="{ 'active': selectedDropdown === 'precio' }" @click="selectDropdown('precio')">
-        <span class="filter-bar__dropdown-text">Precio</span>
-        <img src="/images/arrow-down.svg" alt="Flecha" class="filter-bar__dropdown-arrow">
+      <div class="filter-bar__dropdown filter-bar__dropdown--desktop" :class="{ 'active': selectedDropdown === 'precio' }">
+        <div @click="selectDropdown('precio')" class="filter-bar__dropdown-header">
+          <span class="filter-bar__dropdown-text">{{ selectedPrecio ? selectedPrecio.label : 'Precio' }}</span>
+          <img src="/images/arrow-down.svg" alt="Flecha" class="filter-bar__dropdown-arrow">
+        </div>
+        <div v-if="selectedDropdown === 'precio'" class="filter-bar__dropdown-menu">
+          <div 
+            v-for="precio in precioOptions" 
+            :key="precio.value || 'unlimited'"
+            @click="selectPrecio(precio)"
+            class="filter-bar__dropdown-item"
+          >
+            {{ precio.label }}
+          </div>
+        </div>
       </div>
 
       
@@ -97,7 +172,7 @@
       </button>
 
       
-      <button class="filter-bar__action-button filter-bar__action-button--search filter-bar__action-button--desktop">
+      <button class="filter-bar__action-button filter-bar__action-button--search filter-bar__action-button--desktop" @click="searchProperties">
         <img src="/images/search.svg" alt="Búsqueda" class="filter-bar__action-icon">
       </button>
     </div>
@@ -106,17 +181,83 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { FILTER_OPTIONS } from '@/services/properties.service'
 
-const selectedButton = ref('alquilar') 
+const selectedButton = ref<string | null>(null)
 const selectedDropdown = ref<string | null>(null)
 const showExpandedFilters = ref(false)
+const searchQuery = ref('')
+
+const selectedTipo = ref<{ value: string; label: string } | null>(null)
+const selectedAmbientes = ref<{ value: number; label: string } | null>(null)
+const selectedPrecio = ref<{ value: number | null; label: string } | null>(null)
+
+const tipoOptions = FILTER_OPTIONS.tipos
+const ambientesOptions = FILTER_OPTIONS.ambientes
+const precioOptions = FILTER_OPTIONS.precios
+
+const emit = defineEmits<{
+  filtersChanged: [filters: any]
+}>()
 
 const selectButton = (button: string) => {
   selectedButton.value = button
+  applyFilters()
 }
 
 const selectDropdown = (dropdown: string) => {
   selectedDropdown.value = selectedDropdown.value === dropdown ? null : dropdown
+}
+
+const selectTipo = (tipo: { value: string; label: string }) => {
+  selectedTipo.value = tipo
+  selectedDropdown.value = null
+  applyFilters()
+}
+
+const selectAmbientes = (ambiente: { value: number; label: string }) => {
+  selectedAmbientes.value = ambiente
+  selectedDropdown.value = null
+  applyFilters()
+}
+
+const selectPrecio = (precio: { value: number | null; label: string }) => {
+  selectedPrecio.value = precio
+  selectedDropdown.value = null
+  applyFilters()
+}
+
+const applyFilters = () => {
+  const hasFilters = selectedButton.value || selectedTipo.value || selectedAmbientes.value || selectedPrecio.value || searchQuery.value?.trim()
+  
+  if (!hasFilters) {
+    emit('filtersChanged', {})
+    return
+  }
+
+  const filters: any = {}
+  
+  if (selectedButton.value) {
+    filters.operacion = selectedButton.value === 'comprar' ? 'venta' : 'alquiler'
+  }
+  if (selectedTipo.value) {
+    filters.tipo = selectedTipo.value.value
+  }
+  if (selectedAmbientes.value) {
+    filters.dormitorios = selectedAmbientes.value.value
+  }
+  if (selectedPrecio.value) {
+    filters.precio = selectedPrecio.value.value
+  }
+  if (searchQuery.value?.trim()) {
+    filters.q = searchQuery.value.trim()
+  }
+
+  emit('filtersChanged', filters)
+}
+
+const searchProperties = () => {
+  applyFilters()
 }
 
 const toggleExpandedFilters = () => {
@@ -126,6 +267,18 @@ const toggleExpandedFilters = () => {
     detail: { isExpanded: showExpandedFilters.value }
   })
   window.dispatchEvent(event)
+}
+
+const closeDropdowns = () => {
+  selectedDropdown.value = null
+}
+if (typeof window !== 'undefined') {
+  window.addEventListener('click', (event) => {
+    const target = event.target as HTMLElement
+    if (!target.closest('.filter-bar__dropdown')) {
+      closeDropdowns()
+    }
+  })
 }
 </script>
 
@@ -312,13 +465,15 @@ const toggleExpandedFilters = () => {
     align-items: center;
     height: 44px; 
     gap: 10px; 
-    padding: 0 10px; 
+    padding: 0 15px; 
     border-radius: 5px;
     background: var(--crema, #FCFCFC);
     cursor: pointer;
     transition: background-color 0.3s ease;
     margin-right: 8px; 
-    width: fit-content; 
+    min-width: 120px; 
+    position: relative;
+    z-index: 99999;
 
     &:hover {
       background-color: #F0F0F0;
@@ -332,7 +487,47 @@ const toggleExpandedFilters = () => {
       }
     }
 
-    
+    &-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+    }
+
+    &-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: white;
+      border: 1px solid #E0E0E0;
+      border-radius: 5px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      z-index: 999999;
+      margin-top: 0;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    &-item {
+      padding: 10px 15px;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 400;
+      font-size: 11px;
+      color: #333;
+      border-bottom: 1px solid #F0F0F0;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: #F5F5F5;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
 
     &-text {
       font-family: 'Poppins', sans-serif;
@@ -349,6 +544,11 @@ const toggleExpandedFilters = () => {
       height: 12px;
       object-fit: contain;
       flex-shrink: 0; 
+      transition: transform 0.3s ease;
+    }
+
+    &.active &-arrow {
+      transform: rotate(180deg);
     }
   }
 
@@ -435,19 +635,21 @@ const toggleExpandedFilters = () => {
     width: 90%;
     max-width: 400px;
     height: auto;
-    min-height: 200px;
+    min-height: auto;
     top: 280px;
     flex-direction: column;
     padding: 20px;
     gap: 8px;
-    z-index: 100;
-    box-shadow: none; 
+    z-index: 999999;
+    box-shadow: none;
+    overflow: visible; 
 
     &__content {
       flex-direction: column;
       gap: 8px;
       width: 100%;
       height: auto;
+      overflow: visible;
     }
 
     &__buttons-row {
@@ -500,7 +702,7 @@ const toggleExpandedFilters = () => {
     }
 
     &__dropdown--mobile {
-      width: 95px !important; 
+      flex: 1;
       height: 44px;
       margin: 0;
       padding: 8px;
@@ -511,6 +713,8 @@ const toggleExpandedFilters = () => {
       background: var(--crema, #FCFCFC);
       cursor: pointer;
       transition: background-color 0.3s ease;
+      position: relative;
+      z-index: 99999;
 
       &:hover {
         background-color: #F0F0F0;
@@ -521,6 +725,46 @@ const toggleExpandedFilters = () => {
         
         .filter-bar__dropdown-text {
           color: #333; 
+        }
+      }
+
+      .filter-bar__dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border: 1px solid #E0E0E0;
+        border-radius: 5px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 999999;
+        margin-top: 0;
+        max-height: 200px;
+        overflow-y: auto;
+      }
+
+      .filter-bar__dropdown-item {
+        padding: 10px 15px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 400;
+        font-size: 11px;
+        line-height: 100%;
+        color: #333;
+
+        &:hover {
+          background-color: #F0F0F0;
+        }
+
+        &:first-child {
+          border-top-left-radius: 5px;
+          border-top-right-radius: 5px;
+        }
+
+        &:last-child {
+          border-bottom-left-radius: 5px;
+          border-bottom-right-radius: 5px;
         }
       }
     }
@@ -539,16 +783,17 @@ const toggleExpandedFilters = () => {
       display: flex;
       flex-direction: column;
       width: 100%;
-      gap: 6px;
+      gap: 5px;
       margin-top: 8px;
-      margin-bottom: 4px;
+      margin-bottom: 8px;
       order: 3;
-      z-index: 10;
+      z-index: 999999;
       position: relative;
       align-items: flex-start;
+      overflow: visible;
     }
 
-    &__dropdown--expanded {
+          &__dropdown--expanded {
       width: 340px;
       height: 44px;
       margin: 0;
@@ -557,9 +802,12 @@ const toggleExpandedFilters = () => {
       border-radius: 5px;
       display: flex;
       align-items: center;
+      justify-content: center;
       background: var(--crema, #FCFCFC);
       cursor: pointer;
       transition: background-color 0.3s ease;
+      position: relative;
+      z-index: 1000000;
 
       &:hover {
         background-color: #F0F0F0;
@@ -570,6 +818,46 @@ const toggleExpandedFilters = () => {
         
         .filter-bar__dropdown-text {
           color: #333; 
+        }
+      }
+
+      .filter-bar__dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border: 1px solid #E0E0E0;
+        border-radius: 5px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 10000000;
+        margin-top: 0;
+        max-height: 200px;
+        overflow-y: auto;
+      }
+
+      .filter-bar__dropdown-item {
+        padding: 10px 15px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 400;
+        font-size: 11px;
+        line-height: 100%;
+        color: #333;
+
+        &:hover {
+          background-color: #F0F0F0;
+        }
+
+        &:first-child {
+          border-top-left-radius: 5px;
+          border-top-right-radius: 5px;
+        }
+
+        &:last-child {
+          border-bottom-left-radius: 5px;
+          border-bottom-right-radius: 5px;
         }
       }
     }
@@ -585,10 +873,10 @@ const toggleExpandedFilters = () => {
 
     &__input-text {
       width: 100%;
-      font-size: 14px;
+      font-size: 12px;
       
       &::placeholder {
-        font-size: 14px;
+        font-size: 12px;
       }
     }
 
@@ -617,7 +905,7 @@ const toggleExpandedFilters = () => {
     }
 
     &__button-text {
-      font-size: 14px;
+      font-size: 12px;
     }
 
     &__dropdown {
@@ -629,7 +917,7 @@ const toggleExpandedFilters = () => {
     }
 
     &__dropdown-text {
-      font-size: 14px;
+      font-size: 12px;
     }
 
     &__action-button {
@@ -644,5 +932,111 @@ const toggleExpandedFilters = () => {
       height: 24px;
     }
   }
+}
+</style>
+
+<style>
+.filter-bar__dropdown--mobile {
+  position: relative !important;
+  z-index: 2147483647 !important;
+}
+
+.filter-bar__dropdown--mobile .filter-bar__dropdown-menu {
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  right: 0 !important;
+  background: white !important;
+  border: 1px solid #E0E0E0 !important;
+  border-radius: 5px !important;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15) !important;
+  z-index: 2147483647 !important;
+  display: block !important;
+  margin-top: 0 !important;
+  max-height: 200px !important;
+  overflow-y: auto !important;
+}
+
+.filter-bar__dropdown--mobile .filter-bar__dropdown-item {
+  padding: 10px 12px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 10px !important;
+  line-height: 1.2 !important;
+  color: #333 !important;
+  background: white !important;
+  border: none !important;
+  display: block !important;
+  width: 100% !important;
+  text-align: left !important;
+}
+
+.filter-bar__dropdown--mobile .filter-bar__dropdown-item:hover {
+  background-color: #F0F0F0 !important;
+  color: #000 !important;
+}
+
+.filter-bar__dropdown--mobile .filter-bar__dropdown-item:first-child {
+  border-top-left-radius: 6px !important;
+  border-top-right-radius: 6px !important;
+}
+
+.filter-bar__dropdown--mobile .filter-bar__dropdown-item:last-child {
+  border-bottom-left-radius: 6px !important;
+  border-bottom-right-radius: 6px !important;
+}
+
+
+.filter-bar__dropdown--expanded {
+  position: relative !important;
+  z-index: 999999 !important;
+}
+
+
+.filter-bar__dropdown--expanded:first-child {
+  z-index: 1000001 !important;
+}
+
+.filter-bar__dropdown--expanded:first-child .filter-bar__dropdown-menu {
+  z-index: 1000001 !important;
+}
+
+.filter-bar__dropdown--expanded .filter-bar__dropdown-menu {
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  right: 0 !important;
+  background: white !important;
+  border: 1px solid #E0E0E0 !important;
+  border-radius: 5px !important;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15) !important;
+  z-index: 999999 !important;
+  display: block !important;
+  margin-top: 0 !important;
+  max-height: 200px !important;
+  overflow-y: auto !important;
+}
+
+.filter-bar__dropdown--expanded .filter-bar__dropdown-item {
+  padding: 10px 15px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 10px !important;
+  line-height: 1.2 !important;
+  color: #333 !important;
+  background: white !important;
+  border: none !important;
+  display: block !important;
+  width: 100% !important;
+  text-align: left !important;
+}
+
+.filter-bar__dropdown--expanded .filter-bar__dropdown-item:hover {
+  background-color: #F0F0F0 !important;
+  color: #000 !important;
 }
 </style>
