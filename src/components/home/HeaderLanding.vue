@@ -19,6 +19,9 @@
         <li class="header__nav-item">
           <a href="#" class="header__nav-link" @click="scrollToSection('property-cards')">Propiedades</a>
         </li>
+        <li class="header__nav-item" v-if="isAuthenticated">
+          <a href="#" class="header__nav-link" @click="goToDashboard">Dashboard</a>
+        </li>
       </ul>
     </nav>
 
@@ -49,8 +52,9 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from "vue";
+import { useRouter } from "vue-router";
 import AuthModal from './AuthModal.vue';
-import { useAuth } from '../composables/useAuth';
+import { useAuth } from '../../composables/useAuth';
 
 const isMobileMenuOpen = ref(false);
 const isAuthModalOpen = ref(false);
@@ -81,6 +85,19 @@ const closeAuthModal = () => {
 
 const handleLogout = async () => {
   await logout();
+};
+
+const router = useRouter();
+
+const goToDashboard = () => {
+  console.log('goToDashboard called');
+  console.log('Current auth state:', { isAuthenticated: isAuthenticated.value });
+  
+  isMobileMenuOpen.value = false;
+  document.body.style.overflow = 'auto';
+  
+  console.log('Navigating to dashboard...');
+  router.push('/dashboard');
 };
 
 const scrollToSection = (sectionId: string) => {
