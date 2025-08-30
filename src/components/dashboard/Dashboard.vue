@@ -732,10 +732,11 @@ onUnmounted(() => {
 .dashboard-upgrade__btn {
   display: inline-block;
   width: 100%;
-  text-align: start;
+  text-align: center;
   padding: 8px 20px;
-  font-size: 17px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: var(--font-weight-medium);
+  font-family: "Roboto", "Helvetica Neue", sans-serif;
   color: rgba(255, 255, 255, 0.5);
   background: linear-gradient(to bottom, #243146 0%, transparent 100%);
   border: 1px solid #5a597059;
