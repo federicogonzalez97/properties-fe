@@ -173,6 +173,20 @@
                   </ul>
                 </div>
               </li>
+              
+              <!-- Sección Upgrade to Pro como elemento de lista -->
+              <li class="nav-item dashboard-upgrade-item">
+                <div class="dashboard-upgrade">
+                  <div class="dashboard-upgrade__content">
+                    <h4 class="dashboard-upgrade__title">Upgrade to Pro</h4>
+                    <p class="dashboard-upgrade__desc">
+                      Get one month free and subscribe to pro
+                    </p>
+                    <button class="dashboard-upgrade__btn">Subscribe</button>
+                  </div>
+                  <i class="dashboard-upgrade__bg-icon mdi mdi-home-city-outline"></i>
+                </div>
+              </li>
             </ul>
           </nav>
         </div>
@@ -181,101 +195,95 @@
 
     <main class="dashboard__main">
       <header class="dashboard__header">
-        <div class="header-bar">
-          <div class="header-bar__left">
-            <div class="header-bar__logo-tablet">
-              <img
-                src="/images/Hously2.png"
-                alt="Hously Logo"
-                class="header-bar__logo-tablet-img"
-              />
-            </div>
-
-            <button class="header-bar__hamburger" @click="toggleSidebar">
-              <svg
-                class="header-bar__hamburger-icon"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            </button>
-
-            <div class="header-bar__search">
-              <svg
-                class="header-bar__search-icon"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-              <input
-                type="text"
-                class="header-bar__search-input"
-                placeholder="Search..."
-                name="s"
-                id="searchItem"
-              />
-            </div>
+      <div class="header-bar">
+        <div class="header-bar__left">
+          <div class="header-bar__logo-tablet">
+            <img
+              src="/images/Hously2.png"
+              alt="Hously Logo"
+              class="header-bar__logo-tablet-img"
+            />
           </div>
 
-          <div class="header-bar__right">
-            <button class="header-bar__icon-btn header-bar__icon-btn--flag">
-              <img src="/images/usa.png" alt="USA Flag" />
-            </button>
-
-            <button
-              class="header-bar__icon-btn header-bar__icon-btn--notification"
+          <button class="header-bar__hamburger" @click="toggleSidebar">
+            <svg
+              class="header-bar__hamburger-icon"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
             >
-              <svg
-                class="header-bar__icon-btn-icon"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-              </svg>
-              <span class="notification-badge"></span>
-            </button>
-
-            <button class="header-bar__icon-btn">
-              <img
-                src="/images/user.jpg"
-                alt="Profile"
-                class="header-bar__icon-btn-profile"
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
               />
-            </button>
+            </svg>
+          </button>
+
+          <div class="header-bar__search">
+            <svg
+              class="header-bar__search-icon"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+            <input
+              type="text"
+              class="header-bar__search-input"
+              placeholder="Search..."
+              name="s"
+              id="searchItem"
+            />
           </div>
         </div>
-      </header>
 
-      <div class="dashboard__content">
-        <h1>Hello, Calvin</h1>
-        <p>Welcome back!</p>
+        <div class="header-bar__right">
+          <button class="header-bar__icon-btn header-bar__icon-btn--flag">
+            <img src="/images/usa.png" alt="USA Flag" />
+          </button>
 
-        <div class="mt-8">
-          <p>Contenido del dashboard aquí...</p>
+          <button
+            class="header-bar__icon-btn header-bar__icon-btn--notification"
+          >
+            <svg
+              class="header-bar__icon-btn-icon"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+            <span class="notification-badge"></span>
+          </button>
+
+          <button class="header-bar__icon-btn">
+            <img
+              src="/images/user.jpg"
+              alt="Profile"
+              class="header-bar__icon-btn-profile"
+            />
+          </button>
         </div>
       </div>
+    </header>
+
+      <DashboardView @toggleSidebar="toggleSidebar" />
     </main>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from "vue";
+import DashboardView from './DashboardView.vue';
 
 const isSidebarExpanded = ref(false); 
 const isMobile = ref(false);
@@ -341,6 +349,41 @@ onUnmounted(() => {
   position: relative; 
 }
 
+@media (max-width: 1000px) {
+  .dashboard {
+    display: flex;
+  }
+  
+  .dashboard__sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+  }
+  
+  .dashboard__main {
+    margin-left: 0;
+  }
+}
+
+@media (min-width: 1001px) {
+  .dashboard {
+    display: flex;
+  }
+  
+  .dashboard__sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    z-index: 1000;
+  }
+  
+  .dashboard__main {
+    margin-left: 280px;
+  }
+}
+
 .dashboard__sidebar {
   position: fixed;
   left: 0;
@@ -349,6 +392,8 @@ onUnmounted(() => {
   background-color: var(--color-slate-800);
   transition: width 0.5s ease-in-out;
   z-index: 50; 
+  display: flex;
+  flex-direction: column;
 }
 
 .dashboard__sidebar--collapsed {
@@ -576,10 +621,15 @@ onUnmounted(() => {
 
 .page-wrapper {
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .page-wrapper .sidebar-wrapper {
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .page-wrapper .sidebar-wrapper .sidebar-brand {
@@ -622,8 +672,11 @@ onUnmounted(() => {
   flex: 1;
   padding: 16px 0;
   overflow-y: auto;
+  overflow-x: hidden;
   scrollbar-width: thin;
   scrollbar-color: #fafafa1a transparent;
+  display: flex;
+  flex-direction: column;
 }
 
 .dashboard__sidebar-nav::-webkit-scrollbar {
@@ -639,9 +692,75 @@ onUnmounted(() => {
   border-radius: 3px;
 }
 
-.dashboard__sidebar-nav::-webkit-scrollbar-thumb:hover {
-  background-color: #fafafa2a;
+/* Elemento de upgrade del sidebar */
+.dashboard-upgrade-item {
+  margin-bottom: 0;
+  margin-top: 36px;
 }
+
+.dashboard-upgrade {
+  position: relative;
+  padding: 40px 32px;
+  margin: 20px;
+  height: 230px;
+  background: linear-gradient(to bottom, #243146 0%, transparent 100%);
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.dashboard-upgrade__content {
+  position: relative;
+  z-index: 2;
+}
+
+.dashboard-upgrade__title {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--color-white);
+  margin: 0 0 8px;
+}
+
+.dashboard-upgrade__desc {
+  font-weight: 500;
+  font-size: 14px;
+  color: #90a1b9;
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+
+.dashboard-upgrade__btn {
+  display: inline-block;
+  width: 100%;
+  text-align: start;
+  padding: 8px 20px;
+  font-size: 17px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+  background: linear-gradient(to bottom, #243146 0%, transparent 100%);
+  border: 1px solid #5a597059;
+  border-radius: 6px;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.dashboard-upgrade__btn:hover {
+  background: #ffffff80;
+  border-color: #ffffff80;
+}
+
+.dashboard-upgrade__bg-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 160px;
+  color: var(--color-white);
+  opacity: 0.02;
+  z-index: 1;
+  pointer-events: none;
+}
+
+
 
 .nav-list {
   list-style: none;
@@ -676,6 +795,49 @@ onUnmounted(() => {
     max-width: 260px; 
     padding: 12px 16px; 
   }
+  
+  .sidebar-submenu {
+    padding-left: 55px;
+  }
+  
+  .dashboard__sidebar .nav-link .dropdown-arrow,
+  .dashboard__sidebar .nav-link i.mdi-chevron-right {
+    right: 10px !important;
+  }
+}
+
+/* Para tablet y desktop */
+@media (min-width: 769px) and (max-width: 999px) {
+  .nav-link {
+    width: 300px;
+    padding: 12px 24px 12px 20px;
+  }
+  
+  .sidebar-submenu {
+    padding-left: 59px;
+  }
+  
+  .dashboard__sidebar .nav-link .dropdown-arrow,
+  .dashboard__sidebar .nav-link i.mdi-chevron-right {
+    right: 10px !important;
+  }
+}
+
+/* Para pantallas grandes */
+@media (min-width: 1000px) {
+  .nav-link {
+    width: 300px;
+    padding: 12px 24px 12px 20px;
+  }
+  
+  .sidebar-submenu {
+    padding-left: 59px;
+  }
+  
+  .nav-link .dropdown-arrow,
+  .nav-link i.mdi-chevron-right {
+    right: 10px !important;
+  }
 }
 
 .nav-link:hover {
@@ -691,6 +853,11 @@ onUnmounted(() => {
   color: #ffffff;
 }
 
+.nav-link:hover .dropdown-arrow,
+.nav-link:hover i.mdi-chevron-right {
+  color: #ffffff !important;
+}
+
 .nav-link.active {
   color: var(--color-white);
 }
@@ -704,9 +871,28 @@ onUnmounted(() => {
   color: #ffffff;
 }
 
+.nav-link.active .dropdown-arrow,
+.nav-link.active i.mdi-chevron-right {
+  color: #ffffff !important;
+}
+
+.dashboard ::selection {
+  background-color: var(--color-primary-dark);
+  color: #ffffff !important;
+  font-weight: 700;
+  font-weight: var(--font-weight-medium);
+}
+
+.dashboard ::-moz-selection {
+  background-color: var(--color-primary-dark);
+  color: #ffffff !important;
+  font-size: 15px;
+  font-weight: var(--font-weight-medium);
+}
+
 .nav-link .dropdown-arrow {
   position: absolute !important;
-  right: 16px !important;
+  right: 30px !important;
   top: 50% !important;
   transform: translateY(-50%) !important;
   font-size: 16px !important;
@@ -731,7 +917,7 @@ onUnmounted(() => {
 
 .nav-link i.mdi-chevron-right {
   position: absolute !important;
-  right: 16px !important;
+  right: 30px !important;
   top: 50% !important;
   transform: translateY(-50%) !important;
   font-size: 16px !important;
@@ -762,7 +948,7 @@ onUnmounted(() => {
 
 .sidebar-submenu {
   margin-top: 4px;
-  padding-left: 52px;
+  padding-right: 39px;
 }
 
 .sidebar-submenu ul {
@@ -778,7 +964,7 @@ onUnmounted(() => {
 .sidebar-submenu a {
   display: flex;
   align-items: center;
-  padding: 8px 12px;
+  padding: 8px 12px 8px 0;
   color: #ffffff80;
   text-decoration: none;
   font-size: 12px;
@@ -800,7 +986,7 @@ onUnmounted(() => {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  margin-right: 8px;
+  margin-right: 12px;
   flex-shrink: 0;
 }
 
@@ -977,7 +1163,7 @@ onUnmounted(() => {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-@media (max-width: 1400px) {
+@media (max-width: 999px) {
   .header-bar {
     padding: calc(1.5rem);
   }
@@ -1021,6 +1207,30 @@ onUnmounted(() => {
   }
 }
 
+@media (min-width: 1000px) {
+  .dashboard__sidebar {
+    height: 100vh;
+    top: 0;
+  }
+  
+  .dashboard__sidebar--expanded {
+    height: 100vh;
+  }
+  
+  .page-wrapper {
+    height: 100vh;
+  }
+  
+  .page-wrapper .sidebar-wrapper {
+    height: 100vh;
+  }
+  
+  .dashboard__sidebar-nav {
+    flex: 1;
+    min-height: 0;
+  }
+}
+
 
 @media (max-width: 768px) {
   body {
@@ -1036,14 +1246,14 @@ onUnmounted(() => {
   
   .dashboard__sidebar {
     top: 70px; 
-    height: 840px;  
+    height: calc(100vh - 70px);  
     transform: translateX(-100%);
   }
 
   .dashboard__sidebar--expanded {
     transform: translateX(0);
     width: 260px; 
-    height: 840px; 
+    height: calc(100vh - 70px); 
   }
   
   .dashboard__sidebar--expanded + .dashboard__main {
