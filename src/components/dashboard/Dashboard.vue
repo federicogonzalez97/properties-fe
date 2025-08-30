@@ -174,7 +174,6 @@
                 </div>
               </li>
               
-              <!-- Sección Upgrade to Pro como elemento de lista -->
               <li class="nav-item dashboard-upgrade-item">
                 <div class="dashboard-upgrade">
                   <div class="dashboard-upgrade__content">
@@ -324,20 +323,37 @@ const toggleSidebar = () => {
 };
 
 const checkMobile = () => {
-  isMobile.value = window.innerWidth <= 768;
-  if (isMobile.value) {
+  const width = window.innerWidth;
+  isMobile.value = width <= 768;
+  
+  if (width <= 1000) {
     isSidebarExpanded.value = false;
+  } else {
+    if (!isSidebarExpanded.value) {
+      isSidebarExpanded.value = true;
+    }
   }
 };
 
 
+
+
 onMounted(() => {
   checkMobile();
-  window.addEventListener("resize", checkMobile);
-});
-
-onUnmounted(() => {
-  window.removeEventListener("resize", checkMobile);
+  let resizeTimeout: number;
+  const handleResize = () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      checkMobile();
+    }, 100); 
+  };
+  
+  window.addEventListener("resize", handleResize);
+  
+  onUnmounted(() => {
+    window.removeEventListener("resize", handleResize);
+    clearTimeout(resizeTimeout);
+  });
 });
 </script>
 
@@ -359,10 +375,24 @@ onUnmounted(() => {
     left: 0;
     top: 0;
     height: 100vh;
+    z-index: 1000;
   }
   
   .dashboard__main {
     margin-left: 0;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .dashboard__sidebar--expanded + .dashboard__main {
+    margin-left: 0;
+    width: 100%;
+  }
+  
+  .dashboard__sidebar--collapsed + .dashboard__main {
+    margin-left: 0;
+    width: 100%;
   }
 }
 
@@ -380,7 +410,18 @@ onUnmounted(() => {
   }
   
   .dashboard__main {
+    margin-left: 0;
+    width: 100%;
+  }
+  
+  .dashboard__sidebar--expanded + .dashboard__main {
     margin-left: 280px;
+    width: calc(100% - 280px);
+  }
+  
+  .dashboard__sidebar--collapsed + .dashboard__main {
+    margin-left: 0;
+    width: 100%;
   }
 }
 
@@ -408,17 +449,20 @@ onUnmounted(() => {
 .dashboard__main {
   flex: 1;
   margin-left: 0;
-  transition: margin-left 0.5s ease-in-out;
+  transition: margin-left 0.5s ease-in-out, width 0.5s ease-in-out;
   min-height: 100vh; 
   background-color: var(--color-slate-50);
   position: relative;
   z-index: 1; 
   width: 100%; 
   overflow-x: hidden; 
+  /* Asegurar que el contenido siempre sea visible */
+  min-width: 0;
 }
 
 .dashboard__sidebar--expanded + .dashboard__main {
   margin-left: 280px;
+  width: calc(100% - 280px);
 }
 
 .dashboard__header {
@@ -432,6 +476,32 @@ onUnmounted(() => {
 
 .dashboard__content {
   padding: calc(var(--spacing) * 6);
+}
+
+/* Asegurar que el contenido del dashboard view sea visible */
+.dashboard-view {
+  width: 100%;
+  min-width: 0;
+  overflow: visible;
+}
+
+.dashboard-view__content {
+  width: 100%;
+  min-width: 0;
+  overflow: visible;
+}
+
+/* Regla específica para pantallas ≤1000px cuando el sidebar está colapsado */
+@media (max-width: 1000px) {
+  .dashboard__sidebar--collapsed + .dashboard__main {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+  
+  .dashboard__main {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
 }
 
 .header-bar {
@@ -1202,6 +1272,16 @@ onUnmounted(() => {
     margin-left: 300px; 
     width: calc(100vw - 300px); 
   }
+  
+  .dashboard__main {
+    width: 100vw;
+    margin-left: 0;
+  }
+  
+  .dashboard__sidebar--collapsed + .dashboard__main {
+    margin-left: 0;
+    width: 100vw;
+  }
 
   .page-wrapper .sidebar-wrapper .sidebar-brand {
     display: none !important; 
@@ -1266,7 +1346,13 @@ onUnmounted(() => {
     min-height: calc(100vh - 70px); 
     height: calc(100vh - 70px); 
     margin-left: 0;
+    width: 100vw;
     overflow-y: auto; 
+  }
+  
+  .dashboard__sidebar--collapsed + .dashboard__main {
+    margin-left: 0;
+    width: 100vw;
   }
 }
 

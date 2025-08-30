@@ -25,7 +25,6 @@
   padding: calc(var(--spacing) * 6);
 }
 
-
 .dashboard-cards-container {
   margin-top: calc(var(--spacing) * 8);
   display: grid;
