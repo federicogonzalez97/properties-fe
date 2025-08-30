@@ -110,7 +110,7 @@
 
               <li class="nav-item sidebar-dropdown">
                 <a href="javascript:void(0)" class="nav-link" @click="toggleDropdown('invoice')">
-                  <i class="mdi mdi-invoice-list-outline"></i>
+                  <i class="mdi mdi-receipt-text"></i>
                   <span class="nav-link__text">Invoice</span>
                   <span class="nav-link__badge">New</span>
                   <i class="mdi mdi-chevron-right dropdown-arrow" :class="{ 'rotated': openDropdowns.invoice }"></i>
