@@ -1247,6 +1247,7 @@ onMounted(() => {
 @media (max-width: 999px) {
   .header-bar {
     padding: calc(1.5rem);
+    box-shadow: var(--tw-shadow);
   }
 
   .header-bar__left {
@@ -1333,7 +1334,6 @@ onMounted(() => {
   }
   
   .header-bar {
-    box-shadow: none !important;
     transition: all 0.5s ease-in-out;
   }
   
