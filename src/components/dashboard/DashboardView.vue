@@ -8,32 +8,29 @@
         </div>
       </div>
 
-      <!-- KPIs principales -->
-      <KPICards />
-
-      <!-- Gráficos principales -->
-      <div class="charts-container">
-        <RevenueAnalytics />
-        <SalesData />
+      <div class="kpi-cards">
       </div>
 
-      <!-- Secciones inferiores -->
+      <div class="charts-container">
+        <div class="revenue-analytics">
+        </div>
+        <div class="sales-data">
+        </div>
+      </div>
+
       <div class="bottom-sections">
-        <AreaMap />
-        <RecentTransactions />
-        <TopProperties />
+        <div class="area-map">
+        </div>
+        <div class="recent-transactions">
+        </div>
+        <div class="top-properties">
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import KPICards from './KPICards.vue'
-import RevenueAnalytics from './RevenueAnalytics.vue'
-import SalesData from './SalesData.vue'
-import AreaMap from './AreaMap.vue'
-import RecentTransactions from './RecentTransactions.vue'
-import TopProperties from './TopProperties.vue'
 </script>
 
 <style scoped>
@@ -98,6 +95,31 @@ import TopProperties from './TopProperties.vue'
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: calc(var(--spacing) * 6);
   width: 100%;
+}
+
+.kpi-cards {
+  margin-top: calc(var(--spacing) * 8);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: calc(var(--spacing) * 6);
+  width: 100%;
+}
+
+.revenue-analytics,
+.sales-data {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: calc(var(--spacing) * 6);
+  box-shadow: var(--tw-shadow);
+}
+
+.area-map,
+.recent-transactions,
+.top-properties {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: calc(var(--spacing) * 6);
+  box-shadow: var(--tw-shadow);
 }
 
 *, ::backdrop, ::file-selector-button, :after, :before {
