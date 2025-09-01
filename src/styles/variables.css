@@ -100,6 +100,12 @@
   
   /* Fuente personalizada */
   --font-league: "League Spartan", "serif";
+  --font-league-light: "League Spartan", "serif";
+  --font-league-regular: "League Spartan", "serif";
+  
+  /* Pesos específicos de League Spartan */
+  --font-league-300: 300;
+  --font-league-400: 400;
   
   /* Colores primarios de la marca */
   --color-primary: #00a63e;
