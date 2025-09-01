@@ -1,17 +1,39 @@
 <template>
   <div class="dashboard-view">
     <div class="dashboard-view__content">
-      <h1>Hello, Calvin</h1>
-      <p>Welcome back!</p>
+      <div class="flex justify-between items-center">
+        <div>
+          <h5 class="text-xl font-semibold">Hello, Calvin</h5>
+          <h6 class="text-slate-400">Welcome back!</h6>
+        </div>
+      </div>
 
-      <div class="dashboard-cards-container">
-       
+      <!-- KPIs principales -->
+      <KPICards />
+
+      <!-- Gráficos principales -->
+      <div class="charts-container">
+        <RevenueAnalytics />
+        <SalesData />
+      </div>
+
+      <!-- Secciones inferiores -->
+      <div class="bottom-sections">
+        <AreaMap />
+        <RecentTransactions />
+        <TopProperties />
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import KPICards from './KPICards.vue'
+import RevenueAnalytics from './RevenueAnalytics.vue'
+import SalesData from './SalesData.vue'
+import AreaMap from './AreaMap.vue'
+import RecentTransactions from './RecentTransactions.vue'
+import TopProperties from './TopProperties.vue'
 </script>
 
 <style scoped>
@@ -19,13 +41,58 @@
   flex: 1;
   background-color: var(--color-slate-50);
   min-height: 100vh;
+  font-family: var(--font-league-light);
+  font-weight: var(--font-league-300);
 }
 
 .dashboard-view__content {
   padding: calc(var(--spacing) * 6);
 }
 
-.dashboard-cards-container {
+/* Para pantallas ≥1000px, asegurar que el contenido se desplace correctamente */
+@media (min-width: 1000px) {
+  .dashboard-view {
+    padding-top: 0;
+    margin-top: 0;
+  }
+  
+  .dashboard-view__content {
+    padding-top: calc(var(--spacing) * 6);
+    margin-top: 0;
+  }
+  
+  /* Asegurar que el primer elemento tenga espacio suficiente */
+  .dashboard-view__content > div:first-child {
+    margin-top: 0;
+    padding-top: 0;
+  }
+  
+  /* Asegurar que el contenido se vea completo */
+  .dashboard-view {
+    min-height: calc(100vh - 70px);
+  }
+}
+
+/* Para pantallas menores a 1000px, agregar margin-top para evitar solapamiento con el header */
+@media (max-width: 999px) {
+  .dashboard-view {
+    margin-top: 80px;
+  }
+  
+  .dashboard-view__content {
+    padding-top: calc(var(--spacing) * 6);
+  }
+}
+
+.charts-container {
+  margin-top: calc(var(--spacing) * 8);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: calc(var(--spacing) * 6);
+  width: 100%;
+}
+
+.bottom-sections {
   margin-top: calc(var(--spacing) * 8);
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -33,18 +100,51 @@
   width: 100%;
 }
 
-h1 {
-  font-size: var(--text-3xl);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-slate-900);
-  margin-bottom: calc(var(--spacing) * 2);
+*, ::backdrop, ::file-selector-button, :after, :before {
+  border: 0 solid;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-p {
-  font-size: var(--text-lg);
-  color: var(--color-slate-600);
-  margin-bottom: calc(var(--spacing) * 4);
+.flex {
+  display: flex;
 }
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+  --tw-leading: var(--leading-normal);
+  line-height: var(--leading-normal);
+}
+
+.font-semibold {
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
+}
+
+.text-xl {
+  font-size: 17px;
+  line-height: var(--tw-leading, var(--text-xl--line-height));
+}
+
+.text-slate-400 {
+  color: var(--color-slate-400);
+  font-size: 17px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+
 
 .mt-8 {
   margin-top: calc(var(--spacing) * 8);
