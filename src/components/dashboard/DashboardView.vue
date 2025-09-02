@@ -8,11 +8,19 @@
         </div>
       </div>
 
-      <div class="kpi-cards">
-      </div>
+      <MetricsGrid />
 
       <div class="charts-container">
-        <div class="revenue-analytics">
+        <div class="revenue-analytics revenue-analytics--fixed">
+          <div class="charts-header">
+            <h2 class="charts-title">Revenue Analytics</h2>
+            <select v-model="selectedPeriod" class="charts-select">
+              <option>Yearly</option>
+              <option>Monthly</option>
+              <option>Weekly</option>
+            </select>
+          </div>
+          <RevenueChart :selectedPeriod="selectedPeriod" />
         </div>
         <div class="sales-data">
         </div>
@@ -31,6 +39,11 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
+import MetricsGrid from './MetricsGrid.vue'
+import RevenueChart from './RevenueChart.vue'
+
+const selectedPeriod = ref<'Yearly' | 'Monthly' | 'Weekly'>('Yearly')
 </script>
 
 <style scoped>
@@ -84,9 +97,15 @@
 .charts-container {
   margin-top: calc(var(--spacing) * 8);
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: calc(var(--spacing) * 6);
   width: 100%;
+}
+
+@media (min-width: 1000px) {
+  .charts-container {
+    grid-template-columns: 2fr 1fr;
+  }
 }
 
 .bottom-sections {
@@ -97,13 +116,7 @@
   width: 100%;
 }
 
-.kpi-cards {
-  margin-top: calc(var(--spacing) * 8);
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: calc(var(--spacing) * 6);
-  width: 100%;
-}
+
 
 .revenue-analytics,
 .sales-data {
@@ -111,6 +124,50 @@
   border-radius: var(--radius-lg);
   padding: calc(var(--spacing) * 6);
   box-shadow: var(--tw-shadow);
+}
+
+.revenue-analytics--fixed {
+  height: 473px;
+}
+
+.charts-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.charts-header::after {
+  content: "";
+  position: absolute;
+  left: calc(var(--spacing) * -6);
+  right: calc(var(--spacing) * -6);
+  bottom: -1px;
+  height: 1px;
+  background-color: var(--color-gray-100);
+}
+
+.charts-title {
+  font-size: 18px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-slate-900);
+}
+
+.charts-select {
+  background-color: transparent;
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-md);
+  width: 132px;
+  height: 40px;
+  padding: 8px 40px 8px 12px;
+  font-size: 12px;
+  outline: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
 }
 
 .area-map,

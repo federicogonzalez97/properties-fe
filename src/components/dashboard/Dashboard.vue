@@ -207,16 +207,19 @@
           <button class="header-bar__hamburger" @click="toggleSidebar">
             <svg
               class="header-bar__hamburger-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
             </svg>
           </button>
 
@@ -254,9 +257,15 @@
           >
             <svg
               class="header-bar__icon-btn-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
             >
               <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
               <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
@@ -536,8 +545,8 @@ onMounted(() => {
 .header-bar__hamburger {
   width: 32px;
   height: 32px;
-  background-color: var(--color-gray-100);
-  border: 1px solid var(--color-gray-200);
+  background-color: var(--color-gray-50);
+  border: 1px solid var(--color-gray-100);
   border-radius: var(--radius-md);
   cursor: pointer;
   display: flex;
@@ -548,13 +557,13 @@ onMounted(() => {
 }
 
 .header-bar__hamburger:hover {
-  background-color: var(--color-gray-100);
-  border: 1px solid var(--color-gray-200);
+  background-color: var(--color-gray-50);
+  border: 1px solid var(--color-gray-100);
 }
 
 .header-bar__hamburger-icon {
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
   color: var(--color-slate-700);
 }
 
@@ -602,8 +611,8 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--color-gray-100);
-  border: 1px solid var(--color-gray-200);
+  background-color: var(--color-gray-50);
+  border: 1px solid var(--color-gray-100);
   border-radius: var(--radius-md);
   cursor: pointer;
   transition: all var(--default-transition-duration)
@@ -755,30 +764,81 @@ onMounted(() => {
   flex-direction: column;
 }
 
-.dashboard__sidebar-nav::-webkit-scrollbar {
-  width: 6px;
+/* Configuración del scrollbar para mobile (≤768px) */
+@media (max-width: 768px) {
+  .dashboard__sidebar-nav::-webkit-scrollbar {
+    width: 1px;
+  }
+
+  .dashboard__sidebar-nav::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .dashboard__sidebar-nav::-webkit-scrollbar-thumb {
+    background-color: var(--color-slate-900);
+    border-radius: 3px;
+    transition: background-color 0.3s ease;
+  }
+
+  .dashboard__sidebar-nav:hover::-webkit-scrollbar-thumb {
+    background-color: #fafafa1a;
+  }
 }
 
-.dashboard__sidebar-nav::-webkit-scrollbar-track {
-  background: transparent;
+/* Configuración del scrollbar para tablet (769px - 999px) - misma que mobile */
+@media (min-width: 769px) and (max-width: 999px) {
+  .dashboard__sidebar-nav::-webkit-scrollbar {
+    width: 1px;
+  }
+
+  .dashboard__sidebar-nav::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .dashboard__sidebar-nav::-webkit-scrollbar-thumb {
+    background-color: var(--color-slate-900);
+    border-radius: 3px;
+    transition: background-color 0.3s ease;
+  }
+
+  .dashboard__sidebar-nav:hover::-webkit-scrollbar-thumb {
+    background-color: #fafafa1a;
+  }
 }
 
-.dashboard__sidebar-nav::-webkit-scrollbar-thumb {
-  background-color: #fafafa1a;
-  border-radius: 3px;
+/* Configuración del scrollbar para desktop (≥1000px) - misma que mobile */
+@media (min-width: 1000px) {
+  .dashboard__sidebar-nav::-webkit-scrollbar {
+    width: 1px;
+  }
+
+  .dashboard__sidebar-nav::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .dashboard__sidebar-nav::-webkit-scrollbar-thumb {
+    background-color: var(--color-slate-900);
+    border-radius: 3px;
+    transition: background-color 0.3s ease;
+  }
+
+  .dashboard__sidebar-nav:hover::-webkit-scrollbar-thumb {
+    background-color: #fafafa1a;
+  }
 }
 
 /* Elemento de upgrade del sidebar */
 .dashboard-upgrade-item {
   margin-bottom: 0;
   margin-top: 36px;
+  padding-top: 5px;
 }
 
 .dashboard-upgrade {
   position: relative;
-  padding: 40px 32px;
-  margin: 20px;
-  height: 230px;
+  padding: 40px 14px;
+  margin: 18px;
+  height: 240px;
   background: linear-gradient(to bottom, #243146 0%, transparent 100%);
   border-radius: 8px;
   overflow: hidden;
@@ -803,13 +863,14 @@ onMounted(() => {
   color: #90a1b9;
   margin-top: 15px;
   margin-bottom: 20px;
+  padding: 0 20px;
 }
 
 .dashboard-upgrade__btn {
   display: inline-block;
-  width: 100%;
+  width: 70%;
   text-align: center;
-  padding: 8px 20px;
+  padding: 14px 20px;
   font-size: 15px;
   font-weight: var(--font-weight-medium);
   font-family: "Roboto", "Helvetica Neue", sans-serif;
@@ -847,6 +908,7 @@ onMounted(() => {
 
 .nav-item {
   margin-bottom: calc(var(--spacing) * 2);
+  margin-top: 5px;
 }
 
 .nav-link {
