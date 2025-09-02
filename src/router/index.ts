@@ -38,9 +38,6 @@ router.beforeEach(async (to, _from, next) => {
   if (requiresAuth && !isAuthenticated) {
     console.log('Usuario no autenticado, redirigiendo al home');
     next('/');
-  } else if (to.path === '/' && isAuthenticated) {
-    console.log('Usuario autenticado, redirigiendo al dashboard');
-    next('/dashboard');
   } else {
     next();
   }
