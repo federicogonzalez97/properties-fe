@@ -23,6 +23,7 @@
           <RevenueChart :selectedPeriod="selectedPeriod" />
         </div>
         <div class="sales-data">
+          <SalesData />
         </div>
       </div>
 
@@ -42,6 +43,7 @@
 import { ref } from 'vue'
 import MetricsGrid from './MetricsGrid.vue'
 import RevenueChart from './RevenueChart.vue'
+import SalesData from './SalesData.vue'
 
 const selectedPeriod = ref<'Yearly' | 'Monthly' | 'Weekly'>('Yearly')
 </script>
@@ -59,7 +61,6 @@ const selectedPeriod = ref<'Yearly' | 'Monthly' | 'Weekly'>('Yearly')
   padding: calc(var(--spacing) * 6);
 }
 
-/* Para pantallas ≥1000px, asegurar que el contenido se desplace correctamente */
 @media (min-width: 1000px) {
   .dashboard-view {
     padding-top: 0;
@@ -71,19 +72,16 @@ const selectedPeriod = ref<'Yearly' | 'Monthly' | 'Weekly'>('Yearly')
     margin-top: 0;
   }
   
-  /* Asegurar que el primer elemento tenga espacio suficiente */
   .dashboard-view__content > div:first-child {
     margin-top: 0;
     padding-top: 0;
   }
   
-  /* Asegurar que el contenido se vea completo */
   .dashboard-view {
     min-height: calc(100vh - 70px);
   }
 }
 
-/* Para pantallas menores a 1000px, agregar margin-top para evitar solapamiento con el header */
 @media (max-width: 999px) {
   .dashboard-view {
     margin-top: 80px;
@@ -104,7 +102,35 @@ const selectedPeriod = ref<'Yearly' | 'Monthly' | 'Weekly'>('Yearly')
 
 @media (min-width: 1000px) {
   .charts-container {
-    grid-template-columns: 2fr 1fr;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: calc(var(--spacing) * 6);
+    flex-wrap: nowrap;
+  }
+
+  .revenue-analytics {
+    flex: 1 1 0;
+    min-width: 100px; 
+  }
+
+  .sales-data {
+    flex: 0 1 clamp(460px, 36vw, 600px);
+    min-width: 100px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .charts-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .revenue-analytics,
+  .sales-data {
+    flex: 1 1 100%;
+    width: 100%;
+    min-width: 0;
   }
 }
 
@@ -128,6 +154,18 @@ const selectedPeriod = ref<'Yearly' | 'Monthly' | 'Weekly'>('Yearly')
 
 .revenue-analytics--fixed {
   height: 473px;
+}
+
+.revenue-analytics {
+  position: relative;
+  overflow: hidden;
+}
+
+.sales-data {
+  width: auto; 
+  max-width: 100%;
+  height: 465px;
+  box-sizing: border-box;
 }
 
 .charts-header {
@@ -229,3 +267,4 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: calc(var(--spacing) * 8);
 }
 </style>
+
