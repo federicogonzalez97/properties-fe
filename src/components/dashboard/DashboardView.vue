@@ -28,8 +28,7 @@
       </div>
 
       <div class="bottom-sections">
-        <div class="area-map">
-        </div>
+        <AreaMap />
         <div class="recent-transactions">
         </div>
         <div class="top-properties">
@@ -44,6 +43,7 @@ import { ref } from 'vue'
 import MetricsGrid from './MetricsGrid.vue'
 import RevenueChart from './RevenueChart.vue'
 import SalesData from './SalesData.vue'
+import AreaMap from './AreaMap.vue'
 
 const selectedPeriod = ref<'Yearly' | 'Monthly' | 'Weekly'>('Yearly')
 </script>
@@ -52,13 +52,37 @@ const selectedPeriod = ref<'Yearly' | 'Monthly' | 'Weekly'>('Yearly')
 .dashboard-view {
   flex: 1;
   background-color: var(--color-slate-50);
-  min-height: 100vh;
+  height: 100vh;
   font-family: var(--font-league-light);
   font-weight: var(--font-league-300);
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+}
+
+.dashboard-view::-webkit-scrollbar {
+  width: 14px;
+  display: block;
+}
+
+.dashboard-view::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.dashboard-view::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+  border: 2px solid #f1f1f1;
+}
+
+.dashboard-view::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 .dashboard-view__content {
   padding: calc(var(--spacing) * 6);
+  min-height: calc(100vh + 200px);
 }
 
 @media (min-width: 1000px) {
@@ -115,7 +139,7 @@ const selectedPeriod = ref<'Yearly' | 'Monthly' | 'Weekly'>('Yearly')
   }
 
   .sales-data {
-    flex: 0 1 clamp(460px, 36vw, 600px);
+    flex: 0 1 clamp(380px, 28vw, 500px);
     min-width: 100px;
   }
 }
@@ -136,10 +160,52 @@ const selectedPeriod = ref<'Yearly' | 'Monthly' | 'Weekly'>('Yearly')
 
 .bottom-sections {
   margin-top: calc(var(--spacing) * 8);
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  display: flex;
   gap: calc(var(--spacing) * 6);
   width: 100%;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 999px) {
+  .bottom-sections {
+    flex-direction: column;
+  }
+  
+  .bottom-sections > :first-child,
+  .recent-transactions,
+  .top-properties {
+    width: 100%;
+    flex: 1 1 100%;
+  }
+}
+
+@media (min-width: 1000px) and (max-width: 1139px) {
+  .bottom-sections {
+    flex-wrap: wrap;
+  }
+  
+  .bottom-sections > :first-child {
+    flex: 0 0 383px;
+    width: 383px;
+  }
+  
+  .top-properties {
+    flex: 1 1 400px;
+    min-width: 300px;
+  }
+  
+  .recent-transactions {
+    flex: 1 1 100%;
+    width: 100%;
+    order: 3;
+  }
+}
+
+@media (min-width: 1140px) {
+  .bottom-sections {
+    flex-wrap: nowrap;
+  }
 }
 
 
@@ -148,7 +214,7 @@ const selectedPeriod = ref<'Yearly' | 'Monthly' | 'Weekly'>('Yearly')
 .sales-data {
   background: var(--color-white);
   border-radius: var(--radius-lg);
-  padding: calc(var(--spacing) * 6);
+  padding: calc(var(--spacing) * 4);
   box-shadow: var(--tw-shadow);
 }
 
@@ -208,9 +274,26 @@ const selectedPeriod = ref<'Yearly' | 'Monthly' | 'Weekly'>('Yearly')
   background-size: 16px;
 }
 
-.area-map,
-.recent-transactions,
+.bottom-sections > :first-child {
+  flex: 0 0 383px;
+  width: 383px;
+}
+
+.recent-transactions {
+  flex: 1 1 690px;
+  min-width: 300px;
+  max-width: 690px;
+  height: 361px;
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: calc(var(--spacing) * 6);
+  box-shadow: var(--tw-shadow);
+}
+
 .top-properties {
+  flex: 1 1 400px;
+  min-width: 300px;
+  height: 361px;
   background: var(--color-white);
   border-radius: var(--radius-lg);
   padding: calc(var(--spacing) * 6);
