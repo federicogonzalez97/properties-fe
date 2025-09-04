@@ -1,0 +1,66 @@
+/* JSVectorMap Base Styles */
+.jvm-container {
+  position: relative;
+  overflow: hidden;
+  background: #f8fafc;
+}
+
+.jvm-tooltip {
+  position: absolute;
+  display: none;
+  background: #1f2937;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.jvm-tooltip.jvm-tooltip-active {
+  display: block;
+}
+
+.jvm-region {
+  cursor: pointer;
+}
+
+.jvm-marker {
+  cursor: pointer;
+  transition: fill 0.2s ease, stroke 0.2s ease;
+}
+
+.jvm-marker:hover {
+  opacity: 0.8;
+}
+
+.jvm-zoom-btn {
+  position: absolute;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #64748b;
+}
+
+.jvm-zoom-btn:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.jvm-zoomin {
+  top: 10px;
+  right: 10px;
+}
+
+.jvm-zoomout {
+  top: 36px;
+  right: 10px;
+}

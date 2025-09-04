@@ -157,7 +157,7 @@ onMounted(() => {
   font-size: var(--text-base);
   color: var(--color-slate-400);
   font-weight: var(--font-weight-medium);
-  margin: 0 0 calc(var(--spacing) * 1);
+  margin: 0;
   font-family: var(--font-league-light);
 }
 
