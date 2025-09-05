@@ -30,6 +30,7 @@
       <div class="bottom-sections">
         <AreaMap />
         <div class="recent-transactions">
+          <RecentTransaction/>
         </div>
         <div class="top-properties">
         </div>
@@ -44,6 +45,7 @@ import MetricsGrid from './MetricsGrid.vue'
 import RevenueChart from './RevenueChart.vue'
 import SalesData from './SalesData.vue'
 import AreaMap from './AreaMap.vue'
+import RecentTransaction from './RecentTransactions.vue'
 
 const selectedPeriod = ref<'Yearly' | 'Monthly' | 'Weekly'>('Yearly')
 </script>
@@ -280,20 +282,17 @@ const selectedPeriod = ref<'Yearly' | 'Monthly' | 'Weekly'>('Yearly')
 }
 
 .recent-transactions {
-  flex: 1 1 690px;
-  min-width: 300px;
-  max-width: 690px;
-  height: 361px;
+  flex: 1 1 0;   /* antes 690px */
+  min-width: 0;
   background: var(--color-white);
   border-radius: var(--radius-lg);
-  padding: calc(var(--spacing) * 6);
+  /* padding: calc(var(--spacing) * 6); */
   box-shadow: var(--tw-shadow);
 }
 
 .top-properties {
-  flex: 1 1 400px;
-  min-width: 300px;
-  height: 361px;
+ flex: 0 0 383px;  /* ANTES: no tenía un flex base definido consistentemente */
+  width: 383px;     /* AÑADIDO: para consistencia */
   background: var(--color-white);
   border-radius: var(--radius-lg);
   padding: calc(var(--spacing) * 6);
