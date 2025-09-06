@@ -33,9 +33,16 @@
           <RecentTransaction/>
         </div>
         <div class="top-properties">
+          <TopProperties />
         </div>
       </div>
+
+    
     </div>
+      <!-- Footer -->
+      <div class="footer-wrapper">
+        <FooterBar />
+      </div>
   </div>
 </template>
 
@@ -46,6 +53,8 @@ import RevenueChart from './RevenueChart.vue'
 import SalesData from './SalesData.vue'
 import AreaMap from './AreaMap.vue'
 import RecentTransaction from './RecentTransactions.vue'
+import TopProperties from './TopProperties.vue'
+import FooterBar from './FooterBar.vue'
 
 const selectedPeriod = ref<'Yearly' | 'Monthly' | 'Weekly'>('Yearly')
 </script>
@@ -54,10 +63,10 @@ const selectedPeriod = ref<'Yearly' | 'Monthly' | 'Weekly'>('Yearly')
 .dashboard-view {
   flex: 1;
   background-color: var(--color-slate-50);
-  height: 100vh;
+  height: auto;
   font-family: var(--font-league-light);
   font-weight: var(--font-league-300);
-  overflow-y: scroll;
+  overflow-y: visible;
   scrollbar-width: thin;
   scrollbar-color: #888 #f1f1f1;
 }
@@ -84,7 +93,7 @@ const selectedPeriod = ref<'Yearly' | 'Monthly' | 'Weekly'>('Yearly')
 
 .dashboard-view__content {
   padding: calc(var(--spacing) * 6);
-  min-height: calc(100vh + 200px);
+  min-height: 0;
 }
 
 @media (min-width: 1000px) {
@@ -111,10 +120,14 @@ const selectedPeriod = ref<'Yearly' | 'Monthly' | 'Weekly'>('Yearly')
 @media (max-width: 999px) {
   .dashboard-view {
     margin-top: 80px;
+    height: auto;
+    min-height: 0;
+    overflow-y: visible;
   }
   
   .dashboard-view__content {
     padding-top: calc(var(--spacing) * 6);
+    min-height: auto;
   }
 }
 
@@ -146,19 +159,6 @@ const selectedPeriod = ref<'Yearly' | 'Monthly' | 'Weekly'>('Yearly')
   }
 }
 
-@media (max-width: 1200px) {
-  .charts-container {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .revenue-analytics,
-  .sales-data {
-    flex: 1 1 100%;
-    width: 100%;
-    min-width: 0;
-  }
-}
 
 .bottom-sections {
   margin-top: calc(var(--spacing) * 8);
@@ -180,35 +180,40 @@ const selectedPeriod = ref<'Yearly' | 'Monthly' | 'Weekly'>('Yearly')
     width: 100%;
     flex: 1 1 100%;
   }
+
+  .bottom-sections > :first-child { order: 1; }
+  .top-properties { order: 2; }
+  .recent-transactions { order: 3; }
 }
 
-@media (min-width: 1000px) and (max-width: 1139px) {
+@media (min-width: 1000px) and (max-width: 1245px) {
   .bottom-sections {
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: auto;
+    gap: 24px;
   }
-  
+
   .bottom-sections > :first-child {
-    flex: 0 0 383px;
-    width: 383px;
+    grid-column: 1;
+    grid-row: 1;
+    width: auto;
   }
-  
+
   .top-properties {
-    flex: 1 1 400px;
-    min-width: 300px;
+    grid-column: 2;
+    grid-row: 1;
+    width: auto;
   }
-  
+
   .recent-transactions {
-    flex: 1 1 100%;
-    width: 100%;
-    order: 3;
+    grid-column: 1 / -1;
+    grid-row: 2;
+    width: auto;
   }
 }
 
-@media (min-width: 1140px) {
-  .bottom-sections {
-    flex-wrap: nowrap;
-  }
-}
+
 
 
 
@@ -277,26 +282,18 @@ const selectedPeriod = ref<'Yearly' | 'Monthly' | 'Weekly'>('Yearly')
 }
 
 .bottom-sections > :first-child {
-  flex: 0 0 383px;
-  width: 383px;
+  flex: 1 1 0;
+  min-width: 200px;
 }
 
 .recent-transactions {
-  flex: 1 1 0;   /* antes 690px */
-  min-width: 0;
-  background: var(--color-white);
-  border-radius: var(--radius-lg);
-  /* padding: calc(var(--spacing) * 6); */
-  box-shadow: var(--tw-shadow);
+  flex: 2 1 0;
+  min-width: 250px;
 }
 
 .top-properties {
- flex: 0 0 383px;  /* ANTES: no tenía un flex base definido consistentemente */
-  width: 383px;     /* AÑADIDO: para consistencia */
-  background: var(--color-white);
-  border-radius: var(--radius-lg);
-  padding: calc(var(--spacing) * 6);
-  box-shadow: var(--tw-shadow);
+  flex: 1 1 0;
+  min-width: 200px;
 }
 
 *, ::backdrop, ::file-selector-button, :after, :before {
@@ -321,6 +318,10 @@ const selectedPeriod = ref<'Yearly' | 'Monthly' | 'Weekly'>('Yearly')
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
   --tw-leading: var(--leading-normal);
   line-height: var(--leading-normal);
+}
+
+.footer-wrapper {
+  margin-top: calc(var(--spacing) * 8);
 }
 
 .font-semibold {

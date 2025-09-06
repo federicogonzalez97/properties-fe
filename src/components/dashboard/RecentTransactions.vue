@@ -1,12 +1,15 @@
 <template>
-  <div class="recent-tx">
+  <div class="recent-tx card">
+
     <!-- Header -->
-    <div class="recent-tx__header">
+    <div class="recent-tx__header card-header">
+
       <h3>Recent Transactions</h3>
-      <a href="#">
+      <a href="#" class="link-underline-anim link-primary">
         View orders
         <i class="mdi mdi-arrow-right"></i>
       </a>
+
     </div>
 
     <!-- Tabla -->
@@ -32,7 +35,7 @@
             <td class="text-muted">{{ tx.price }}</td>
             <td class="font-semibold">{{ tx.type }}</td>
             <td>
-              <span :class="getStatusClass(tx.status)">
+              <span :class="['badge', getStatusClass(tx.status)]">
                 {{ tx.status }}
               </span>
             </td>
@@ -121,15 +124,6 @@ const transactions = ref<Transaction[]>([
     status: 'Paid' 
   },
   { 
-    id: 7, 
-    image: 'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=48&h=48&fit=crop&crop=center', 
-    date: 'Nov 28, 2024', 
-    name: 'Amanda Foster', 
-    price: '$310,000', 
-    type: 'Sell', 
-    status: 'Pending' 
-  },
-  { 
     id: 8, 
     image: 'https://images.unsplash.com/photo-1600573472592-401b489a3cdc?w=48&h=48&fit=crop&crop=center', 
     date: 'Nov 25, 2024', 
@@ -140,36 +134,14 @@ const transactions = ref<Transaction[]>([
   },
 ])
 
-const getStatusClass = (status: TransactionStatus) => ({
-  'status-paid': status === 'Paid',
-  'status-unpaid': status === 'Unpaid',
-  'status-pending': status === 'Pending',
-})
+const getStatusClass = (status: TransactionStatus) => {
+  if (status === 'Paid') return 'badge-green'
+  if (status === 'Unpaid') return 'badge-red'
+  return 'badge-amber'
+}
 </script>
 
 <style scoped>
-/* 1. CONTENEDOR PRINCIPAL: Alineado con el estilo de .area-map-card */
-.recent-tx {
-  background-color: var(--color-white, #ffffff);
-  border: 1px solid var(--color-slate-100, #f1f5f9);
-  border-radius: 12px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
-  height: 360px;
-  min-width: 300px;
-  display: flex;
-  flex-direction: column;
-}
-
-/* 2. HEADER: Alineado con el estilo de .area-map-header */
-.recent-tx__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 17px 24px;
-  border-bottom: 1px solid var(--color-slate-100, #f1f5f9);
-  flex-shrink: 0;
-}
-
 .recent-tx__header h3 {
   font-size: 18px;
   font-weight: 600;
@@ -177,54 +149,11 @@ const getStatusClass = (status: TransactionStatus) => ({
   margin: 0;
 }
 
-.recent-tx__header a {
-  position: relative;
-  display: flex;
-  align-items: center;
-  font-size: 17px;
-  font-weight: 400;
-  color: oklch(0.704 0.04 256.788);
-  text-decoration: none;
-  padding-bottom: 5px;
-  transition: color 0.2s ease-in-out;
-}
-
-.recent-tx__header a:hover {
-  color: var(--color-primary, #00a63e);
-}
-
-.recent-tx__header a::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 2px;
-  background-color: var(--color-primary, #00a63e);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s var(--ease-in-out, ease-in-out);
-}
-
-.recent-tx__header a:hover::after {
-  transform: scaleX(1);
-}
-
-.recent-tx__header a .mdi {
-  margin-left: 4px;
-  font-size: 1.1em;
-  transition: transform 0.2s ease-in-out;
-}
-
-.recent-tx__header a:hover .mdi {
-  transform: translateX(3px);
-}
-
 /* 3. CONTENEDOR DE LA TABLA (CUERPO) */
 .recent-tx__table-wrapper {
   flex-grow: 1;
   overflow-y: auto;
-  overflow-x: hidden;
+  overflow-x: auto;
   padding: 0 24px;
   scroll-behavior: smooth;
   scrollbar-width: none; 
@@ -276,7 +205,7 @@ const getStatusClass = (status: TransactionStatus) => ({
 
 .recent-tx__table-wrapper::-webkit-scrollbar {
   width: 5px;
-  height: 5px;
+  height: 8px;
 }
 .recent-tx__table-wrapper::-webkit-scrollbar-track {
   background: transparent;
@@ -294,6 +223,7 @@ const getStatusClass = (status: TransactionStatus) => ({
 /* TABLA */
 .recent-tx__table {
   width: 100%;
+  min-width: 600px;
   border-collapse: collapse;
   font-size: 0.875rem;
   text-align: left;
@@ -370,28 +300,19 @@ const getStatusClass = (status: TransactionStatus) => ({
   cursor: pointer;
 }
 
-/* ESTILOS RESTANTES */
-.text-muted {
-  color: var(--color-slate-400, #6474b8);
+.recent-tx__table td img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 6px;
 }
-.font-semibold {
-  font-weight: 600;
-}
-.status-paid, .status-unpaid, .status-pending {
-  padding: 2px 10px;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  display: inline-block;
-}
-.status-paid { background-color: #d1fae5; color: #009966; }
-.status-unpaid { background-color: #fee2e2; color: #e7000b; }
-.status-pending { background-color: #ffedd5; color: #9a3412; }
+
 .text-empty {
   text-align: center;
   color: var(--color-slate-400, #94a3b8);
   padding: 16px 0;
   border:1px solid #e7000b ;
 }
+.recent-tx { /* placeholder to keep scope; styles moved to .card */ }
+.recent-tx__header { /* placeholder; header styles via .card-header */ }
 </style>

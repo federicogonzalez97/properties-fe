@@ -1,13 +1,13 @@
 <template>
-  <div class="area-map-card">
-    <div class="area-map-header">
+  <div class="area-map-card card">
+    <div class="area-map-header card-header">
       <h3>Area Map</h3>
       <span class="last-update-text">Last update 5 days ago</span>
     </div>
 
     <div class="area-map-container">
-      <div class="map-wrapper" style="width: 457px; height: 284px;">
-        <div ref="mapContainer" style="width: 323px; height: 226px;"></div>
+      <div class="map-wrapper" @mouseleave="hideTooltip">
+        <div ref="mapContainer"></div>
         
         <div 
           ref="customTooltip"
@@ -23,12 +23,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed, nextTick, onUnmounted, watch } from 'vue'
+import { ref, onMounted, computed, nextTick } from 'vue'
 
 const mapRef = ref()
 const mapContainer = ref()
 const customTooltip = ref()
-const selectedMarkers = ref<Set<number>>(new Set()) 
 const tooltipVisible = ref(false)
 const tooltipContent = ref('')
 const tooltipStyle = ref<{left: string, top: string, zIndex?: string}>({
@@ -36,7 +35,6 @@ const tooltipStyle = ref<{left: string, top: string, zIndex?: string}>({
   top: '0px'
 })
 
-// Marcadores según la imagen de referencia
 const markers = computed(() => [
   { name: 'Canada', coords: [56.1304, -106.3468], active: true },
   { name: 'Greenland', coords: [71.7069, -42.6043], active: true },
@@ -44,11 +42,10 @@ const markers = computed(() => [
   { name: 'Palestine', coords: [31.9522, 35.2332], active: false }
 ])
 
+
 const mapOptions = {
   map: 'world_merc',
   backgroundColor: '#ffffff',
-  width: 323,
-  height: 226,
   regionStyle: { 
     initial: { 
       fill: '#e5e7eb',
@@ -91,20 +88,10 @@ const mapOptions = {
   zoomOnScroll: false
 }
 
-
-watch(selectedMarkers, () => {
-  nextTick(() => {
-    updateAllMarkers()
-  })
-}, { deep: true })
-
 const updateAllMarkers = () => {
   if (!mapRef.value) {
-    console.log('Map ref not available yet')
     return
   }
-  
-  console.log('Updating markers, selected:', Array.from(selectedMarkers.value))
   
   markers.value.forEach((_, index) => {
     let fillColor, strokeOpacity
@@ -117,8 +104,6 @@ const updateAllMarkers = () => {
       strokeOpacity = 0.3
     }
     
-    console.log(`Marker ${index}: color=${fillColor}, opacity=${strokeOpacity}`)
-    
     try {
       if (mapRef.value.markers && mapRef.value.markers[index]) {
         const markerElement = mapRef.value.markers[index].element
@@ -129,14 +114,42 @@ const updateAllMarkers = () => {
             circle.setAttribute('stroke-opacity', strokeOpacity.toString())
             circle.setAttribute('stroke-width', '5')
             circle.setAttribute('r', '7')
-            console.log(`Updated marker ${index}: color=${fillColor}, opacity=${strokeOpacity}`)
           }
         }
       }
     } catch (error) {
-      console.error('Error updating marker:', error)
     }
   })
+}
+
+const computeMapSize = () => {
+  const w = window.innerWidth
+  if (w <= 480) {
+    return { w: 290, h: 195 }
+  }
+  if (w <= 768) {
+    return { w: 320, h: 220 }
+  }
+  return { w: 340, h: 240 }
+}
+
+const applyMapSize = () => {
+  const sizes = computeMapSize()
+  const container = mapContainer.value?.querySelector('.jvm-container') as HTMLElement | null
+  const svg = mapContainer.value?.querySelector('svg') as SVGElement | null
+  if (container) {
+    container.style.width = `${sizes.w}px`
+    container.style.height = `${sizes.h}px`
+    container.style.overflow = 'hidden'
+    container.style.margin = '0 auto'
+  }
+  if (svg) {
+    svg.setAttribute('width', `${sizes.w}`)
+    svg.setAttribute('height', `${sizes.h}`)
+    svg.setAttribute('viewBox', `0 0 ${sizes.w} ${sizes.h}`)
+    ;(svg as any).style.width = `${sizes.w}px`
+    ;(svg as any).style.height = `${sizes.h}px`
+  }
 }
 
 const handleRegionOver = (event: any, code: string) => {
@@ -148,10 +161,7 @@ const handleRegionOut = () => {
   hideTooltip()
 }
 
-
-
 const showTooltip = (event: any, content: string) => {
-  console.log('Showing tooltip:', content)
   tooltipContent.value = content
   tooltipVisible.value = true
   
@@ -175,12 +185,10 @@ const showTooltip = (event: any, content: string) => {
       left: `${x + 10}px`,
       top: `${y - 30}px`
     }
-    console.log('Tooltip positioned at:', tooltipStyle.value)
   }
 }
 
 const hideTooltip = () => {
-  console.log('Hiding tooltip')
   tooltipVisible.value = false
 }
 
@@ -253,104 +261,53 @@ onMounted(async () => {
         ...mapOptions,
         onLoaded: (map: any) => {
           mapRef.value = map
-          console.log('Map loaded, setting up markers')
           
           setTimeout(() => {
-            const container = mapContainer.value?.querySelector('.jvm-container')
-            const svg = mapContainer.value?.querySelector('svg')
-            
-            if (container) {
-              container.style.width = '323px'
-              container.style.height = '226px'
-              container.style.maxWidth = '323px'
-              container.style.maxHeight = '226px'
-            }
-            
-            if (svg) {
-              svg.setAttribute('width', '323')
-              svg.setAttribute('height', '226')
-              svg.setAttribute('viewBox', '0 0 323 226')
-              svg.style.width = '323px'
-              svg.style.height = '226px'
-              svg.style.maxWidth = '323px'
-              svg.style.maxHeight = '226px'
-              console.log('SVG dimensions forced to 323x226')
-            }
+            applyMapSize()
             updateAllMarkers()
           }, 200)
         },
-        onMarkerClick: (_event: MouseEvent, index: number) => {
-          console.log('Marker clicked:', index)
-        },
-        onMarkerTooltipShow: (event: any, _tooltip: any, index: number) => {
-          const marker = markers.value[index]
-          if (marker) {
-            showTooltip(event, marker.name)
-          }
-        },
         onRegionTooltipShow: (event: any, tooltip: any, code: string) => {
-          console.log('Region tooltip show:', code)
           if (tooltip && tooltip.hide) {
             tooltip.hide()
           }
           handleRegionOver(event, code)
         },
         onRegionOver: (event: any, code: string) => {
-          console.log('Region over:', code)
           handleRegionOver(event, code)
         },
-        onRegionOut: (_event: any, code: string) => {
-          console.log('Region out:', code)
+        onRegionOut: (_event: any) => {
           handleRegionOut()
         }
       })
     } catch (error) {
-      console.error('Error initializing map:', error)
     }
   }
 })
 
-onUnmounted(() => {
-})
+if (typeof window !== 'undefined') {
+  window.addEventListener('resize', () => {
+    applyMapSize()
+  })
+}
 </script>
 
 <style scoped>
-.area-map-card {
-  background: #ffffff;
-  border: 1px solid #f1f5f9;
-  border-radius: 12px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  width: 100%;
-  height: 360px;
-  display: flex;
-  flex-direction: column;
-  min-width: 300px;
-}
 
-/* Responsive breakpoints */
 @media (max-width: 768px) {
   .area-map-card {
-    height: 300px;
+    height: 340px;
     min-width: 280px;
   }
 }
 
 @media (max-width: 480px) {
   .area-map-card {
-    height: 250px;
+    height: 300px;
     min-width: 250px;
   }
 }
 
-.area-map-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px 24px;
-  border-bottom: 1px solid #f1f5f9;
-  flex-shrink: 0;
-}
 
 @media (max-width: 768px) {
   .area-map-header {
@@ -384,16 +341,20 @@ onUnmounted(() => {
 
 .area-map-container {
   flex: 1;
-  padding: 24px;
   display: flex;
+  flex-direction: column;
+  padding: 0 24px 0 24px;
+  margin-top:40px;
+  margin-bottom: 40px;
+  overflow: hidden;
+  min-height: 0;
   align-items: center;
   justify-content: center;
-  min-height: 0;
 }
 
 @media (max-width: 768px) {
   .area-map-container {
-    padding: 16px 20px;
+    padding: 0 20px 0 20px;
   }
 }
 
@@ -408,21 +369,26 @@ onUnmounted(() => {
   height: 100%;
   min-height: 250px;
   border-radius: 8px;
-  overflow: hidden;
+  background-color: #ffffff;
   position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @media (max-width: 768px) {
   .map-wrapper {
-    min-height: 200px;
+    min-height: 260px;
   }
 }
 
 @media (max-width: 480px) {
   .map-wrapper {
-    min-height: 150px;
+    min-height: 220px;
   }
 }
+
 
 .custom-tooltip {
   position: absolute;
@@ -433,7 +399,7 @@ onUnmounted(() => {
   font-size: 13px;
   font-weight: 500;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  z-index: 1000;
+  z-index: 1001 !important;
   pointer-events: none;
   white-space: nowrap;
   opacity: 1;
@@ -445,25 +411,20 @@ onUnmounted(() => {
 :deep(.jvm-container) {
   background-color: #ffffff !important;
   border-radius: 8px;
-  width: 323px !important;
-  height: 226px !important;
-  max-width: 323px !important;
-  max-height: 226px !important;
+  width: 340px !important;
+  height: 240px !important;
+  overflow: hidden;
+  margin: 0 auto; 
 }
 
 :deep(.jvm-container svg) {
-  width: 323px !important;
-  height: 226px !important;
-  max-width: 323px !important;
-  max-height: 226px !important;
-  padding-top: 16px;
+  width: 340px !important;
+  height: 240px !important;
 }
 
 :deep(svg) {
-  width: 323px !important;
-  height: 226px !important;
-  max-width: 323px !important;
-  max-height: 226px !important;
+  width: 340px !important;
+  height: 240px !important;
 }
 
 :deep(.jvm-marker) {
@@ -482,5 +443,38 @@ onUnmounted(() => {
 
 :deep(.jvm-tooltip) {
   display: none !important;
+}
+
+@media (max-width: 999px) {
+  .country-labels { display: none; }
+}
+
+@media (max-width: 768px) {
+  :deep(.jvm-container) {
+    width: 320px !important;
+    height: 220px !important;
+    margin: 0 auto; 
+  }
+  :deep(.jvm-container svg),
+  :deep(svg) {
+    width: 320px !important;
+    height: 220px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  :deep(.jvm-container) {
+    width: 290px !important;
+    height: 195px !important;
+    margin: 0 auto; 
+  }
+  :deep(.jvm-container svg),
+  :deep(svg) {
+    width: 290px !important;
+    height: 195px !important;
+  }
+  .country-labels {
+    display: none;
+  }
 }
 </style>

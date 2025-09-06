@@ -377,6 +377,7 @@ onMounted(() => {
 @media (max-width: 1000px) {
   .dashboard {
     display: flex;
+    min-height: auto;
   }
   
   .dashboard__sidebar {
@@ -461,13 +462,12 @@ onMounted(() => {
   flex: 1;
   margin-left: 0;
   transition: margin-left 0.5s ease-in-out, width 0.5s ease-in-out;
-  min-height: 100vh; 
+  min-height: calc(100vh - 70px); 
   background-color: var(--color-slate-50);
   position: relative;
   z-index: 1; 
   width: 100%; 
   overflow-x: hidden; 
-  /* Asegurar que el contenido siempre sea visible */
   min-width: 0;
 }
 
@@ -491,7 +491,6 @@ onMounted(() => {
   padding: calc(var(--spacing) * 6);
 }
 
-/* Asegurar que el contenido del dashboard view sea visible */
 .dashboard-view {
   width: 100%;
   min-width: 0;
@@ -504,16 +503,17 @@ onMounted(() => {
   overflow: visible;
 }
 
-/* Regla específica para pantallas ≤1000px cuando el sidebar está colapsado */
 @media (max-width: 1000px) {
   .dashboard__sidebar--collapsed + .dashboard__main {
     margin-left: 0 !important;
     width: 100% !important;
+    min-height: auto !important;
   }
   
   .dashboard__main {
     margin-left: 0 !important;
     width: 100% !important;
+    min-height: auto !important;
   }
 }
 
@@ -764,7 +764,6 @@ onMounted(() => {
   flex-direction: column;
 }
 
-/* Configuración del scrollbar para mobile (≤768px) */
 @media (max-width: 768px) {
   .dashboard__sidebar-nav::-webkit-scrollbar {
     width: 1px;
@@ -785,7 +784,6 @@ onMounted(() => {
   }
 }
 
-/* Configuración del scrollbar para tablet (769px - 999px) - misma que mobile */
 @media (min-width: 769px) and (max-width: 999px) {
   .dashboard__sidebar-nav::-webkit-scrollbar {
     width: 1px;
@@ -806,7 +804,6 @@ onMounted(() => {
   }
 }
 
-/* Configuración del scrollbar para desktop (≥1000px) - misma que mobile */
 @media (min-width: 1000px) {
   .dashboard__sidebar-nav::-webkit-scrollbar {
     width: 1px;
@@ -827,7 +824,6 @@ onMounted(() => {
   }
 }
 
-/* Elemento de upgrade del sidebar */
 .dashboard-upgrade-item {
   margin-bottom: 0;
   margin-top: 36px;
@@ -945,7 +941,6 @@ onMounted(() => {
   }
 }
 
-/* Para tablet y desktop */
 @media (min-width: 769px) and (max-width: 999px) {
   .nav-link {
     width: 300px;
@@ -962,7 +957,6 @@ onMounted(() => {
   }
 }
 
-/* Para pantallas grandes */
 @media (min-width: 1000px) {
   .nav-link {
     width: 300px;
@@ -1423,9 +1417,9 @@ onMounted(() => {
   }
   
   .dashboard {
-    min-height: 100vh;
-    height: 100vh; 
-    overflow: hidden; 
+    min-height: auto;
+    height: auto; 
+    overflow: visible; 
   }
   
   .dashboard__sidebar {
@@ -1446,11 +1440,11 @@ onMounted(() => {
   }
   
   .dashboard__main {
-    min-height: calc(100vh - 70px); 
-    height: calc(100vh - 70px); 
-    margin-left: 0;
+    min-height: auto;
+    height: auto;
     width: 100vw;
-    overflow-y: auto; 
+    overflow-x: hidden;
+    overflow-y: auto;
   }
   
   .dashboard__sidebar--collapsed + .dashboard__main {
