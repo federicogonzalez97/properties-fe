@@ -18,6 +18,13 @@ export const API_ENDPOINTS = {
   PROPERTIES: {
     BASE: `${config.API_URL}/poperties-real-state`,
   },
+  DASHBOARD: {
+    METRICS: `${config.API_URL}/dashboard/metrics`,
+    REVENUE: `${config.API_URL}/dashboard/revenue`,
+    SALES_DISTRIBUTION: `${config.API_URL}/dashboard/sales-distribution`,
+    RECENT_TRANSACTIONS: `${config.API_URL}/dashboard/recent-transactions`,
+    TOP_PROPERTIES: `${config.API_URL}/dashboard/top-properties`,
+  },
 };
 
 export const FRONTEND_URLS = {

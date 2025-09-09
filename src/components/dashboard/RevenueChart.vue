@@ -1,19 +1,23 @@
 <template>
-    <div class="revenue-chart" @wheel.prevent="onWheel">
-      <apexchart
-        width="100%"
-        height="365"
-        type="area"
-        :options="chartOptions"
-        :series="series"
-      />
+  <div class="revenue-chart" @wheel.prevent="onWheel">
+    <div v-if="isLoading" class="spinner-overlay">
+      <div class="spinner"></div>
     </div>
-    
-  </template>
+    <apexchart
+      width="100%"
+      height="365"
+      type="area"
+      :options="chartOptions"
+      :series="series"
+    />
+  </div>
+  
+</template>
   
   <script setup lang="ts">
-  import { computed, ref, watch } from 'vue';
+  import { computed, ref, watch, onMounted } from 'vue';
   import VueApexCharts from 'vue3-apexcharts';
+  import { dashboardService } from '@/services/dashboard.service'
   
   const apexchart = VueApexCharts as unknown as any;
   
@@ -21,7 +25,8 @@
   
   const props = defineProps<{ selectedPeriod?: Period }>();
   
-  const baseData = [
+  const isLoading = ref(true)
+  const fetchedPoints = ref<{ month: string; sales: number; revenue: number }[]>([
     { month: 'Jan', sales: 0, revenue: 0 },
     { month: 'Feb', sales: 100, revenue: 45 },
     { month: 'Mar', sales: 40, revenue: 10 },
@@ -34,23 +39,32 @@
     { month: 'Oct', sales: 180, revenue: 105 },
     { month: 'Nov', sales: 75, revenue: 65 },
     { month: 'Dec', sales: 115, revenue: 110 }
-  ];
+  ])
   
   const levelIndex = ref<number>(0); 
   const centerMonthIndex = ref<number>(7); 
   
-  const periodData = computed(() => {
-    const p = props.selectedPeriod || 'Yearly';
-    if (p === 'Monthly') return baseData.slice(0, 6);
-    if (p === 'Weekly') return baseData.slice(0, 4);
-    if (p === 'Today') return baseData.slice(-1); 
-    return baseData;
-  });
+  const periodData = computed(() => fetchedPoints.value)
   
-  watch(periodData, () => {
-    levelIndex.value = 0;
-    centerMonthIndex.value = periodData.value.length - 1;
-  });
+  const load = async () => {
+    try {
+      isLoading.value = true
+      const p = (props.selectedPeriod || 'Yearly') as Period
+      const res = await dashboardService.getRevenue(p)
+      fetchedPoints.value = res.points.map(pt => ({
+        month: pt.label,
+        sales: pt.sales,
+        revenue: pt.revenue,
+      }))
+      levelIndex.value = 0
+      centerMonthIndex.value = periodData.value.length - 1
+    } finally {
+      isLoading.value = false
+    }
+  }
+  
+  onMounted(load)
+  watch(() => props.selectedPeriod, load)
   
   const visibleData = computed(() => {
     const data = periodData.value;
@@ -205,16 +219,37 @@
       levelIndex.value = Math.max(levelIndex.value - 1, 0);
     }
   };
-  </script>
-  
-  <style scoped>
+</script>
+
+<style scoped>
   .revenue-chart {
     width: 100%;
   }
+
+  .spinner-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.6);
+    z-index: 2;
+    border-radius: var(--radius-lg);
+  }
+  .revenue-chart { position: relative; }
+  .spinner {
+    width: 28px;
+    height: 28px;
+    border: 3px solid #e5e7eb;
+    border-top-color: var(--color-primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
 
 :deep(.apexcharts-legend-marker) {
   border-radius: 0 !important;
   width: 12px !important;
   height: 6px !important;
 }
-  </style>
+</style>

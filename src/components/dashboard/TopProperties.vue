@@ -1,5 +1,8 @@
 <template>
   <div class="top-properties-card card">
+    <div v-if="isLoading" class="spinner-overlay">
+      <div class="spinner"></div>
+    </div>
     <div class="top-properties-card__header card-header">
       <h3>Top Properties</h3>
       <a href="#" class="link-underline-anim link-primary">
@@ -36,7 +39,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { dashboardService } from '@/services/dashboard.service'
 
 type PropertyStatus = 'High' | 'Medium' | 'Low'
 
@@ -50,64 +54,26 @@ interface Property {
   status: PropertyStatus
 }
 
-const properties = ref<Property[]>([
-  {
-    id: 1,
-    image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=56&h=56&fit=crop&crop=center',
-    name: 'House',
-    location: 'Baton Rouge, USA',
-    price: '',
-    percentage: 11,
-    status: 'High'
-  },
-  {
-    id: 2,
-    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=56&h=56&fit=crop&crop=center',
-    name: 'House',
-    location: 'Baton Rouge, USA',
-    price: '',
-    percentage: 20,
-    status: 'High'
-  },
-  {
-    id: 3,
-    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=56&h=56&fit=crop&crop=center',
-    name: 'House',
-    location: 'New Orleans, USA',
-    price: '',
-    percentage: 15,
-    status: 'High'
-  },
-  {
-    id: 4,
-    image: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=56&h=56&fit=crop&crop=center',
-    name: 'House',
-    location: 'Lafayette, USA',
-    price: '',
-    percentage: -8,
-    status: 'Low'
-  },
-  {
-    id: 5,
-    image: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=56&h=56&fit=crop&crop=center',
-    name: 'House',
-    location: 'Shreveport, USA',
-    price: '',
-    percentage: 25,
-    status: 'High'
-  },
-  {
-    id: 6,
-    image: 'https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=56&h=56&fit=crop&crop=center',
-    name: 'House',
-    location: 'Lake Charles, USA',
-    price: '',
-    percentage: -5,
-    status: 'Low'
+const isLoading = ref(true)
+const properties = ref<Property[]>([])
+
+onMounted(async () => {
+  try {
+    isLoading.value = true
+    const res = await dashboardService.getTopProperties(6)
+    properties.value = res.map((p: any) => ({
+      id: p.id,
+      image: p.image,
+      name: p.name,
+      location: p.location,
+      price: typeof p.price === 'number' ? `$${p.price.toLocaleString()}` : (p.price ?? ''),
+      percentage: p.percentage,
+      status: p.status,
+    }))
+  } finally {
+    isLoading.value = false
   }
-])
-
-
+})
 
 const getPercentageClass = (percentage: number) => {
   if (percentage > 0) return 'text-emerald-600'
@@ -290,4 +256,26 @@ const getArrowIcon = (percentage: number) => {
   min-width: 0;
   flex: 1;
 }
+
+/* Spinner overlay */
+.top-properties-card { position: relative; }
+.spinner-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.6);
+  z-index: 2;
+  border-radius: var(--radius-lg);
+}
+.spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid #e5e7eb;
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
 </style>

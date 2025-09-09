@@ -84,8 +84,8 @@ const mapOptions = {
     }
   },
   showTooltip: true,
-  zoomButtons: false,
-  zoomOnScroll: false
+  zoomButtons: true,
+  zoomOnScroll: true
 }
 
 const updateAllMarkers = () => {
@@ -124,12 +124,19 @@ const updateAllMarkers = () => {
 
 const computeMapSize = () => {
   const w = window.innerWidth
+  // Extra small devices
+  if (w <= 360) {
+    return { w: 240, h: 165 }
+  }
+  // Small phones
   if (w <= 480) {
-    return { w: 290, h: 195 }
+    return { w: 260, h: 175 }
   }
+  // Tablets
   if (w <= 768) {
-    return { w: 320, h: 220 }
+    return { w: 300, h: 205 }
   }
+  // Desktop default
   return { w: 340, h: 240 }
 }
 
@@ -385,7 +392,7 @@ if (typeof window !== 'undefined') {
 
 @media (max-width: 480px) {
   .map-wrapper {
-    min-height: 220px;
+    min-height: 190px;
   }
 }
 
@@ -451,30 +458,43 @@ if (typeof window !== 'undefined') {
 
 @media (max-width: 768px) {
   :deep(.jvm-container) {
-    width: 320px !important;
-    height: 220px !important;
+    width: 300px !important;
+    height: 205px !important;
     margin: 0 auto; 
   }
   :deep(.jvm-container svg),
   :deep(svg) {
-    width: 320px !important;
-    height: 220px !important;
+    width: 300px !important;
+    height: 205px !important;
   }
 }
 
 @media (max-width: 480px) {
   :deep(.jvm-container) {
-    width: 290px !important;
-    height: 195px !important;
+    width: 260px !important;
+    height: 175px !important;
     margin: 0 auto; 
   }
   :deep(.jvm-container svg),
   :deep(svg) {
-    width: 290px !important;
-    height: 195px !important;
+    width: 260px !important;
+    height: 175px !important;
   }
   .country-labels {
     display: none;
+  }
+}
+
+@media (max-width: 360px) {
+  :deep(.jvm-container) {
+    width: 240px !important;
+    height: 165px !important;
+    margin: 0 auto;
+  }
+  :deep(.jvm-container svg),
+  :deep(svg) {
+    width: 240px !important;
+    height: 165px !important;
   }
 }
 </style>

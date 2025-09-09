@@ -1,5 +1,8 @@
 <template>
   <div class="recent-tx card">
+    <div v-if="isLoading" class="spinner-overlay">
+      <div class="spinner"></div>
+    </div>
 
     <!-- Header -->
     <div class="recent-tx__header card-header">
@@ -54,7 +57,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { dashboardService } from '@/services/dashboard.service'
 
 type TransactionStatus = 'Paid' | 'Unpaid' | 'Pending'
 
@@ -68,71 +72,41 @@ interface Transaction {
   status: TransactionStatus
 }
 
-const transactions = ref<Transaction[]>([
-  { 
-    id: 1, 
-    image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=48&h=48&fit=crop&crop=center', 
-    date: 'Dec 15, 2024', 
-    name: 'Sarah Johnson', 
-    price: '$2,350', 
-    type: 'Rent', 
-    status: 'Paid' 
-  },
-  { 
-    id: 2, 
-    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=48&h=48&fit=crop&crop=center', 
-    date: 'Dec 12, 2024', 
-    name: 'Michael Chen', 
-    price: '$485,000', 
-    type: 'Sell', 
-    status: 'Unpaid' 
-  },
-  { 
-    id: 3, 
-    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=48&h=48&fit=crop&crop=center', 
-    date: 'Dec 10, 2024', 
-    name: 'Emma Rodriguez', 
-    price: '$1,850', 
-    type: 'Rent', 
-    status: 'Paid' 
-  },
-  { 
-    id: 4, 
-    image: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=48&h=48&fit=crop&crop=center', 
-    date: 'Dec 8, 2024', 
-    name: 'David Thompson', 
-    price: '$325,750', 
-    type: 'Sell', 
-    status: 'Paid' 
-  },
-  { 
-    id: 5, 
-    image: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=48&h=48&fit=crop&crop=center', 
-    date: 'Dec 5, 2024', 
-    name: 'Lisa Martinez', 
-    price: '$1,100', 
-    type: 'Rent', 
-    status: 'Unpaid' 
-  },
-  { 
-    id: 6, 
-    image: 'https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=48&h=48&fit=crop&crop=center', 
-    date: 'Dec 3, 2024', 
-    name: 'James Wilson', 
-    price: '$1,500', 
-    type: 'Rent', 
-    status: 'Paid' 
-  },
-  { 
-    id: 8, 
-    image: 'https://images.unsplash.com/photo-1600573472592-401b489a3cdc?w=48&h=48&fit=crop&crop=center', 
-    date: 'Nov 25, 2024', 
-    name: 'Robert Kim', 
-    price: '$1,100', 
-    type: 'Rent', 
-    status: 'Paid' 
-  },
-])
+const isLoading = ref(true)
+const transactions = ref<Transaction[]>([])
+
+const formatPrice = (price: unknown, currency?: string): string => {
+  if (typeof price === 'string') return price
+  if (typeof price === 'number') {
+    try {
+      return new Intl.NumberFormat(undefined, { style: 'currency', currency: currency || 'USD' }).format(price)
+    } catch {
+      return `$${price.toLocaleString()}`
+    }
+  }
+  return ''
+}
+
+onMounted(async () => {
+  try {
+    isLoading.value = true
+    const res = await dashboardService.getRecentTransactions(1, 10)
+    transactions.value = res.data.map((it: any) => ({
+      id: it.id,
+      image: it.image,
+      date: it.date,
+      name: it.name,
+      price: formatPrice(it.price, it.currency),
+      type: it.type,
+      status: it.status,
+    }))
+    if (!transactions.value.length) {
+      transactions.value = []
+    }
+  } finally {
+    isLoading.value = false
+  }
+})
 
 const getStatusClass = (status: TransactionStatus) => {
   if (status === 'Paid') return 'badge-green'
@@ -313,6 +287,27 @@ const getStatusClass = (status: TransactionStatus) => {
   padding: 16px 0;
   border:1px solid #e7000b ;
 }
-.recent-tx { /* placeholder to keep scope; styles moved to .card */ }
-.recent-tx__header { /* placeholder; header styles via .card-header */ }
+
+
+/* Spinner overlay */
+.recent-tx { position: relative; }
+.spinner-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.6);
+  z-index: 2;
+  border-radius: var(--radius-lg);
+}
+.spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid #e5e7eb;
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
 </style>

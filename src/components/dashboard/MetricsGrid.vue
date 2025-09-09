@@ -1,5 +1,8 @@
 <template>
   <div class="metrics-grid">
+    <div v-if="isLoading" class="spinner-overlay">
+      <div class="spinner"></div>
+    </div>
     <div class="metric-item">
       <div class="metric-content">
         <h3 class="metric-label">Total Revenue</h3>
@@ -64,13 +67,16 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import { dashboardService } from '@/services/dashboard.service'
+
+const isLoading = ref(true)
 
 const finalValues = {
-  revenue: 45890,
-  visitors: 2456,
-  properties: 358,
-  forSale: 243,
-  forRent: 115
+  revenue: 0,
+  visitors: 0,
+  properties: 0,
+  forSale: 0,
+  forRent: 0
 };
 
 const animatedRevenue = ref(0);
@@ -99,13 +105,22 @@ const animateValue = (start: number, end: number, duration: number, callback: (v
   requestAnimationFrame(animate);
 };
 
-onMounted(() => {
-  setTimeout(() => {
+onMounted(async () => {
+  try {
+    isLoading.value = true
+    const m = await dashboardService.getMetrics()
+    finalValues.revenue = m.revenue
+    finalValues.visitors = m.visitors
+    finalValues.properties = m.propertiesTotal
+    finalValues.forSale = m.propertiesForSale
+    finalValues.forRent = m.propertiesForRent
+
+    // Animate to the fetched values
     animateValue(0, finalValues.revenue, 1500, (value) => {
       animatedRevenue.value = value;
     });
     
-    animateValue(0, finalValues.visitors, 4800, (value) => {
+    animateValue(0, finalValues.visitors, 1200, (value) => {
       animatedVisitors.value = value;
     });
     
@@ -120,7 +135,9 @@ onMounted(() => {
     animateValue(0, finalValues.forRent, 1300, (value) => {
       animatedForRent.value = value;
     });
-  }, 200);
+  } finally {
+    isLoading.value = false
+  }
 });
 </script>
 
@@ -185,4 +202,26 @@ onMounted(() => {
   height: 24px;
   color: var(--color-primary);
 }
+
+/* Spinner overlay */
+.spinner-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.6);
+  z-index: 2;
+  border-radius: var(--radius-lg);
+}
+.metrics-grid { position: relative; }
+.spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid #e5e7eb;
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
 </style>

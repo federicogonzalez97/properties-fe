@@ -1,5 +1,8 @@
 <template>
   <div class="sales-data-content">
+    <div v-if="isLoading" class="spinner-overlay">
+      <div class="spinner"></div>
+    </div>
     <div class="charts-header">
       <h2 class="charts-title">Sales Data</h2>
       <div class="charts-actions">
@@ -31,20 +34,27 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted, watch } from 'vue'
+import { dashboardService } from '@/services/dashboard.service'
 
 type Period = 'Yearly' | 'Monthly' | 'Weekly' | 'Today'
 
 const selectedPeriod = ref<Period>('Yearly')
+const isLoading = ref(true)
+const sales = ref<{ label: string; value: number }[]>([])
 
-const sales = [
-  { label: 'Via Website', value: 50 },
-  { label: 'Via Team Member', value: 12 },
-  { label: 'Via Agents', value: 6 },
-  { label: 'Via Social Media', value: 15 },
-  { label: 'Via Digital Marketing', value: 12 },
-  { label: 'Via Others', value: 5 }
-]
+const load = async () => {
+  try {
+    isLoading.value = true
+    const res = await dashboardService.getSalesDistribution(selectedPeriod.value)
+    sales.value = res.items
+  } finally {
+    isLoading.value = false
+  }
+}
+
+onMounted(load)
+watch(selectedPeriod, load)
 </script>
 
 <style scoped>
@@ -148,6 +158,28 @@ const sales = [
   border-radius: 999px;
   transition: width var(--default-transition-duration) var(--default-transition-timing-function);
 }
+
+/* Spinner overlay */
+.sales-data-content { position: relative; }
+.spinner-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.6);
+  z-index: 2;
+  border-radius: var(--radius-lg);
+}
+.spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid #e5e7eb;
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
 </style>
 
 
