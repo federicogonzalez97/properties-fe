@@ -36,7 +36,6 @@ router.beforeEach(async (to, _from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
   if (requiresAuth && !isAuthenticated) {
-    console.log('Usuario no autenticado, redirigiendo al home');
     next('/');
   } else {
     next();

@@ -90,13 +90,10 @@ const handleLogout = async () => {
 const router = useRouter();
 
 const goToDashboard = () => {
-  console.log('goToDashboard called');
-  console.log('Current auth state:', { isAuthenticated: isAuthenticated.value });
   
   isMobileMenuOpen.value = false;
   document.body.style.overflow = 'auto';
   
-  console.log('Navigating to dashboard...');
   router.push('/dashboard');
 };
 

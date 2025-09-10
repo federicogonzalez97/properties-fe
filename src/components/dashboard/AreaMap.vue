@@ -84,8 +84,8 @@ const mapOptions = {
     }
   },
   showTooltip: true,
-  zoomButtons: true,
-  zoomOnScroll: true
+  zoomButtons: false ,
+  zoomOnScroll: false  
 }
 
 const updateAllMarkers = () => {
