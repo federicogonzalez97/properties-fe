@@ -115,27 +115,33 @@ onMounted(async () => {
     finalValues.forSale = m.propertiesForSale
     finalValues.forRent = m.propertiesForRent
 
-    // Animate to the fetched values
-    animateValue(0, finalValues.revenue, 1500, (value) => {
-      animatedRevenue.value = value;
-    });
-    
-    animateValue(0, finalValues.visitors, 1200, (value) => {
-      animatedVisitors.value = value;
-    });
-    
-    animateValue(0, finalValues.properties, 1000, (value) => {
-      animatedProperties.value = value;
-    });
-    
-    animateValue(0, finalValues.forSale, 1100, (value) => {
-      animatedForSale.value = value;
-    });
-    
-    animateValue(0, finalValues.forRent, 1300, (value) => {
-      animatedForRent.value = value;
-    });
-  } finally {
+    setTimeout(() => {
+      isLoading.value = false
+      
+      setTimeout(() => {
+        animateValue(0, finalValues.revenue, 1500, (value) => {
+          animatedRevenue.value = value;
+        });
+        
+        animateValue(0, finalValues.visitors, 3500, (value) => {
+          animatedVisitors.value = value;
+        });
+        
+        animateValue(0, finalValues.properties, 1000, (value) => {
+          animatedProperties.value = value;
+        });
+        
+        animateValue(0, finalValues.forSale, 1100, (value) => {
+          animatedForSale.value = value;
+        });
+        
+        animateValue(0, finalValues.forRent, 1300, (value) => {
+          animatedForRent.value = value;
+        });
+      }, 100); 
+    }, 800); 
+  } catch (error) {
+    console.error('Error loading metrics:', error)
     isLoading.value = false
   }
 });

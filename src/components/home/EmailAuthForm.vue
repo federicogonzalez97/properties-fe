@@ -316,6 +316,7 @@ const handleSubmit = async () => {
   align-items: center;
   justify-content: center;
   gap: 10px;
+  margin-top: 30px;
 
   &:hover:not(:disabled) {
     background: #2d4080;
