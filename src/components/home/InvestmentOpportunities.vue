@@ -175,11 +175,11 @@ const loadInvestmentProperties = () => {
 
 watch(() => propertiesService.investmentProperties.value, () => {
   investmentProperties.value = propertiesService.investmentProperties.value
-})
+}, { immediate: true })
 
-watch(() => propertiesService.isLoading.value, () => {
-  isLoading.value = propertiesService.isLoading.value
-})
+watch(() => propertiesService.isLoading.value, (newValue) => {
+  isLoading.value = newValue
+}, { immediate: true })
 
 onMounted(() => {
   loadInvestmentProperties()

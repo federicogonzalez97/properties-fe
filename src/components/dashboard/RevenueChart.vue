@@ -26,23 +26,10 @@
   const props = defineProps<{ selectedPeriod?: Period }>();
   
   const isLoading = ref(true)
-  const fetchedPoints = ref<{ month: string; sales: number; revenue: number }[]>([
-    { month: 'Jan', sales: 0, revenue: 0 },
-    { month: 'Feb', sales: 100, revenue: 45 },
-    { month: 'Mar', sales: 40, revenue: 10 },
-    { month: 'Apr', sales: 110, revenue: 75 },
-    { month: 'May', sales: 60, revenue: 35 },
-    { month: 'Jun', sales: 140, revenue: 94 },
-    { month: 'Jul', sales: 55, revenue: 40 },
-    { month: 'Aug', sales: 130, revenue: 115 },
-    { month: 'Sep', sales: 65, revenue: 30 },
-    { month: 'Oct', sales: 180, revenue: 105 },
-    { month: 'Nov', sales: 75, revenue: 65 },
-    { month: 'Dec', sales: 115, revenue: 110 }
-  ])
+  const fetchedPoints = ref<{ month: string; sales: number; revenue: number }[]>([])
   
   const levelIndex = ref<number>(0); 
-  const centerMonthIndex = ref<number>(7); 
+  const centerMonthIndex = ref<number>(0); 
   
   const periodData = computed(() => fetchedPoints.value)
   
@@ -57,7 +44,7 @@
         revenue: pt.revenue,
       }))
       levelIndex.value = 0
-      centerMonthIndex.value = periodData.value.length - 1
+      centerMonthIndex.value = Math.floor(fetchedPoints.value.length / 2)
     } finally {
       isLoading.value = false
     }

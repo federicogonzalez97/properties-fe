@@ -73,9 +73,9 @@
                 </a>
                 <div class="sidebar-submenu" v-show="openDropdowns.apps">
                   <ul>
-                    <li><a href="chat.html"><span class="submenu-dot submenu-dot--apps"></span>Chat</a></li>
-                    <li><a href="email.html"><span class="submenu-dot submenu-dot--apps"></span>Email</a></li>
-                    <li><a href="calendar.html"><span class="submenu-dot submenu-dot--apps"></span>Calendar</a></li>
+                    <li><a href="#" @click.prevent="navigateToHome"><span class="submenu-dot submenu-dot--apps"></span>Chat</a></li>
+                    <li><a href="#" @click.prevent="navigateToHome"><span class="submenu-dot submenu-dot--apps"></span>Email</a></li>
+                    <li><a href="#" @click.prevent="navigateToHome"><span class="submenu-dot submenu-dot--apps"></span>Calendar</a></li>
                   </ul>
                 </div>
               </li>
@@ -88,8 +88,8 @@
                 </a>
                 <div class="sidebar-submenu" v-show="openDropdowns.userProfile">
                   <ul>
-                    <li><a href="profile.html"><span class="submenu-dot submenu-dot--userProfile"></span>Profile</a></li>
-                    <li><a href="profile-settings.html"><span class="submenu-dot submenu-dot--userProfile"></span>Profile Settings</a></li>
+                    <li><a href="#" @click.prevent="navigateToHome"><span class="submenu-dot submenu-dot--userProfile"></span>Profile</a></li>
+                    <li><a href="#" @click.prevent="navigateToHome"><span class="submenu-dot submenu-dot--userProfile"></span>Profile Settings</a></li>
                   </ul>
                 </div>
               </li>
@@ -102,8 +102,8 @@
                 </a>
                 <div class="sidebar-submenu" v-show="openDropdowns.blog">
                   <ul>
-                    <li><a href="blogs.html"><span class="submenu-dot submenu-dot--blog"></span>Blogs</a></li>
-                    <li><a href="blog-detail.html"><span class="submenu-dot submenu-dot--blog"></span>Blogs Detail</a></li>
+                    <li><a href="#" @click.prevent="navigateToHome"><span class="submenu-dot submenu-dot--blog"></span>Blogs</a></li>
+                    <li><a href="#" @click.prevent="navigateToHome"><span class="submenu-dot submenu-dot--blog"></span>Blogs Detail</a></li>
                   </ul>
                 </div>
               </li>
@@ -117,8 +117,8 @@
                 </a>
                 <div class="sidebar-submenu" v-show="openDropdowns.invoice">
                   <ul>
-                    <li><a href="invoice-list.html"><span class="submenu-dot submenu-dot--invoice"></span>Invoice List</a></li>
-                    <li><a href="invoice-preview.html"><span class="submenu-dot submenu-dot--invoice"></span>Invoice Preview</a></li>
+                    <li><a href="#" @click.prevent="navigateToHome"><span class="submenu-dot submenu-dot--invoice"></span>Invoice List</a></li>
+                    <li><a href="#" @click.prevent="navigateToHome"><span class="submenu-dot submenu-dot--invoice"></span>Invoice Preview</a></li>
                   </ul>
                 </div>
               </li>
@@ -131,12 +131,12 @@
                 </a>
                 <div class="sidebar-submenu" v-show="openDropdowns.pages">
                   <ul>
-                    <li><a href="starter.html"><span class="submenu-dot submenu-dot--pages"></span>Starter</a></li>
-                    <li><a href="faqs.html"><span class="submenu-dot submenu-dot--pages"></span>FAQs</a></li>
-                    <li><a href="pricing.html"><span class="submenu-dot submenu-dot--pages"></span>Pricing</a></li>
-                    <li><a href="review.html"><span class="submenu-dot submenu-dot--pages"></span>Review</a></li>
-                    <li><a href="privacy-policy.html"><span class="submenu-dot submenu-dot--pages"></span>Privacy Policy</a></li>
-                    <li><a href="terms-condition.html"><span class="submenu-dot submenu-dot--pages"></span>Terms & Condition</a></li>
+                    <li><a href="#" @click.prevent="navigateToHome"><span class="submenu-dot submenu-dot--pages"></span>Starter</a></li>
+                    <li><a href="#" @click.prevent="navigateToHome"><span class="submenu-dot submenu-dot--pages"></span>FAQs</a></li>
+                    <li><a href="#" @click.prevent="navigateToHome"><span class="submenu-dot submenu-dot--pages"></span>Pricing</a></li>
+                    <li><a href="#" @click.prevent="navigateToHome"><span class="submenu-dot submenu-dot--pages"></span>Review</a></li>
+                    <li><a href="#" @click.prevent="navigateToHome"><span class="submenu-dot submenu-dot--pages"></span>Privacy Policy</a></li>
+                    <li><a href="#" @click.prevent="navigateToHome"><span class="submenu-dot submenu-dot--pages"></span>Terms & Condition</a></li>
                   </ul>
                 </div>
               </li>
@@ -149,11 +149,11 @@
                 </a>
                 <div class="sidebar-submenu" v-show="openDropdowns.authentication">
                   <ul>
-                    <li><a href="login.html"><span class="submenu-dot submenu-dot--authentication"></span>Login</a></li>
-                    <li><a href="signup.html"><span class="submenu-dot submenu-dot--authentication"></span>Signup</a></li>
-                    <li><a href="signup-success.html"><span class="submenu-dot submenu-dot--authentication"></span>Signup Success</a></li>
-                    <li><a href="reset-password.html"><span class="submenu-dot submenu-dot--authentication"></span>Reset Password</a></li>
-                    <li><a href="lockscreen.html"><span class="submenu-dot submenu-dot--authentication"></span>Lockscreen</a></li>
+                    <li><a href="#" @click.prevent="navigateToHome"><span class="submenu-dot submenu-dot--authentication"></span>Login</a></li>
+                    <li><a href="#" @click.prevent="navigateToHome"><span class="submenu-dot submenu-dot--authentication"></span>Signup</a></li>
+                    <li><a href="#" @click.prevent="navigateToHome"><span class="submenu-dot submenu-dot--authentication"></span>Signup Success</a></li>
+                    <li><a href="#" @click.prevent="navigateToHome"><span class="submenu-dot submenu-dot--authentication"></span>Reset Password</a></li>
+                    <li><a href="#" @click.prevent="navigateToHome"><span class="submenu-dot submenu-dot--authentication"></span>Lockscreen</a></li>
                   </ul>
                 </div>
               </li>
@@ -166,10 +166,10 @@
                 </a>
                 <div class="sidebar-submenu" v-show="openDropdowns.miscellaneous">
                   <ul>
-                    <li><a href="comingsoon.html"><span class="submenu-dot submenu-dot--miscellaneous"></span>Coming Soon</a></li>
-                    <li><a href="maintenance.html"><span class="submenu-dot submenu-dot--miscellaneous"></span>Maintenance</a></li>
-                    <li><a href="error.html"><span class="submenu-dot submenu-dot--miscellaneous"></span>Error</a></li>
-                    <li><a href="thank-you.html"><span class="submenu-dot submenu-dot--miscellaneous"></span>Thank You</a></li>
+                    <li><a href="#" @click.prevent="navigateToHome"><span class="submenu-dot submenu-dot--miscellaneous"></span>Coming Soon</a></li>
+                    <li><a href="#" @click.prevent="navigateToHome"><span class="submenu-dot submenu-dot--miscellaneous"></span>Maintenance</a></li>
+                    <li><a href="#" @click.prevent="navigateToHome"><span class="submenu-dot submenu-dot--miscellaneous"></span>Error</a></li>
+                    <li><a href="#" @click.prevent="navigateToHome"><span class="submenu-dot submenu-dot--miscellaneous"></span>Thank You</a></li>
                   </ul>
                 </div>
               </li>
@@ -291,7 +291,10 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from "vue";
+import { useRouter } from 'vue-router';
 import DashboardView from './DashboardView.vue';
+
+const router = useRouter();
 
 const isSidebarExpanded = ref(false); 
 const isMobile = ref(false);
@@ -315,6 +318,10 @@ const toggleDropdown = (dropdownName: string) => {
   
   openDropdowns.value[dropdownName as keyof typeof openDropdowns.value] = 
     !openDropdowns.value[dropdownName as keyof typeof openDropdowns.value];
+};
+
+const navigateToHome = () => {
+  router.push('/');
 };
 
 const dashboardClass = computed(() => ({

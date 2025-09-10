@@ -155,7 +155,7 @@ onUnmounted(() => {
     width: 721px;
     height: 68px;
     position: absolute;
-    top: 254px;
+    top: 228px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;

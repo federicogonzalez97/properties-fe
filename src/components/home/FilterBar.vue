@@ -313,7 +313,7 @@ if (typeof window !== 'undefined') {
     width: 100%;
     height: 100%;
     display: flex;
-    align-items: center;
+    align-items: stretch;
     gap: 0; 
   }
 
@@ -335,16 +335,22 @@ if (typeof window !== 'undefined') {
     opacity: 1;
     position: relative;
     padding: 0;
+    
+    &.active {
+      transform: translateY(-2px);
+    }
 
     &--comprar {
       
       width: 100px;
       height: 44px;
+      padding-top: 8px;
       background: var(--rosa, #F5F7FA);
       border-top-left-radius: 5px;
       border-bottom-left-radius: 5px;
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
+      align-self: stretch;
 
       .filter-bar__button-text {
         color: #8A8A8A; 
@@ -353,6 +359,11 @@ if (typeof window !== 'undefined') {
       &:has(.filter-bar__indicator--active) .filter-bar__button-text,
       &.active .filter-bar__button-text {
         color: #333; 
+      }
+      
+      &:has(.filter-bar__indicator--active),
+      &.active {
+        transform: translateY(-2px);
       }
     }
 
@@ -361,6 +372,7 @@ if (typeof window !== 'undefined') {
       width: 100px;
       height: 44px;
       background: var(--crema, #FCFCFC);
+      padding-top: 8px;
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
       border-top-right-radius: 5px;
@@ -368,7 +380,8 @@ if (typeof window !== 'undefined') {
       padding-right: 5px;
       padding-left: 5px;
       box-shadow: 0px 51px 30px 0px #6A64A60D;
-        margin-right: 8px; 
+      margin-right: 8px;
+      align-self: stretch;
 
       .filter-bar__button-text {
         color: #8A8A8A; 
@@ -377,6 +390,11 @@ if (typeof window !== 'undefined') {
       &:has(.filter-bar__indicator--active) .filter-bar__button-text,
       &.active .filter-bar__button-text {
         color: #333; 
+      }
+      
+      &:has(.filter-bar__indicator--active),
+      &.active {
+        transform: translateY(-2px);
       }
     }
 

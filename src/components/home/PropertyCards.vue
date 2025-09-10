@@ -193,19 +193,21 @@ const loadProperties = async (filters?: PropertyFilter) => {
     properties.value = propertiesService.properties.value
     currentPage.value = 1
     currentPageGroup.value = 0 
-    
   }
 }
+
 
 watch(() => props.filters, (newFilters) => {
   loadProperties(newFilters)
 }, { deep: true })
 
 watch(() => propertiesService.properties.value, () => {
-  if (!props.filters || Object.keys(props.filters).length === 0) {
-    properties.value = propertiesService.properties.value
-  }
-})
+  properties.value = propertiesService.properties.value
+}, { immediate: true })
+
+watch(() => propertiesService.isLoading.value, (newValue) => {
+  isLoading.value = newValue
+}, { immediate: true })
 
 onMounted(() => {
   loadProperties(props.filters)

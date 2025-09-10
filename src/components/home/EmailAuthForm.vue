@@ -153,9 +153,14 @@ const validateField = (field: keyof typeof formData) => {
 const validateForm = () => {
   let isValid = true
   
-  ;(Object.keys(validators) as Array<keyof typeof formData>).forEach(field => {
-    validateField(field)
-    if (formErrors[field]) {
+  // Only validate email and password for login mode
+  const fieldsToValidate = isLoginMode.value 
+    ? ['email', 'password'] 
+    : ['email', 'password', 'confirmPassword']
+  
+  fieldsToValidate.forEach(field => {
+    validateField(field as keyof typeof formData)
+    if (formErrors[field as keyof typeof formData]) {
       isValid = false
     }
   })
