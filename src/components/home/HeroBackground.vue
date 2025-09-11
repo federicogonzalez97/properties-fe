@@ -86,7 +86,7 @@ onUnmounted(() => {
   max-width: 100%;
   min-height: 660px;
   height: auto;
-  overflow-x: hidden;
+  overflow: visible;
   margin-left: 0;
   margin-top: 0;
   transition: min-height 0.3s ease;
