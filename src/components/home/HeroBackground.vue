@@ -82,11 +82,11 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 .hero-background {
   position: relative;
-  width: 100vw;
+  width: 100%;
   min-height: 660px;
   height: auto;
   overflow: visible;
-  margin-left: calc(-50vw + 50%);
+  margin-left: 0;
   margin-top: 0;
   transition: min-height 0.3s ease;
   
