@@ -687,7 +687,7 @@ if (typeof window !== 'undefined') {
       width: 100%;
       height: auto;
       overflow: visible;
-      margin-right: 25px;
+      margin-right: 35px;
     }
 
     &__buttons-row {
