@@ -19,6 +19,8 @@ export interface Property {
   superficie: number;
   imagenUrl?: string;
   inversion: boolean;
+  estadoComplejo?: string;
+  cantidadEdificios?: number;
   direccion: {
     calle: string;
     altura: number;

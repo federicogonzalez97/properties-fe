@@ -2,7 +2,7 @@
   <div class="investment-opportunities-section">
     <div class="section-header">
       <h2>Oportunidades de inversión</h2>
-      <p class="subtitle">Explora Nuestra Oferta de Complejos Residenciales y Terrenos</p>
+      <p class="subtitle">Explora Nuestra Oferta de Complejos Residenciales</p>
     </div>
     
     <div v-if="isLoading" class="loading-container">
@@ -44,18 +44,35 @@
             </div>
             
             <div class="property-card__details">
-              <div class="property-card__detail" v-if="property.dormitorios > 0">
-                <img src="/images/dormitorio.svg" alt="Dormitorios" class="property-card__detail-icon">
-                <span>{{ property.dormitorios }}</span>
-              </div>
-              <div class="property-card__detail" v-if="property.banios > 0">
-                <img src="/images/banios.svg" alt="Baños" class="property-card__detail-icon">
-                <span>{{ property.banios }}</span>
-              </div>
-              <div class="property-card__detail">
-                <img src="/images/area.svg" alt="Área" class="property-card__detail-icon">
-                <span>{{ property.superficie }}m²</span>
-              </div>
+              <!-- Para complejos (oportunidades de inversión) -->
+              <template v-if="property.tipo === 'complejo'">
+                <div class="property-card__detail" v-if="property.cantidadEdificios">
+                  <img src="/images/dashboard/edificio.svg" alt="Edificios" class="property-card__detail-icon">
+                  <span>{{ property.cantidadEdificios }}</span>
+                </div>
+                <div class="property-card__detail property-card__detail--status" v-if="property.estadoComplejo">
+                  <span class="status-text">{{ formatEstadoComplejo(property.estadoComplejo) }}</span>
+                </div>
+                <div class="property-card__detail">
+                  <img src="/images/area.svg" alt="Área" class="property-card__detail-icon">
+                  <span>{{ property.superficie }}m²</span>
+                </div>
+              </template>
+              <!-- Para otros tipos de propiedades -->
+              <template v-else>
+                <div class="property-card__detail" v-if="property.dormitorios > 0">
+                  <img src="/images/dormitorio.svg" alt="Dormitorios" class="property-card__detail-icon">
+                  <span>{{ property.dormitorios }}</span>
+                </div>
+                <div class="property-card__detail" v-if="property.banios > 0">
+                  <img src="/images/banios.svg" alt="Baños" class="property-card__detail-icon">
+                  <span>{{ property.banios }}</span>
+                </div>
+                <div class="property-card__detail">
+                  <img src="/images/area.svg" alt="Área" class="property-card__detail-icon">
+                  <span>{{ property.superficie }}m²</span>
+                </div>
+              </template>
             </div>
             
             <p class="property-card__address">
@@ -142,6 +159,17 @@ const formatAddress = (direccion: Property['direccion']): string => {
 const handleImageError = (event: Event) => {
   const img = event.target as HTMLImageElement
   img.src = '/images/house.svg'
+}
+
+const formatEstadoComplejo = (estado: string): string => {
+  switch (estado) {
+    case 'en_construccion':
+      return 'En Construcción'
+    case 'terminado':
+      return 'Terminado'
+    default:
+      return estado
+  }
 }
 
 const goToPage = (page: number) => {
@@ -352,9 +380,9 @@ onMounted(() => {
 
   &__price {
     font-family: 'Poppins', sans-serif;
-    font-weight: 500;
-    font-size: 13.87px;
-    line-height: 100%;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 110%;
     letter-spacing: 0%;
     text-align: right;
     vertical-align: middle;
@@ -430,6 +458,25 @@ onMounted(() => {
     &-icon {
       width: 12px;
       height: 12px;
+    }
+
+    &--status {
+      background: transparent;
+      color: #365196;
+      padding: 0 10px;
+      border-radius: 12px;
+      min-width: 80px;
+
+      .status-text {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 400;
+        font-size: 9px;
+        line-height: 100%;
+        letter-spacing: 0%;
+        text-align: center;
+        vertical-align: middle;
+        white-space: nowrap;
+      }
     }
   }
 }
