@@ -83,9 +83,10 @@ onUnmounted(() => {
 .hero-background {
   position: relative;
   width: 100%;
+  max-width: 100%;
   min-height: 660px;
   height: auto;
-  overflow: visible;
+  overflow-x: hidden;
   margin-left: 0;
   margin-top: 0;
   transition: min-height 0.3s ease;

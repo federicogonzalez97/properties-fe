@@ -31,6 +31,8 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
+  width: 100%;
+  max-width: 100%;
 }
 
 body::-webkit-scrollbar {
@@ -41,11 +43,17 @@ body::-webkit-scrollbar {
 html {
   margin: 0;
   padding: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 #app {
   min-height: 100vh;
   position: relative;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .main-content {

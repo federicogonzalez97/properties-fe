@@ -37,6 +37,9 @@ onMounted(async () => {
 .home {
   min-height: 100vh;
   position: relative;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .main-content {
