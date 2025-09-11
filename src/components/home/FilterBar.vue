@@ -675,7 +675,7 @@ if (typeof window !== 'undefined') {
     min-height: auto;
     top: 280px;
     flex-direction: column;
-    padding: 20px;
+    padding: 20px 0 20px 20px;
     gap: 8px;
     z-index: 999999;
     box-shadow: none;
@@ -687,6 +687,7 @@ if (typeof window !== 'undefined') {
       width: 100%;
       height: auto;
       overflow: visible;
+      margin-right: 25px;
     }
 
     &__buttons-row {
