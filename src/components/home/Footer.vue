@@ -56,7 +56,7 @@
     <div class="footer-separator"></div>
     
     <div class="footer-copyright">
-      Copyright ©2023 | Todos los derechos reservados
+      Copyright ©2025 | Todos los derechos reservados
     </div>
     
     <button class="footer-back-to-top" @click="scrollToTop">
