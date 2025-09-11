@@ -144,23 +144,26 @@ onUnmounted(() => {
   &__title {
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
-    font-size: 28px;
-    line-height: 100%;
+    font-size: clamp(20px, 4vw, 28px);
+    line-height: 110%;
     letter-spacing: 0;
     text-align: center;
     color: white;
     margin: 0;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     
-    width: 721px;
-    height: 68px;
+    width: min(721px, 90vw);
+    max-width: 721px;
+    height: auto;
+    min-height: 68px;
     position: absolute;
-    top: 228px;
+    top: clamp(180px, 25vh, 228px);
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 0 20px;
   }
   
   &__search-container {
@@ -273,6 +276,17 @@ onUnmounted(() => {
   }
 }
     
+@media (max-width: 1100px) {
+  .hero-background {
+    &__title {
+      width: min(600px, 85vw);
+      font-size: clamp(22px, 3.5vw, 26px);
+      top: clamp(160px, 22vh, 200px);
+      padding: 0 15px;
+    }
+  }
+}
+
 @media (max-width: 768px) {
   .hero-background {
     min-height: 520px;

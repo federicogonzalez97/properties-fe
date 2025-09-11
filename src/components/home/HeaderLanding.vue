@@ -175,7 +175,8 @@ onUnmounted(() => {
 .header {
   display: flex;
   flex-direction: row;
-  width: 1041px;
+  width: min(1041px, 95vw);
+  max-width: 1041px;
   height: 45px;
   opacity: 1;
   gap: 24px;
@@ -348,6 +349,15 @@ onUnmounted(() => {
       }
     }
 }
+}
+
+@media (max-width: 1100px) {
+  .header {
+    width: 95vw;
+    max-width: 95vw;
+    padding: 0 15px;
+    gap: 16px;
+  }
 }
 
 @media (max-width: 768px) {

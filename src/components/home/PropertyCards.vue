@@ -219,7 +219,7 @@ onMounted(() => {
   width: 100%;
   max-width: 1345px;
   min-height: 414px;
-  padding: 10px 152px 80px 152px;
+  padding: 10px clamp(20px, 8vw, 152px) 80px clamp(20px, 8vw, 152px);
   gap: 46px;
   transform: rotate(0deg);
   opacity: 1;
@@ -242,8 +242,10 @@ onMounted(() => {
 }
 
 .section-header h2 {
-  width: 500px;
-  height: 100px;
+  width: min(500px, 90vw);
+  max-width: 500px;
+  height: auto;
+  min-height: 100px;
   margin: 0 auto; 
   opacity: 1;
   
@@ -261,8 +263,10 @@ onMounted(() => {
 }
 
 .subtitle {
-  width: 530px;
-  height: 26px;
+  width: min(530px, 90vw);
+  max-width: 530px;
+  height: auto;
+  min-height: 26px;
   margin: 0 auto; 
   opacity: 1;
   
@@ -523,6 +527,21 @@ onMounted(() => {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 1200px) {
+  .property-cards-section {
+    padding: 10px clamp(15px, 5vw, 80px) 80px clamp(15px, 5vw, 80px);
+  }
+  
+  .section-header h2 {
+    font-size: clamp(28px, 4vw, 36px);
+    line-height: clamp(36px, 5vw, 50px);
+  }
+  
+  .subtitle {
+    font-size: clamp(14px, 2vw, 16px);
+  }
 }
 
 @media (max-width: 768px) {

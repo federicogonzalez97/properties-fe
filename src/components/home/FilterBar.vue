@@ -285,7 +285,8 @@ if (typeof window !== 'undefined') {
 <style lang="scss" scoped>
 .filter-bar {
   
-  width: 1030px;
+  width: min(1030px, 95vw);
+  max-width: 1030px;
   height: 44px;
   position: absolute; 
   top: 399px;
@@ -437,7 +438,8 @@ if (typeof window !== 'undefined') {
 
   &__input {
     
-    width: 398px;
+    width: min(398px, 40vw);
+    max-width: 398px;
     height: 44px;
     gap: 10px;
     opacity: 1;
@@ -453,7 +455,7 @@ if (typeof window !== 'undefined') {
 
   &__input-text {
     
-    width: 436px;
+    width: 100%;
     height: 17px;
     opacity: 1;
     font-family: 'Poppins', sans-serif;
@@ -647,6 +649,23 @@ if (typeof window !== 'undefined') {
   }
 }
 
+
+@media (max-width: 1100px) {
+  .filter-bar {
+    width: 90vw;
+    max-width: 90vw;
+    padding: 0 15px;
+    
+    &__input {
+      width: min(300px, 35vw);
+    }
+    
+    &__dropdown {
+      min-width: 100px;
+      padding: 0 10px;
+    }
+  }
+}
 
 @media (max-width: 768px) {
   .filter-bar {
