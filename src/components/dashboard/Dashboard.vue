@@ -4,7 +4,7 @@
       <div class="page-wrapper">
         <div class="sidebar-wrapper">
           <div class="sidebar-brand">
-            <a href="#" class="sidebar-logo">
+            <a href="#" class="sidebar-logo" @click="navigateToHome">
               <img
                 src="/images/Hously.png"
                 alt="Hously Logo"
@@ -174,18 +174,6 @@
                 </div>
               </li>
               
-              <li class="nav-item dashboard-upgrade-item">
-                <div class="dashboard-upgrade">
-                  <div class="dashboard-upgrade__content">
-                    <h4 class="dashboard-upgrade__title">Upgrade to Pro</h4>
-                    <p class="dashboard-upgrade__desc">
-                      Get one month free and subscribe to pro
-                    </p>
-                    <button class="dashboard-upgrade__btn">Subscribe</button>
-                  </div>
-                  <i class="dashboard-upgrade__bg-icon mdi mdi-home-city-outline"></i>
-                </div>
-              </li>
             </ul>
           </nav>
         </div>
@@ -196,7 +184,7 @@
       <header class="dashboard__header">
       <div class="header-bar">
         <div class="header-bar__left">
-          <div class="header-bar__logo-tablet">
+          <div class="header-bar__logo-tablet" @click="navigateToHome" style="cursor: pointer;">
             <img
               src="/images/Hously2.png"
               alt="Hously Logo"
@@ -827,79 +815,10 @@ onMounted(() => {
   }
 
   .dashboard__sidebar-nav:hover::-webkit-scrollbar-thumb {
-    background-color: #fafafa1a;
+    background-color: #ffffff80;
   }
 }
 
-.dashboard-upgrade-item {
-  margin-bottom: 0;
-  margin-top: 36px;
-  padding-top: 5px;
-}
-
-.dashboard-upgrade {
-  position: relative;
-  padding: 40px 14px;
-  margin: 18px;
-  height: 240px;
-  background: linear-gradient(to bottom, #243146 0%, transparent 100%);
-  border-radius: 8px;
-  overflow: hidden;
-  text-align: center;
-}
-
-.dashboard-upgrade__content {
-  position: relative;
-  z-index: 2;
-}
-
-.dashboard-upgrade__title {
-  font-size: 17px;
-  font-weight: 600;
-  color: var(--color-white);
-  margin: 0 0 8px;
-}
-
-.dashboard-upgrade__desc {
-  font-weight: 500;
-  font-size: 14px;
-  color: #90a1b9;
-  margin-top: 15px;
-  margin-bottom: 20px;
-  padding: 0 20px;
-}
-
-.dashboard-upgrade__btn {
-  display: inline-block;
-  width: 70%;
-  text-align: center;
-  padding: 14px 20px;
-  font-size: 15px;
-  font-weight: var(--font-weight-medium);
-  font-family: "Roboto", "Helvetica Neue", sans-serif;
-  color: rgba(255, 255, 255, 0.5);
-  background: linear-gradient(to bottom, #243146 0%, transparent 100%);
-  border: 1px solid #5a597059;
-  border-radius: 6px;
-  transition: background 0.3s ease, border-color 0.3s ease;
-}
-
-.dashboard-upgrade__btn:hover {
-  background: #ffffff80;
-  border-color: #ffffff80;
-}
-
-.dashboard-upgrade__bg-icon {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 160px;
-  color: var(--color-white);
-  opacity: 0.02;
-  z-index: 1;
-  pointer-events: none;
-}
 
 
 

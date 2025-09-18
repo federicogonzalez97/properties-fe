@@ -90,15 +90,15 @@ const scrollToTop = () => {
               0px 30px 9px 0px #36519600;
   margin-top: 100px;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 44px clamp(20px, 8vw, 152px) 30px clamp(20px, 8vw, 152px);
 }
 
 .footer-logo {
-  width: 135px;
-  height: 62px;
-  position: absolute;
-  top: 44px;
-  left: 154px;
-  border-radius: 4px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -118,25 +118,27 @@ const scrollToTop = () => {
 .footer-container {
   width: 100%;
   max-width: 1200px;
-  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: clamp(40px, 8vw, 80px);
   margin: 0 auto;
-  padding-top: 44px;
 }
 
 .footer-main-content {
-  width: 747px;
-  height: 194px;
-  position: absolute;
-  top: 44px;
-  left: 436px;
+  flex: 1;
   display: flex;
-  gap: 62px;
+  justify-content: space-between;
+  gap: clamp(30px, 5vw, 62px);
+  max-width: 800px;
 }
 
 .nav-column {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  flex: 1;
+  min-width: 0;
 }
 
 .nav-list {
@@ -168,15 +170,12 @@ const scrollToTop = () => {
 }
 
 .nav-title {
-  width: 80px;
-  height: 30px;
   font-family: 'Poppins', sans-serif;
   font-weight: 600;
   font-size: 18px;
   color: #FFFFFF;
   margin: 0;
-  display: flex;
-  align-items: center;
+  white-space: nowrap;
 }
 
 .nav-list {
@@ -189,16 +188,13 @@ const scrollToTop = () => {
 }
 
 .nav-link {
-  width: 63px;
-  height: 21px;
   color: #FFFFFF;
   text-decoration: none;
   font-family: 'Poppins', sans-serif;
   font-weight: 400;
   font-size: 14px;
-  display: flex;
-  align-items: center;
   transition: color 0.3s ease;
+  white-space: nowrap;
 }
 
 .nav-link:hover {
@@ -206,8 +202,7 @@ const scrollToTop = () => {
 }
 
 .social-section {
-  width: 80px;
-  height: 153px;
+  flex-shrink: 0;
 }
 
 .social-icons {
@@ -217,14 +212,17 @@ const scrollToTop = () => {
 }
 
 .social-icon {
-  width: 63px;
-  height: 21px;
   background: transparent;
   border-radius: 4px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  overflow: hidden;
+  justify-content: flex-start;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.1);
+  }
 }
 
 .social-icon img {
@@ -237,36 +235,28 @@ const scrollToTop = () => {
 
 
 .footer-separator {
-  width: 1041px;
+  width: 100%;
+  max-width: 1200px;
   height: 0.8px;
-  position: absolute;
-  top: 290px;
-  left: 50%;
-  transform: translateX(-50%);
   background: #FCFCFC;
-  margin-left: 60px;
+  margin: 40px 0 20px 0;
 }
 
 .footer-copyright {
-  width: 346px;
-  height: 18px;
-  position: absolute;
-  top: 306px;
-  margin-left: 490px;
   font-family: 'Poppins', sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 130%;
-  letter-spacing: 0%;
-  text-align: center;
+  text-align: left;
   color: #FFFFFF;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin: 0;
+  width: 100%;
+  max-width: 1200px;
+  padding-left: 0;
 }
 
 
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
   .footer {
     margin-top: 50px;
     min-height: auto;
@@ -326,7 +316,8 @@ const scrollToTop = () => {
 
   .social-icons {
     flex-direction: row;
-    gap: 20px;
+    gap: 30px;
+    margin-bottom: 20px;
   }
 
   .social-icon {
@@ -345,13 +336,9 @@ const scrollToTop = () => {
 
   .footer-copyright {
     width: 90%;
-    top: 15px;
-    margin-left: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    position: relative;
+    margin: 20px 0 0 0;
+    text-align: center;
     font-size: 13px;
-    margin-bottom: 0;
     padding-bottom: 10px;
     color: #FFFFFF;
     font-weight: 400;
@@ -407,10 +394,10 @@ const scrollToTop = () => {
   }
 
   .footer-copyright {
-    top: 0;
     font-size: 12px;
     width: 95%;
-    margin-bottom: 0;
+    margin: 20px 0 0 0;
+    text-align: center;
     padding-bottom: 8px;
     color: #FFFFFF;
     font-weight: 400;
@@ -440,9 +427,9 @@ const scrollToTop = () => {
 }
 
 .footer-back-to-top {
-  position: absolute;
-  bottom: 15px;
-  right: 50px;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -456,7 +443,7 @@ const scrollToTop = () => {
   font-size: 14px;
   cursor: pointer;
   transition: all 0.3s ease;
-  z-index: 100;
+  z-index: 1000;
   
   &:hover {
     background: #2a3f7a;

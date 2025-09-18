@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <div class="header__logo">LOGO</div>
+    <div class="header__logo" @click="reloadPage" style="cursor: pointer;">LOGO</div>
 
     <button class="header__hamburger" @click="toggleMobileMenu">
       <span></span>
@@ -11,7 +11,7 @@
     <nav class="header__nav" :class="{ 'header__nav--mobile-open': isMobileMenuOpen }">
       <ul class="header__nav-list">
         <li class="header__nav-item">
-          <a href="#" class="header__nav-link" @click="scrollToSection('hero')">Inicio</a>
+          <a href="#" class="header__nav-link" @click="reloadPage">Inicio</a>
         </li>
         <li class="header__nav-item">
           <a href="#" class="header__nav-link" @click="scrollToSection('dream-property')">Nosotros</a>
@@ -88,6 +88,10 @@ const handleLogout = async () => {
 };
 
 const router = useRouter();
+
+const reloadPage = () => {
+  window.location.reload();
+};
 
 const goToDashboard = () => {
   

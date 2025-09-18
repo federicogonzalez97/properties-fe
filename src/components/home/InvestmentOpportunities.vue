@@ -85,9 +85,9 @@
     
     <div class="pagination" v-if="!isLoading && totalPages > 1">
       <button 
+        v-if="currentPageGroup > 0"
         class="pagination-arrow pagination-arrow--prev"
         @click="goToPrevPage"
-        :disabled="currentPageGroup === 0"
       >
         &#8249;
       </button>
@@ -101,9 +101,9 @@
       ></div>
       
       <button 
+        v-if="currentPageGroup < totalPageGroups - 1"
         class="pagination-arrow pagination-arrow--next"
         @click="goToNextPage"
-        :disabled="currentPageGroup === totalPageGroups - 1"
       >
         &#8250;
       </button>
@@ -219,7 +219,7 @@ onMounted(() => {
   width: 100%;
   max-width: 1345px;
   min-height: 414px;
-  padding: 10px 152px 30px 152px;
+  padding: 10px clamp(20px, 8vw, 152px) 80px clamp(20px, 8vw, 152px);
   gap: 46px;
   transform: rotate(0deg);
   opacity: 1;
@@ -242,11 +242,12 @@ onMounted(() => {
 }
 
 .section-header h2 {
-  width: 1041px;
-  height: 96px;
+  width: min(500px, 90vw);
+  max-width: 500px;
+  height: auto;
+  min-height: 100px;
   margin: 0 auto; 
   opacity: 1;
-  gap: 20px;
   
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
@@ -257,17 +258,19 @@ onMounted(() => {
   
   color: #222222;
   
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .subtitle {
-  width: 530px;
-  height: 26px;
+  width: min(530px, 90vw);
+  max-width: 530px;
+  height: auto;
+  min-height: 26px;
   margin: 0 auto; 
   opacity: 1;
   
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 26px;
@@ -276,14 +279,14 @@ onMounted(() => {
   
   color: #838383;
   
-  margin-top: 0rem;
-  margin-bottom: 1.5rem; 
+  margin-top: 1rem;
+  margin-bottom: 1rem; 
 }
 
 .property-cards-container {
   width: 100%;
-  max-width: 1029.391357421875px;
-  min-height: 299.5826110839844px;
+  max-width: 1029px;
+  min-height: 300px;
   gap: 38px;
   transform: rotate(0deg);
   opacity: 1;
@@ -545,17 +548,32 @@ onMounted(() => {
   100% { transform: rotate(360deg); }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
   .investment-opportunities-section {
-    padding: 20px 20px 30px 20px;
+    padding: 10px clamp(15px, 5vw, 80px) 80px clamp(15px, 5vw, 80px);
+  }
+  
+  .section-header h2 {
+    font-size: clamp(28px, 4vw, 36px);
+    line-height: clamp(36px, 5vw, 50px);
+  }
+  
+  .subtitle {
+    font-size: clamp(14px, 2vw, 16px);
+  }
+}
+
+@media (max-width: 1000px) {
+  .investment-opportunities-section {
+    padding: 8px 20px 60px 20px;
     gap: 30px;
-    z-index: 200;
+    z-index: 1;
     position: relative;
   }
 
   .section-header {
     padding: 1.5rem 1rem 1rem 1rem;
-    z-index: 200;
+    z-index: 1;
     position: relative;
   }
   
@@ -592,8 +610,8 @@ onMounted(() => {
 
   .property-card {
     width: 100%;
-    max-width: 300px;
-    height: 250px;
+    max-width: 400px;
+    height: 280px;
     
     &__image {
       width: 100% !important;
@@ -609,7 +627,7 @@ onMounted(() => {
 
 @media (max-width: 480px) {
   .investment-opportunities-section {
-    padding: 15px 15px 25px 15px;
+    padding: 5px 15px 50px 15px;
     gap: 25px;
   }
 

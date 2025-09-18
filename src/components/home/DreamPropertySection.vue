@@ -44,8 +44,8 @@
             <img src="/images/pork.svg" alt="Icono de edificio" />
           </div>
           <div class="feature-content">
-            <h3 class="feature-title">Seguridad y Tranquilidad</h3>
-            <p class="feature-subtitle">Tu seguridad y la de tu familia</p>
+            <h3 class="feature-title">Inversión Inteligente</h3>
+            <p class="feature-subtitle">Maximiza tu patrimonio inmobiliario</p>
           </div>
         </div>
         
@@ -54,8 +54,8 @@
             <img src="/images/handshake.svg" alt="Icono de tendencia" />
           </div>
           <div class="feature-content">
-            <h3 class="feature-title">Seguridad y Tranquilidad</h3>
-            <p class="feature-subtitle">Tu seguridad y la de tu familia</p>
+            <h3 class="feature-title">Asesoramiento Experto</h3>
+            <p class="feature-subtitle">Acompañamiento profesional en cada paso</p>
           </div>
         </div>
         
@@ -64,8 +64,8 @@
             <img src="/images/house.svg" alt="Icono de búsqueda" />
           </div>
           <div class="feature-content">
-            <h3 class="feature-title">Seguridad y Tranquilidad</h3>
-            <p class="feature-subtitle">Tu seguridad y la de tu familia</p>
+            <h3 class="feature-title">Variedad de Opciones</h3>
+            <p class="feature-subtitle">Encuentra la propiedad perfecta para ti</p>
           </div>
         </div>
       </div>
@@ -78,13 +78,16 @@
   
   <style lang="scss" scoped>
   .dream-property-section {
-
     width: 100%;
     max-width: 1345px;
     min-height: 663px;
+    padding: 10px clamp(20px, 8vw, 152px) 80px clamp(20px, 8vw, 152px);
+    gap: 46px;
     transform: rotate(0deg);
     opacity: 1;
     margin: 0 auto;
+    
+    background: #FFFFFF;
 
     display: flex;
     flex-direction: column;
@@ -321,10 +324,19 @@
 }
 
 
-@media (max-width: 768px) { 
+@media (max-width: 1200px) {
+  .dream-property-section {
+    padding: 10px clamp(15px, 5vw, 80px) 80px clamp(15px, 5vw, 80px);
+  }
+}
+
+@media (max-width: 1000px) { 
   .dream-property-section {
     min-height: 500px;
-    padding: 20px;
+    padding: 8px 20px 60px 20px;
+    gap: 30px;
+    z-index: 1;
+    position: relative;
   }
 
   .dream-property-image {
@@ -361,9 +373,9 @@
 
   .feature-card {
     width: 100%;
-    max-width: 350px;
-    height: 80px;
-    gap: 12px;
+    max-width: 450px;
+    height: 110px;
+    gap: 15px;
     background: #FFFFFF;
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
     z-index: 100;
@@ -394,7 +406,8 @@
 @media (max-width: 480px) {
   .dream-property-section {
     min-height: 400px;
-    padding: 15px;
+    padding: 5px 15px 50px 15px;
+    gap: 25px;
   }
 
   .dream-property-image {
@@ -417,7 +430,7 @@
   }
 
   .feature-card {
-    height: 70px;
+    height: 85px;
     gap: 10px;
     background: #FFFFFF;
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
@@ -480,7 +493,7 @@
   }
 
   .feature-card {
-    height: 65px;
+    height: 80px;
     gap: 8px;
     background: #FFFFFF;
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);

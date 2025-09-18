@@ -282,7 +282,6 @@ onUnmounted(() => {
     &__title {
       width: min(600px, 85vw);
       font-size: clamp(22px, 3.5vw, 26px);
-      top: clamp(160px, 22vh, 200px);
       padding: 0 15px;
     }
   }

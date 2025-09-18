@@ -68,9 +68,9 @@
     
     <div class="pagination" v-if="!isLoading && totalPages > 1">
       <button 
+        v-if="currentPageGroup > 0"
         class="pagination-arrow pagination-arrow--prev"
         @click="goToPrevPage"
-        :disabled="currentPageGroup === 0"
       >
         &#8249;
       </button>
@@ -84,9 +84,9 @@
       ></div>
       
       <button 
+        v-if="currentPageGroup < totalPageGroups - 1"
         class="pagination-arrow pagination-arrow--next"
         @click="goToNextPage"
-        :disabled="currentPageGroup === totalPageGroups - 1"
       >
         &#8250;
       </button>
@@ -544,7 +544,7 @@ onMounted(() => {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
   .property-cards-section {
     padding: 8px 20px 60px 20px;
     gap: 30px;
@@ -591,8 +591,8 @@ onMounted(() => {
 
   .property-card {
     width: 100%;
-    max-width: 300px;
-    height: 250px;
+    max-width: 400px;
+    height: 280px;
     
     &__image {
       width: 100% !important;
