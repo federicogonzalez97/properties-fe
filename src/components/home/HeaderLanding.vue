@@ -62,25 +62,41 @@ const authModalMode = ref<'login' | 'register'>('login');
 
 const { logout, isAuthenticated } = useAuth();
 
+const disableBodyScroll = () => {
+  document.body.style.overflow = 'hidden';
+  document.documentElement.style.overflow = 'hidden';
+  document.body.style.position = 'fixed';
+  document.body.style.width = '100%';
+  document.body.style.height = '100%';
+};
+
+const enableBodyScroll = () => {
+  document.body.style.overflow = '';
+  document.documentElement.style.overflow = '';
+  document.body.style.position = '';
+  document.body.style.width = '';
+  document.body.style.height = '';
+};
+
 const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value;
   
   if (isMobileMenuOpen.value) {
-    document.body.style.overflow = 'hidden';
+    disableBodyScroll();
   } else {
-    document.body.style.overflow = 'auto';
+    enableBodyScroll();
   }
 };
 
 const openAuthModal = (mode: 'login' | 'register' = 'login') => {
   authModalMode.value = mode;
   isAuthModalOpen.value = true;
-  document.body.style.overflow = 'hidden';
+  disableBodyScroll();
 };
 
 const closeAuthModal = () => {
   isAuthModalOpen.value = false;
-  document.body.style.overflow = 'auto';
+  enableBodyScroll();
 };
 
 const handleLogout = async () => {
@@ -96,7 +112,7 @@ const reloadPage = () => {
 const goToDashboard = () => {
   
   isMobileMenuOpen.value = false;
-  document.body.style.overflow = 'auto';
+  enableBodyScroll();
   
   router.push('/dashboard');
 };
@@ -104,7 +120,7 @@ const goToDashboard = () => {
 const scrollToSection = (sectionId: string) => {
   isMobileMenuOpen.value = false;
   
-  document.body.style.overflow = 'auto';
+  enableBodyScroll();
   
   setTimeout(() => {
     switch (sectionId) {
@@ -158,11 +174,10 @@ const scrollToSection = (sectionId: string) => {
 };
 
 onMounted(() => {
-  // Sin listeners de scroll
 });
 
 onUnmounted(() => {
-  document.body.style.overflow = 'auto';
+  enableBodyScroll();
 });
 </script>
 
