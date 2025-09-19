@@ -22,16 +22,7 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach(async (to, _from, next) => {
-  if (localStorage.getItem('access_token') && !authService.currentUser.value) {
-    try {
-      await authService.initAuth();
-    } catch (error) {
-      console.error('Error inicializando auth:', error);
-      authService.clearAuth();
-    }
-  }
-
+router.beforeEach((to, _from, next) => {
   const isAuthenticated = authService.isAuthenticated.value;
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
