@@ -22,15 +22,36 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, _from, next) => {
-  const isAuthenticated = authService.isAuthenticated.value;
+router.beforeEach(async (to, _from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-
-  if (requiresAuth && !isAuthenticated) {
-    next('/');
-  } else {
-    next();
+  
+  if (requiresAuth) {
+    const hasToken = !!localStorage.getItem('access_token');
+    const hasUser = !!authService.currentUser.value;
+    
+    if (hasToken && !hasUser) {
+      try {
+        await Promise.race([
+          authService.initAuth(),
+          new Promise((_, reject) => 
+            setTimeout(() => reject(new Error('Router guard timeout')), 3000)
+          )
+        ]);
+      } catch (error) {
+        console.error('Error en router guard:', error);
+        authService.clearAuth();
+        next('/');
+        return;
+      }
+    }
+    
+    if (!authService.isAuthenticated.value) {
+      next('/');
+      return;
+    }
   }
+  
+  next();
 });
 
 export default router;

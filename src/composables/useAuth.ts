@@ -125,7 +125,12 @@ const ensureAuth = async (): Promise<boolean> => {
   
   if (localStorage.getItem('access_token') && !authService.currentUser.value) {
     try {
-      await authService.initAuth()
+      await Promise.race([
+        authService.initAuth(),
+        new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('EnsureAuth timeout')), 3000)
+        )
+      ])
     } catch (err) {
       console.error('Failed to ensure auth:', err)
       return false

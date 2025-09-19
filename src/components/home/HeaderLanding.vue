@@ -20,7 +20,7 @@
           <a href="#" class="header__nav-link" @click="scrollToSection('property-cards')">Propiedades</a>
         </li>
         <li class="header__nav-item" v-if="isAuthenticated">
-          <a href="#" class="header__nav-link" @click="goToDashboard">Dashboard</a>
+          <a href="#" class="header__nav-link" @click.prevent="goToDashboard">Dashboard</a>
         </li>
       </ul>
     </nav>
@@ -60,7 +60,7 @@ const isMobileMenuOpen = ref(false);
 const isAuthModalOpen = ref(false);
 const authModalMode = ref<'login' | 'register'>('login');
 
-const { logout, isAuthenticated } = useAuth();
+const { logout, isAuthenticated, ensureAuth } = useAuth();
 
 const disableBodyScroll = () => {
   document.body.style.overflow = 'hidden';
@@ -109,16 +109,17 @@ const reloadPage = () => {
   window.location.reload();
 };
 
-const goToDashboard = () => {
+const goToDashboard = async () => {
   isMobileMenuOpen.value = false;
   enableBodyScroll();
   
-  // Pequeño delay para asegurar que el estado esté sincronizado
-  setTimeout(() => {
-    if (isAuthenticated.value) {
+  const isAuth = await ensureAuth();
+  
+  if (isAuth) {
+    setTimeout(() => {
       router.push('/dashboard');
-    }
-  }, 100);
+    }, 100);
+  }
 };
 
 const scrollToSection = (sectionId: string) => {

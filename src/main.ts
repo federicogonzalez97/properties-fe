@@ -12,7 +12,12 @@ const initApp = async () => {
   
   if (localStorage.getItem('access_token')) {
     try {
-      await authService.initAuth()
+      await Promise.race([
+        authService.initAuth(),
+        new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Auth initialization timeout')), 5000)
+        )
+      ])
     } catch (error) {
       console.error('Error inicializando auth en main:', error)
       authService.clearAuth()
