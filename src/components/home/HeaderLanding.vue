@@ -51,7 +51,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, nextTick } from "vue";
 import { useRouter } from "vue-router";
 import AuthModal from './AuthModal.vue';
 import { useAuth } from '../../composables/useAuth';
@@ -110,11 +110,15 @@ const reloadPage = () => {
 };
 
 const goToDashboard = () => {
-  
   isMobileMenuOpen.value = false;
   enableBodyScroll();
   
-  router.push('/dashboard');
+  // Pequeño delay para asegurar que el estado esté sincronizado
+  setTimeout(() => {
+    if (isAuthenticated.value) {
+      router.push('/dashboard');
+    }
+  }, 100);
 };
 
 const scrollToSection = (sectionId: string) => {

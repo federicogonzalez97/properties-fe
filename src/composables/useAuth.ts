@@ -118,6 +118,23 @@ const initAuth = async (): Promise<void> => {
   }
 }
 
+const ensureAuth = async (): Promise<boolean> => {
+  if (!isInitialized.value) {
+    await initAuth()
+  }
+  
+  if (localStorage.getItem('access_token') && !authService.currentUser.value) {
+    try {
+      await authService.initAuth()
+    } catch (err) {
+      console.error('Failed to ensure auth:', err)
+      return false
+    }
+  }
+  
+  return authService.isAuthenticated.value
+}
+
 const handleOAuthCallback = async (): Promise<void> => {
   try {
     await authService.handleOAuthCallback()
@@ -144,6 +161,7 @@ export function useAuth() {
     getProfile,
     verifyToken,
     initAuth,
+    ensureAuth,
     handleOAuthCallback,
     clearError,
     setError
